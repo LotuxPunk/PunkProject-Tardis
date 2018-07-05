@@ -119,6 +119,7 @@ nav.circle ul li a:after {
 }
 nav.circle ul li a:hover:after {
     -webkit-animation: circle 1.5s ease-in forwards;
+    animation: circle 1.5s ease-in forwards;
 }
 
 /* SHIFT */
@@ -153,7 +154,7 @@ nav.shift ul li a:hover:after {
 }
 
 /* Keyframes */
-@-webkit-keyframes fill {
+@keyframes fill {
     0% {
         width: 0%;
         height: 1px;
@@ -170,7 +171,7 @@ nav.shift ul li a:hover:after {
 }
 
 /* Keyframes */
-@-webkit-keyframes circle {
+@keyframes circle {
     0% {
         width: 1px;
         top: 0;
