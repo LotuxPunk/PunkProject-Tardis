@@ -21,6 +21,7 @@
                     <ul class="navbar-nav mr-auto">
                         <?= $nav ?>
                     </ul>
+                    <a class="float-right text-light" href="#">Sign in/ Login</a>
                 </div>
             </nav>
         </div>
