@@ -19,6 +19,7 @@
 <?php $content = ob_get_clean(); ?>
 
 <?php ob_start(); ?>
+<?php if(isset($_SESSION['connected'])){?>
 <div class="modal fade" id="addRequest" tabindex="-1" role="dialog" aria-labelledby="addRequestLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -45,6 +46,24 @@
         </div>
     </div>
 </div>
+<?php } else { ?>
+<div class="modal fade" id="addRequest" tabindex="-1" role="dialog" aria-labelledby="addRequestLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addRequestLabel">It's embarassing...</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body bg-info"><p>You must be logged in to share your ideas!</p><img src="https://media.giphy.com/media/WyJLAIJYPfMfC/giphy.gif" alt="" style="width:80%;"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<?php } ?>
 <?php $modal = ob_get_clean(); ?>
 
 <?php require('template.php'); ?>
