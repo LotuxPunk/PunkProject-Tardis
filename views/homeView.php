@@ -1,8 +1,7 @@
 <?php $title = 'PunkProject'; ?>
 
 <?php ob_start(); ?>
-<li class="nav-item active"><a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a></li>
-<li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#addRequest" href="#">Add a suggestion</a></li>
+<li class="nav-item active"><a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a></li>
 <li class="nav-item"><a class="nav-link" href="#">Another useless link</a></li>
 <?php $nav = ob_get_clean(); ?>
 
@@ -19,51 +18,7 @@
 <?php $content = ob_get_clean(); ?>
 
 <?php ob_start(); ?>
-<?php if(isset($_SESSION['connected'])){?>
-<div class="modal fade" id="addRequest" tabindex="-1" role="dialog" aria-labelledby="addRequestLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addRequestLabel">New suggestion</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="title" class="col-form-label">Title:</label>
-                        <input type="text" class="form-control" id="title">
-                    </div>
-                    <div class="form-group">
-                        <label for="description" class="col-form-label">Description:</label>
-                        <textarea class="form-control" id="description"></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Propose</button>
-            </div>
-        </div>
-    </div>
-</div>
-<?php } else { ?>
-<div class="modal fade" id="addRequest" tabindex="-1" role="dialog" aria-labelledby="addRequestLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addRequestLabel">It's embarassing...</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body bg-info"><p>You must be logged in to share your ideas!</p><img src="https://media.giphy.com/media/WyJLAIJYPfMfC/giphy.gif" alt="" style="width:80%;"></div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-<?php } ?>
+
 <?php $modal = ob_get_clean(); ?>
 
 <?php require('template.php'); ?>
