@@ -21,9 +21,10 @@
                     <ul class="navbar-nav mr-auto">
                         <?= $nav ?>
                         <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#addRequest" href="#">Add a suggestion</a></li>
+                        <?php if(isset($_SESSION["username"])){?><li class="nav-item"><a class="nav-link" href="#">My profile (<?= $_SESSION['username'] ?>)</a></li><?php } ?>
                     </ul>
-                    <?php if(isset($_SESSION['username'])) { ?>
-                        <p>You're logged as <?= $_SESSION['username'] ?></p>
+                    <?php if(isset($_SESSION['connected'])) { ?>
+                        <a class="float-right text-light" href="index.php?p=logout">Log out</a>
                     <?php } else { ?>
                         <a class="float-right text-light" href="index.php?p=login">Sign in / Login</a>
                     <?php } ?>
@@ -43,14 +44,14 @@
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         </div>
                         <div class="modal-body">
-                            <form>
+                            <form action="index.php?p=add-request" method="post">
                                 <div class="form-group">
                                     <label for="title" class="col-form-label">Title:</label>
-                                    <input type="text" class="form-control" id="title">
+                                    <input type="text" name="title" class="form-control" id="title">
                                 </div>
                                 <div class="form-group">
                                     <label for="description" class="col-form-label">Description:</label>
-                                    <textarea class="form-control" id="description"></textarea>
+                                    <textarea class="form-control" name="description" id="description"></textarea>
                                 </div>
                             </form>
                         </div>
