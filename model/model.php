@@ -86,3 +86,28 @@
         $result = $row['id'];
         return $result;
     }
+
+    function setRequest($title, $content, $date){
+        $servername = "punkprojhytardis.mysql.db";
+        $username = "punkprojhytardis";
+        $password = "Tardis2018";
+        $dbname = "punkprojhytardis";
+
+        try {
+            $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $stmt = $conn->prepare("INSERT INTO request (id_user, title, content, date) VALUES (:id_user, :title, :content, :date)");
+            $stmt->bindParam(':id_user', $_SESSION['id']);
+            $stmt->bindParam(':title', $title);
+            $stmt->bindParam(':content', $content);
+            $stmt->bindParam(':date', $date);
+            $stmt->execute();
+            $result = 'New request added, thank you for your contribution !';
+        }
+        catch(PDOException $e)
+            {
+                $result = "Error: " . $e->getMessage();
+            }
+        $conn = null;
+        return $result;
+    }

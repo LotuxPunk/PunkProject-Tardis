@@ -1,12 +1,18 @@
 <?php
     require('./model/model.php');
 
-    function getHomePage(){
+    function getHomePage($message = ""){
         require('./views/homeView.php');
     }
 
     function getLoginPage($echec ="", $success = "", $activation =""){
         require('./views/loginView.php');
+    }
+
+    function addRequest($title, $content){
+        $today = date('Y-m-d H:i:s');
+        $result = setRequest($title, $content, $today);
+        getHomePage($result);
     }
 
     //Some funtions
@@ -76,4 +82,9 @@
 
     function checkPass($password){
         return strlen($password) > 7;
+    }
+
+    function sendWebhook($title, $content, $username){
+        $url = "https://discordapp.com/api/webhooks/464923140036755456/CuY_mJflj43EfPK6X_dMYx_SztT578ts1NfV10BzwrCbCjLzG7yF9Gy4mwwd2kmpU1vr";
+        
     }

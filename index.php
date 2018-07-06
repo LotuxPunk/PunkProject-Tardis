@@ -13,6 +13,9 @@
                 header("Refresh:0");
                 getHomePage();
             }
+            elseif($_GET['p'] == "add-request"){
+                addRequest(htmlspecialchars($_POST['title']), htmlspecialchars($_POST['description']));
+            }
             else{
                 getHomePage();
             }

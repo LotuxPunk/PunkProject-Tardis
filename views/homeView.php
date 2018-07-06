@@ -6,6 +6,7 @@
 <?php $nav = ob_get_clean(); ?>
 
 <?php ob_start(); ?>
+<?php if($message != ""){?><div class="alert alert-info" role="alert"><?= $message ?></div><?php } ?>
 <div class="card bg-light mb-3">
     <div class="card-body">
         <div class="d-flex">
