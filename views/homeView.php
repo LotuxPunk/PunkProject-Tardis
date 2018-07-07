@@ -16,6 +16,13 @@
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRequest">I have an idea !</button>
     </div>
 </div>
+<div class="bg-white rounded mb-3 request">
+    <h3>Latest requests</h3>
+    <?php $i = 0; 
+    while($row = $request->fetch_assoc()){
+        echo '<div class="border-bottom row"><div class="col-9"><h5>'.$row['title'].'<small> by '.$users[$i++].'</small></h5><p>'.$row['content'].'</p></div><div class="col-3"><div class="float-right btn-group" style="margin-top:20px;" role="group"><a class="btn btn-success" href="#"><i class="fas fa-thumbs-up"></i></a><span class="btn btn-secondary">0</span><a class="btn btn-danger" href="#"><i class="fas fa-thumbs-down"></i></a></div></div></div>';
+    } ?>
+</div>
 <?php $content = ob_get_clean(); ?>
 
 <?php ob_start(); ?>

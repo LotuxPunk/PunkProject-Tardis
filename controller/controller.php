@@ -2,6 +2,12 @@
     require('./model/model.php');
 
     function getHomePage($message = ""){
+        $request = getLastRequest();
+        $data = getLastRequest();
+        $users = array();
+        while($row = $data->fetch_assoc()){
+            $users[] = getUsernameByID($row['id_user']);
+        }
         require('./views/homeView.php');
     }
 

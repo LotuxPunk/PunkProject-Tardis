@@ -111,3 +111,22 @@
         $conn = null;
         return $result;
     }
+
+    function getLastRequest($nb = 10){
+        $conn = dbConnect();
+        $sql = "SELECT * FROM request ORDER BY id DESC LIMIT ".$nb;
+        $result = $conn->query($sql);
+        $conn->close();
+        return $result;
+    }
+
+    function getUsernameByID($id){
+        $conn = dbConnect();
+        $sql = "SELECT username FROM user WHERE id = ".$id;
+        $result = $conn->query($sql);
+        $conn->close();
+
+        $row = $result->fetch_assoc();
+        $result = $row['username'];
+        return $result;
+    }
