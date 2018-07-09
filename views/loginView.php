@@ -2,7 +2,7 @@
 
 <?php ob_start(); ?>
 <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
-<li class="nav-item"><a class="nav-link" href="#">Another useless link</a></li>
+<li class="nav-item"><a class="nav-link" href="index.php?p=request&n=1">All requests</a></li>
 <?php $nav = ob_get_clean(); ?>
 
 <?php ob_start(); ?>

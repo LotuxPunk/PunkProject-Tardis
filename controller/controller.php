@@ -5,10 +5,39 @@
         $request = getLastRequest();
         $data = getLastRequest();
         $users = array();
+        $voted = array();
         while($row = $data->fetch_assoc()){
             $users[] = getUsernameByID($row['id_user']);
+            if (isset($_SESSION['connected'])) {
+                $voted[] = isVoted($_SESSION['id'], $row['id']);
+            }
+            else{
+                $voted[] = 0;
+            }
         }
         require('./views/homeView.php');
+    }
+
+    function getRequestView($page = 1, $message = ""){
+        $nb_elem = 100;
+        if(isset($_SESSION['nb_elem'])){
+            $nb_elem = $_SESSION['nb_elem'];
+        }
+
+        $request = getLastRequest($nb_elem, $page);
+        $data = getLastRequest();
+        $users = array();
+        $voted = array();
+        while($row = $data->fetch_assoc()){
+            $users[] = getUsernameByID($row['id_user']);
+            if (isset($_SESSION['connected'])) {
+                $voted[] = isVoted($_SESSION['id'], $row['id']);
+            }
+            else{
+                $voted[] = 0;
+            }
+        }
+        require('./views/requestView.php');
     }
 
     function getLoginPage($echec ="", $success = "", $activation =""){
@@ -37,6 +66,7 @@
             $_SESSION['connected'] = true;
             $_SESSION['username'] = getNom($email);
             $_SESSION['id'] = getId($email);
+            $_SESSION['nb_elem'] = 100;
             getHomePage();
         }
         else {
@@ -93,4 +123,9 @@
     function sendWebhook($title, $content, $username){
         $url = "https://discordapp.com/api/webhooks/464923140036755456/CuY_mJflj43EfPK6X_dMYx_SztT578ts1NfV10BzwrCbCjLzG7yF9Gy4mwwd2kmpU1vr";
         
+    }
+
+    function setVote($isUp, $id){
+        $result = addThumb($isUp, $id);
+        getRequestView(1,$result);
     }
