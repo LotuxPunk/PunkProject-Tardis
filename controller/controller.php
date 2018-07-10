@@ -2,8 +2,8 @@
     require('./model/model.php');
 
     function getHomePage($message = ""){
-        $request = getLastRequest();
-        $data = getLastRequest();
+        $request = getLastRequest(10,1,true);
+        $data = getLastRequest(10,1,true);
         $users = array();
         $voted = array();
         while($row = $data->fetch_assoc()){
@@ -67,6 +67,7 @@
             $_SESSION['username'] = getNom($email);
             $_SESSION['id'] = getId($email);
             $_SESSION['nb_elem'] = 100;
+            $_SESSION['level'] = getLevel($_SESSION['id']);
             getHomePage();
         }
         else {
@@ -127,5 +128,10 @@
 
     function setVote($isUp, $id){
         $result = addThumb($isUp, $id);
+        getRequestView(1,$result);
+    }
+
+    function setStatus($isRejected, $id){
+        $result = addStatus($isRejected, $id);
         getRequestView(1,$result);
     }

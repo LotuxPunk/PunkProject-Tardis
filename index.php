@@ -41,6 +41,11 @@
             getHomePage();
         }
     }
+    elseif(isset($_GET['done']) || isset($_GET['rejected'])){
+        $isRejected = (isset($_GET['done']))? false : true;
+        $id = (isset($_GET['done']))? htmlspecialchars($_GET['done']) : htmlspecialchars($_GET['rejected']);
+        setStatus($isRejected, $id);
+    }
     elseif(isset($_GET['code'])){
         checkActive(htmlspecialchars($_GET['code']));
     }

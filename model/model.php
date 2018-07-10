@@ -112,10 +112,17 @@
         return $result;
     }
 
-    function getLastRequest($nb = 10, $page = 1){
+    function getLastRequest($nb = 10, $page = 1, $homePage = false){
         $conn = dbConnect();
         $page = ($page - 1) * $nb;
-        $sql = "SELECT * FROM request ORDER BY id DESC LIMIT ".$page.",".$nb;
+        $sql;
+        if ($homePage) {
+            $sql = "SELECT * FROM request WHERE rejected = 0 ORDER BY id DESC LIMIT ".$page.",".$nb;
+        }
+        else{
+            $sql = "SELECT * FROM request ORDER BY id DESC LIMIT ".$page.",".$nb;
+        }
+        
         $result = $conn->query($sql);
         $conn->close();
         return $result;
@@ -212,4 +219,35 @@
         }
         mysqli_close($conn);
         return $value;        
+    }
+
+    function getLevel($id){
+        $conn = dbConnect();
+        $sql = "SELECT level FROM user WHERE id = ".$id;
+        $result = $conn->query($sql);
+        $conn->close();
+
+        $row = $result->fetch_assoc();
+        $result = $row['level'];
+        return $result;
+        
+    }
+
+    function addStatus($isRejected, $id){
+        $conn = dbConnect();
+        if($isRejected){
+            $sql = "UPDATE request SET rejected = 1 WHERE id = ".$id;
+        }
+        else{
+            $sql = "UPDATE request SET done = 1 WHERE id = ".$id;
+        }
+
+        if($conn->query($sql) === TRUE){
+            $result = "Request updated";
+        }
+        else{
+            $result = "Error when updating request";
+        }
+        $conn->close();
+        return $result;
     }
