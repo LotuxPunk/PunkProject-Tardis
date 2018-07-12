@@ -20,6 +20,10 @@
                 $page = htmlspecialchars($_GET['n']);
                 getRequestView($page);
             }
+            elseif($_GET['p'] == 'focus'){
+                $id = htmlspecialchars($_GET['id']);
+                getFocusPage($id);
+            }
             else{
                 getHomePage();
             }
@@ -58,7 +62,6 @@
         else{
             getHomePage("You must be logged in to vote");
         }
-       
     }
     else{
         getHomePage();

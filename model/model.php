@@ -229,8 +229,7 @@
 
         $row = $result->fetch_assoc();
         $result = $row['level'];
-        return $result;
-        
+        return $result;        
     }
 
     function addStatus($isRejected, $id){
@@ -249,5 +248,24 @@
             $result = "Error when updating request";
         }
         $conn->close();
+        return $result;
+    }
+
+    function getIDLastRequest(){
+        $conn = dbConnect();
+        $sql = "SELECT id FROM request LIMIT 1 ORDER BY id DESC";
+        $result = $conn->query($sql);
+        $conn->close();
+
+        $row = $result->fetch_assoc();
+        return $row['id'];
+    }
+
+    function getRequestByID($id){
+        $conn = dbConnect();
+        $sql = "SELECT * FROM request WHERE id = ".$id;
+        $result = $conn->query($sql);
+        $conn->close();
+
         return $result;
     }

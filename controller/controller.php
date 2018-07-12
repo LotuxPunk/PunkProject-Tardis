@@ -47,14 +47,27 @@
         require('./views/loginView.php');
     }
 
+    function getFocusPage($id){
+        $request = getRequestByID($id);
+        $row = $request->fetch_assoc();
+        $voted = 0;
+        $user = getUsernameByID($row['id_user']);
+
+        if (isset($_SESSION['connected'])) {
+            $voted = isVoted($_SESSION['id'], $row['id']);
+        }
+
+        require('./views/singleView.php');
+    }
+
+    #Fonctions se servant des pages
+
     function addRequest($title, $content){
         $today = date('Y-m-d H:i:s');
         $result = setRequest($title, $content, $today);
-        sendWebhook($title, $content, $_SESSION['username']);
+        sendWebhook($title, $content, $_SESSION['username'], getIDLastRequest());
         getHomePage($result);
     }
-
-    
 
     function checkConn($password, $email){
         $pass = hash('sha256', $password);
@@ -125,7 +138,7 @@
         return mail($to,$subject,$message, $headers);
     }
 
-    function sendWebhook($title, $content, $username){
+    function sendWebhook($title, $content, $username,$id){
         $url = "https://discordapp.com/api/webhooks/464923140036755456/CuY_mJflj43EfPK6X_dMYx_SztT578ts1NfV10BzwrCbCjLzG7yF9Gy4mwwd2kmpU1vr";
         #$image = 'https://via.placeholder.com/400x400';
         $data = json_encode([
@@ -139,7 +152,7 @@
                 [
                     'title' => $title,
                     'description' => $content,
-                    'url' => 'https://punkproject.xyz',
+                    'url' => 'https://punkproject.xyz/index.php?p=focus&id='.$id,
                     'color' => 0xFFFFFF,
                     'timestamp' => (new DateTime())->format('c'),
                     'author' => [
