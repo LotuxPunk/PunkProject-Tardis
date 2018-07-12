@@ -1,6 +1,9 @@
 <?php
     require('./model/model.php');
 
+    #Fonction de pages
+
+
     function getHomePage($message = ""){
         $request = getLastRequest(10,1,true);
         $data = getLastRequest(10,1,true);
@@ -47,17 +50,11 @@
     function addRequest($title, $content){
         $today = date('Y-m-d H:i:s');
         $result = setRequest($title, $content, $today);
+        sendWebhook($title, $content, $_SESSION['username']);
         getHomePage($result);
     }
 
-    //Some funtions
-    function sendMail($to, $code) {
-        $from = "no-reply@punkproject.xyz";
-        $subject = "Confirmation of PunkProject registration";
-        $message = "Click here to activate your account: https://punkproject.xyz/index.php?code=".$code;
-        $headers = "From:" . $from;
-        return mail($to,$subject,$message, $headers);
-    }
+    
 
     function checkConn($password, $email){
         $pass = hash('sha256', $password);
@@ -86,6 +83,7 @@
                 $today = date('Y-m-d H:i:s');
                 if(sendMail($email, $code)){
                     $success = setInsc($username, $pass, $email, $code, $today);
+                    sendWebhookInsc($username);
                 }
                 else {
                     $echec = "Email error";
@@ -105,6 +103,119 @@
     function checkActive($code){
         $activation = setActif($code);
         getLoginPage("","",$activation);
+    } 
+
+    function setVote($isUp, $id){
+        $result = addThumb($isUp, $id);
+        getRequestView(1,$result);
+    }
+
+    function setStatus($isRejected, $id){
+        $result = addStatus($isRejected, $id);
+        getRequestView(1,$result);
+    }
+
+    #Fonctions utilitaires
+
+    function sendMail($to, $code) {
+        $from = "no-reply@punkproject.xyz";
+        $subject = "Confirmation of PunkProject registration";
+        $message = "Click here to activate your account: https://punkproject.xyz/index.php?code=".$code;
+        $headers = "From:" . $from;
+        return mail($to,$subject,$message, $headers);
+    }
+
+    function sendWebhook($title, $content, $username){
+        $url = "https://discordapp.com/api/webhooks/464923140036755456/CuY_mJflj43EfPK6X_dMYx_SztT578ts1NfV10BzwrCbCjLzG7yF9Gy4mwwd2kmpU1vr";
+        #$image = 'https://via.placeholder.com/400x400';
+        $data = json_encode([
+            // These 2 should usually be left out
+            // as it will overwrite whatever your
+            // users have set
+            'username' => 'PunkProject',
+            #'avatar_url' => $image,
+            'content' => 'New suggestion added by '.$username.'!',
+            'embeds' => [
+                [
+                    'title' => $title,
+                    'description' => $content,
+                    'url' => 'https://punkproject.xyz',
+                    'color' => 0xFFFFFF,
+                    'timestamp' => (new DateTime())->format('c'),
+                    'author' => [
+                        'name' => $username,
+                        'url' => 'https://punkproject.xyz',
+                        #'icon_url' => $image
+                    ],
+                    // 'thumbnail' => [
+                    //     'url' => $image
+                    // ],
+                    'footer' => [
+                        'text' => 'PunkProject by LotuxPunk',
+                        // 'icon_url' => $image
+                    ],
+                    // 'image' => [
+                    //     'url' => $image
+                    // ],
+                    // 'fields' => [
+                    //     [
+                    //         'name' => 'My First Field Name',
+                    //         'value' => 'My First Field Value',
+                    //         'inline' => true
+                    //     ],
+                    //     [
+                    //         'name' => 'My Second Field Name',
+                    //         'value' => 'My Second Field Value',
+                    //         'inline' => true
+                    //     ]
+                    // ]
+                ]
+            ]
+        ]);
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($data)
+        ]);
+        echo curl_exec($ch);
+        
+    }
+
+    function sendWebhookInsc($username){
+        $url = "https://discordapp.com/api/webhooks/464923140036755456/CuY_mJflj43EfPK6X_dMYx_SztT578ts1NfV10BzwrCbCjLzG7yF9Gy4mwwd2kmpU1vr";
+        #$image = 'https://via.placeholder.com/400x400';
+        $data = json_encode([
+            'username' => 'PunkProject',
+            'content' => 'New member on PunkProject',
+            'embeds' => [
+                [
+                    'title' => 'Welcome '.$username.'!',
+                    'description' => 'A new member has come to add his suggestions on the PunkProject !',
+                    'url' => 'https://punkproject.xyz',
+                    'color' => 0xB9FC81,
+                    'timestamp' => (new DateTime())->format('c'),
+                    'author' => [
+                        'name' => $username,
+                        'url' => 'https://punkproject.xyz',
+                        #'icon_url' => $image
+                    ],
+                    'footer' => [
+                        'text' => 'PunkProject by LotuxPunk',
+                        // 'icon_url' => $image
+                    ]
+                ]
+            ]
+        ]);
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($data)
+        ]);
+        echo curl_exec($ch);
     }
 
     function chaineAleatoire($nb_car) {
@@ -119,19 +230,4 @@
 
     function checkPass($password){
         return strlen($password) > 7;
-    }
-
-    function sendWebhook($title, $content, $username){
-        $url = "https://discordapp.com/api/webhooks/464923140036755456/CuY_mJflj43EfPK6X_dMYx_SztT578ts1NfV10BzwrCbCjLzG7yF9Gy4mwwd2kmpU1vr";
-        
-    }
-
-    function setVote($isUp, $id){
-        $result = addThumb($isUp, $id);
-        getRequestView(1,$result);
-    }
-
-    function setStatus($isRejected, $id){
-        $result = addStatus($isRejected, $id);
-        getRequestView(1,$result);
-    }
+    }   
