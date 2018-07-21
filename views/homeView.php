@@ -8,8 +8,8 @@
 <?php ob_start(); ?>
 <?php if($message != ""){?><div class="alert alert-info" role="alert"><?= $message ?></div><?php } ?>
 <div class="jumbotron">
-    <h1 class="display-4">Hello !</h1>
-    <p class="lead">This project is set up to group and follow-up the requests for improvement of the "New TARDIS mod".</p>
+    <h2 class="display-4">Hello ! <img src="./views/img/logo.png" width="30" height="30" class="d-inline-block" alt=""></h2>
+    <p class="lead">This project is set up to group and follow-up the requests for improvement of the "<a href="https://minecraft.curseforge.com/projects/new-tardis-mod" target="_blank">New TARDIS mod</a>".</p>
     <hr class="my-4">
     <p>You have a suggestion, an idea, or a remark to improve the mod ? Go ahead, we're listening !</p>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRequest">I have an idea !</button>

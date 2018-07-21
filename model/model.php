@@ -117,7 +117,7 @@
         $page = ($page - 1) * $nb;
         $sql;
         if ($homePage) {
-            $sql = "SELECT * FROM request WHERE rejected = 0 ORDER BY id DESC LIMIT ".$page.",".$nb;
+            $sql = "SELECT * FROM request WHERE rejected = 0 AND done = 0 ORDER BY id DESC LIMIT ".$page.",".$nb;
         }
         else{
             $sql = "SELECT * FROM request ORDER BY id DESC LIMIT ".$page.",".$nb;
@@ -253,7 +253,7 @@
 
     function getIDLastRequest(){
         $conn = dbConnect();
-        $sql = "SELECT id FROM request LIMIT 1 ORDER BY id DESC";
+        $sql = "SELECT id FROM request ORDER BY id DESC LIMIT 1";
         $result = $conn->query($sql);
         $conn->close();
 
@@ -268,4 +268,14 @@
         $conn->close();
 
         return $result;
+    }
+
+    function getTitleRequestByID($id){
+        $conn = dbConnect();
+        $sql = "SELECT title FROM request WHERE id = ".$id;
+        $result = $conn->query($sql);
+        $conn->close();
+
+        $row = $result->fetch_assoc();
+        return $row['title'];
     }

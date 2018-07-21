@@ -28,7 +28,7 @@
         }
 
         $request = getLastRequest($nb_elem, $page);
-        $data = getLastRequest();
+        $data = getLastRequest($nb_elem, $page);
         $users = array();
         $voted = array();
         while($row = $data->fetch_assoc()){
@@ -125,6 +125,7 @@
 
     function setStatus($isRejected, $id){
         $result = addStatus($isRejected, $id);
+        sendWebhookStatus(!$isRejected, $id, getTitleRequestByID($id));
         getRequestView(1,$result);
     }
 
@@ -229,6 +230,43 @@
             'Content-Length: ' . strlen($data)
         ]);
         echo curl_exec($ch);
+    }
+
+    function sendWebhookStatus($status, $id, $title){
+        $content = "One request was denied";
+        $color = 0x92003B;
+        if($status){
+            $content = "A request has been implemented";
+            $color = 0x63F63B;
+        }
+
+        $url = "https://discordapp.com/api/webhooks/464923140036755456/CuY_mJflj43EfPK6X_dMYx_SztT578ts1NfV10BzwrCbCjLzG7yF9Gy4mwwd2kmpU1vr";
+        $data = json_encode([
+            'username' => 'PunkProject',
+            'embeds' => [
+                [
+                    'title' => $title,
+                    'description' => $content,
+                    'url' => 'https://punkproject.xyz/index.php?p=focus&id='.$id,
+                    'color' => $color,
+                    'timestamp' => (new DateTime())->format('c'),
+                    'footer' => [
+                        'text' => 'PunkProject by LotuxPunk',
+                        // 'icon_url' => $image
+                    ]
+                ]
+            ]
+        ]);
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($data)
+        ]);
+        echo curl_exec($ch);
+        
+
     }
 
     function chaineAleatoire($nb_car) {
