@@ -5,6 +5,11 @@
         <meta charset="utf-8"/>
         <link href="./views/style/style.css" rel="stylesheet" type="text/css">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta property="og:title" content="PunkProject" />
+        <meta property="og:description" content="Suggestion handler for the New TARDIS mod"/>
+        <meta property="og:site_name" content="PunkProject" />
+        <meta property="og:url" content="https://punkproject.xyz/" />
+        <meta property="og:image" content="https://punkproject.xyz/views/img/logo.png" />
         <!-- Font Awesome -->
         <link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
         <!-- Bootstrap CSS-->
