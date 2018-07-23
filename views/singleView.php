@@ -13,10 +13,10 @@
         $moderation = "";
         
         if($row['done'] == 1){
-            $status = '<span class="badge badge-success">Done !</span>';
+            $status = ' <span class="badge badge-success">Done !</span>';
         }
         elseif($row['rejected'] == 1){
-            $status = '<span class="badge badge-danger">Rejected !</span>';
+            $status = ' <span class="badge badge-danger">Rejected !</span>';
         }
         else{
             if($voted == 0){
@@ -28,10 +28,10 @@
             else{
                 $vote = '<div class="float-right btn-group" style="margin-top:20px;" role="group"><a class="btn btn-success disabled" href="index.php?up='.$row['id'].'" role="button" aria-disabled="true"><i class="fas fa-thumbs-up"></i></a><span class="btn btn-secondary">'.$row['vote'].'</span><span class="btn btn-danger"><i class="fas fa-thumbs-down"></i></span></div>';
             }
-        }
 
-        if(isset($_SESSION['connected']) && $_SESSION['level'] >= 5){
-            $moderation = '<div class="btn-group" style="margin-bottom:20px;" role="group"><a class="btn btn-success" role="button" href="index.php?done='.$row['id'].'">Done !</a><a class="btn btn-danger" href="index.php?rejected='.$row['id'].'" role="button">Reject</a></div>';
+            if(isset($_SESSION['connected']) && $_SESSION['level'] >= 5){
+                $moderation = '<div class="btn-group" style="margin-bottom:20px;" role="group"><a class="btn btn-success" role="button" href="index.php?done='.$row['id'].'">Done !</a><a class="btn btn-danger" href="index.php?rejected='.$row['id'].'" role="button">Reject</a></div>';
+            }
         }
     ?>
     <h3><?= $row['title'] ?><small> by <?= $user ?></small><?= $status ?></h3>
