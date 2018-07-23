@@ -279,3 +279,20 @@
         $row = $result->fetch_assoc();
         return $row['title'];
     }
+
+    function getNbRequest(){
+        $servername = "punkprojhytardis.mysql.db";
+        $username = "punkprojhytardis";
+        $password = "Tardis2018";
+        $dbname = "punkprojhytardis";
+
+        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $sql = "SELECT COUNT(*) AS NbRequests FROM request";
+        $result = $conn->prepare($sql); 
+        $result->execute(); 
+        $number_of_rows = $result->fetchColumn();
+
+        $conn = null;
+        return $number_of_rows;
+    }

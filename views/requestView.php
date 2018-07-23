@@ -36,6 +36,25 @@
             echo '<div class="border-bottom row"><div class="col-9"><h5>'.$row['title'].'<small> by '.$users[$i++].'</small></h5><p>'.$row['content'].'</p><div class="btn-group" style="margin-bottom:20px;" role="group">'.$moderation.'<a class="btn btn-secondary" role="button" href="index.php?p=focus&id='.$row['id'].'">Focus</a></div></div><div class="col-3">'.$vote.'</div></div>';
         }
     } ?>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <?php
+                if($page > 1){
+                    $prev_page = $page - 1;
+                    echo '<li class="page-item"><a class="page-link" href="index.php?p=request&n='.$prev_page.'">Previous</a></li>';
+                }
+
+                for ($i = 1; $i <= $nb_pages; $i++){
+                    echo '<li class="page-item"><a class="page-link" href="index.php?p=request&n='.$i.'">'.$i.'</a></li>';
+                }
+
+                if ($page < $nb_pages) {
+                    $next_page = $page + 1;
+                    echo '<li class="page-item"><a class="page-link" href="index.php?p=request&n='.$next_page.'">Next</a></li>';
+                }
+            ?>
+        </ul>
+    </nav>
 </div>
 <?php $content = ob_get_clean(); ?>
 

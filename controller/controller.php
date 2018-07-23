@@ -5,6 +5,8 @@
 
 
     function getHomePage($message = ""){
+        $_SESSION['page'] = 1;
+
         $request = getLastRequest(10,1,true);
         $data = getLastRequest(10,1,true);
         $users = array();
@@ -22,10 +24,15 @@
     }
 
     function getRequestView($page = 1, $message = ""){
-        $nb_elem = 100;
+        $_SESSION['page'] = $page;
+
+        $nb_elem = 10;
         if(isset($_SESSION['nb_elem'])){
             $nb_elem = $_SESSION['nb_elem'];
         }
+
+        $nb_requests = getNbRequest();
+        $nb_pages = intdiv($nb_requests, $nb_elem) + 1;
 
         $request = getLastRequest($nb_elem, $page);
         $data = getLastRequest($nb_elem, $page);
@@ -76,8 +83,9 @@
             $_SESSION['connected'] = true;
             $_SESSION['username'] = getNom($email);
             $_SESSION['id'] = getId($email);
-            $_SESSION['nb_elem'] = 100;
+            $_SESSION['nb_elem'] = 10;
             $_SESSION['level'] = getLevel($_SESSION['id']);
+            $_SESSION['page'] = 1;
             getHomePage();
         }
         else {
@@ -120,13 +128,13 @@
 
     function setVote($isUp, $id){
         $result = addThumb($isUp, $id);
-        getRequestView(1,$result);
+        getRequestView($_SESSION['page'],$result);
     }
 
     function setStatus($isRejected, $id){
         $result = addStatus($isRejected, $id);
         sendWebhookStatus(!$isRejected, $id, getTitleRequestByID($id));
-        getRequestView(1,$result);
+        getRequestView($_SESSION['page'],$result);
     }
 
     #Fonctions utilitaires
