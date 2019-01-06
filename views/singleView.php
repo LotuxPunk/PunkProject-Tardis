@@ -1,4 +1,7 @@
-<?php $title = 'Focus on request - PunkProject'; ?>
+<?php
+    $title = $row['title'];
+    $desc = $row['content'];
+?>
 
 <?php ob_start(); ?>
 <li class="nav-item"><a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a></li>

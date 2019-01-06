@@ -1,4 +1,7 @@
-<?php $title = 'Login - PunkProject'; ?>
+<?php 
+    $title = 'Login - PunkProject';
+    $desc = 'Suggestion handler for the New TARDIS mod';
+?>
 
 <?php ob_start(); ?>
 <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>

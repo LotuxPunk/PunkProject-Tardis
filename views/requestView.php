@@ -1,4 +1,7 @@
-<?php $title = 'Requests - PunkProject'; ?>
+<?php 
+    $title = 'Requests - PunkProject';
+    $desc = 'All requests for the NEW TARDIS MOD - Page '. $page;
+?>
 
 <?php ob_start(); ?>
 <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
