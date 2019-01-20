@@ -3,7 +3,6 @@
 
     #Fonction de pages
 
-
     function getHomePage($message = ""){
         $_SESSION['page'] = 1;
 
@@ -201,7 +200,7 @@
             'Content-Type: application/json',
             'Content-Length: ' . strlen($data)
         ]);
-        echo curl_exec($ch);
+        curl_exec($ch);
         
     }
 
@@ -237,7 +236,7 @@
             'Content-Type: application/json',
             'Content-Length: ' . strlen($data)
         ]);
-        echo curl_exec($ch);
+        curl_exec($ch);
     }
 
     function sendWebhookStatus($status, $id, $title){
@@ -272,7 +271,7 @@
             'Content-Type: application/json',
             'Content-Length: ' . strlen($data)
         ]);
-        echo curl_exec($ch);
+        curl_exec($ch);
         
 
     }

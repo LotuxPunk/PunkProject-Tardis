@@ -35,7 +35,7 @@
                     <label for="password">Password</label>
                     <input type="password" name="password" class="form-control" id="password" placeholder="Password">
                 </div>
-                <a href="#" data-toggle="modal" data-target="#register" class="btn btn-secondary"><i class="fas fa-address-book"></i> I'm not register yet</a>
+                <a href="#" data-toggle="modal" data-target="#register" class="btn btn-secondary"><i class="fas fa-address-book"></i> I'm not registered yet</a>
                 <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Login</button>
             </form>
         </div>

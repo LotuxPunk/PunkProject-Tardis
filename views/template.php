@@ -31,7 +31,7 @@
                     <?php if(isset($_SESSION['connected'])) { ?>
                         <a class="float-right text-light" href="index.php?p=logout">Log out</a>
                     <?php } else { ?>
-                        <a class="float-right text-light" href="index.php?p=login">Sign in / Login</a>
+                        <a class="float-right text-light" href="index.php?p=login">Signup / Login</a>
                     <?php } ?>
                 </div>
             </nav>

@@ -115,7 +115,7 @@
     function getLastRequest($nb = 10, $page = 1, $homePage = false){
         $conn = dbConnect();
         $page = ($page - 1) * $nb;
-        $sql;
+        $sql = "";
         if ($homePage) {
             $sql = "SELECT * FROM request WHERE rejected = 0 AND done = 0 ORDER BY id DESC LIMIT ".$page.",".$nb;
         }
