@@ -85,6 +85,7 @@
             $_SESSION['nb_elem'] = 10;
             $_SESSION['level'] = getLevel($_SESSION['id']);
             $_SESSION['page'] = 1;
+            $_SESSION['showdone'] = true;
             getHomePage();
         }
         else {

@@ -120,7 +120,13 @@
             $sql = "SELECT * FROM request WHERE rejected = 0 AND done = 0 ORDER BY id DESC LIMIT ".$page.",".$nb;
         }
         else{
-            $sql = "SELECT * FROM request ORDER BY id DESC LIMIT ".$page.",".$nb;
+            if(isset($_SESSION['showdone']) && $_SESSION['showdone'] || !isset($_SESSION['connected'])){
+                $sql = "SELECT * FROM request ORDER BY id DESC LIMIT ".$page.",".$nb;
+            }
+            else{
+                $sql = "SELECT * FROM request WHERE rejected = 0 AND done = 0 ORDER BY id DESC LIMIT ".$page.",".$nb;
+            }
+            
         }
         
         $result = $conn->query($sql);

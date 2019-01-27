@@ -24,6 +24,16 @@
                 $id = htmlspecialchars($_GET['id']);
                 getFocusPage($id);
             }
+            elseif($_GET['p'] == 'showdone'){
+                if(isset($_POST["showdone"])){
+                    $_SESSION["showdone"] = true;
+                }
+                else{
+                    $_SESSION["showdone"] = false;
+                }
+                
+                getRequestView($_SESSION["page"]);
+            }  
             else{
                 getHomePage();
             }
@@ -44,7 +54,7 @@
         elseif($_GET['p'] == 'focus'){
             $id = htmlspecialchars($_GET['id']);
             getFocusPage($id);
-        }
+        }      
         else{
             getHomePage();
         }
