@@ -1,7 +1,6 @@
 <?php
     require('./model/model.php');
-
-    #Fonction de pages
+    require('functions.php');
 
     function getHomePage($message = ""){
         $_SESSION['page'] = 1;
@@ -121,6 +120,38 @@
         getLoginPage($echec, $success);
     }
 
+    function sendMailPassword($email){
+        $code = chaineAleatoire(20);
+        $echec = "";
+        $success = "";      
+        if(updateCode($email, $code)){
+            if(sendResetMail($email,$code)){
+                $success = "Email sent, check your box";
+            }
+            else{
+                $echec = "Error on sending email";
+            }            
+        }
+        else{
+            $echec = "Email not found";
+        }
+        getLoginPage($echec, $success);
+    }
+
+    function getResetPage($code){
+        require('./views/resetPasswordView.php');
+    }
+
+    function checkResetPass($password, $code){
+        $passHash = hash('sha256', $password);
+        if(updatePassword($passHash, $code)){
+            getLoginPage("", "Password successfully changed");
+        }
+        else{
+            getLoginPage("Error when changing the password");
+        }
+    }
+
     function checkActive($code){
         $activation = setActif($code);
         getLoginPage("","",$activation);
@@ -136,157 +167,3 @@
         sendWebhookStatus(!$isRejected, $id, getTitleRequestByID($id));
         getRequestView($_SESSION['page'],$result);
     }
-
-    #Fonctions utilitaires
-
-    function sendMail($to, $code) {
-        $from = "no-reply@punkproject.xyz";
-        $subject = "Confirmation of PunkProject registration";
-        $message = "Click here to activate your account: https://punkproject.xyz/index.php?code=".$code;
-        $headers = "From:" . $from;
-        return mail($to,$subject,$message, $headers);
-    }
-
-    function sendWebhook($title, $content, $username,$id){
-        $url = "https://discordapp.com/api/webhooks/464923140036755456/CuY_mJflj43EfPK6X_dMYx_SztT578ts1NfV10BzwrCbCjLzG7yF9Gy4mwwd2kmpU1vr";
-        #$image = 'https://via.placeholder.com/400x400';
-        $data = json_encode([
-            // These 2 should usually be left out
-            // as it will overwrite whatever your
-            // users have set
-            'username' => 'PunkProject',
-            #'avatar_url' => $image,
-            'content' => 'New suggestion added by '.$username.'!',
-            'embeds' => [
-                [
-                    'title' => $title,
-                    'description' => $content,
-                    'url' => 'https://punkproject.xyz/index.php?p=focus&id='.$id,
-                    'color' => 0xFFFFFF,
-                    'timestamp' => (new DateTime())->format('c'),
-                    'author' => [
-                        'name' => $username,
-                        'url' => 'https://punkproject.xyz',
-                        #'icon_url' => $image
-                    ],
-                    // 'thumbnail' => [
-                    //     'url' => $image
-                    // ],
-                    'footer' => [
-                        'text' => 'PunkProject by LotuxPunk',
-                        // 'icon_url' => $image
-                    ],
-                    // 'image' => [
-                    //     'url' => $image
-                    // ],
-                    // 'fields' => [
-                    //     [
-                    //         'name' => 'My First Field Name',
-                    //         'value' => 'My First Field Value',
-                    //         'inline' => true
-                    //     ],
-                    //     [
-                    //         'name' => 'My Second Field Name',
-                    //         'value' => 'My Second Field Value',
-                    //         'inline' => true
-                    //     ]
-                    // ]
-                ]
-            ]
-        ]);
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Content-Type: application/json',
-            'Content-Length: ' . strlen($data)
-        ]);
-        curl_exec($ch);
-        
-    }
-
-    function sendWebhookInsc($username){
-        $url = "https://discordapp.com/api/webhooks/464923140036755456/CuY_mJflj43EfPK6X_dMYx_SztT578ts1NfV10BzwrCbCjLzG7yF9Gy4mwwd2kmpU1vr";
-        #$image = 'https://via.placeholder.com/400x400';
-        $data = json_encode([
-            'username' => 'PunkProject',
-            'content' => 'New member on PunkProject',
-            'embeds' => [
-                [
-                    'title' => 'Welcome '.$username.'!',
-                    'description' => 'A new member has come to add his suggestions on the PunkProject !',
-                    'url' => 'https://punkproject.xyz',
-                    'color' => 0xB9FC81,
-                    'timestamp' => (new DateTime())->format('c'),
-                    'author' => [
-                        'name' => $username,
-                        'url' => 'https://punkproject.xyz',
-                        #'icon_url' => $image
-                    ],
-                    'footer' => [
-                        'text' => 'PunkProject by LotuxPunk',
-                        // 'icon_url' => $image
-                    ]
-                ]
-            ]
-        ]);
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Content-Type: application/json',
-            'Content-Length: ' . strlen($data)
-        ]);
-        curl_exec($ch);
-    }
-
-    function sendWebhookStatus($status, $id, $title){
-        $content = "One request was denied";
-        $color = 0x92003B;
-        if($status){
-            $content = "A request has been implemented";
-            $color = 0x63F63B;
-        }
-
-        $url = "https://discordapp.com/api/webhooks/464923140036755456/CuY_mJflj43EfPK6X_dMYx_SztT578ts1NfV10BzwrCbCjLzG7yF9Gy4mwwd2kmpU1vr";
-        $data = json_encode([
-            'username' => 'PunkProject',
-            'embeds' => [
-                [
-                    'title' => $title,
-                    'description' => $content,
-                    'url' => 'https://punkproject.xyz/index.php?p=focus&id='.$id,
-                    'color' => $color,
-                    'timestamp' => (new DateTime())->format('c'),
-                    'footer' => [
-                        'text' => 'PunkProject by LotuxPunk',
-                        // 'icon_url' => $image
-                    ]
-                ]
-            ]
-        ]);
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Content-Type: application/json',
-            'Content-Length: ' . strlen($data)
-        ]);
-        curl_exec($ch);
-        
-
-    }
-
-    function chaineAleatoire($nb_car) {
-        $caracteres = "123ABcDE456fGHiJKLMN789PQRSTUVWXYZ";
-        $chaine = "";
-        srand(time());
-        for ($i=0;$i<=$nb_car;$i++) {
-            $chaine.=substr($caracteres,(rand()%(strlen($caracteres))),1);
-        }
-        return $chaine;
-    }
-
-    function checkPass($password){
-        return strlen($password) > 7;
-    }   

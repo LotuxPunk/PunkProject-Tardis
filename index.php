@@ -1,5 +1,5 @@
 <?php
-    ini_set('display_errors', 'On');
+    ini_set('display_errors', 1);
     error_reporting(E_ALL);
 
     session_start();
@@ -31,7 +31,6 @@
                 else{
                     $_SESSION["showdone"] = false;
                 }
-                
                 getRequestView($_SESSION["page"]);
             }  
             else{
@@ -44,6 +43,9 @@
         elseif($_GET['p'] == "check-login"){
             checkConn(htmlspecialchars($_POST['password']), htmlspecialchars($_POST['email']));
         }
+        elseif($_GET['p'] == "check-reset-pass"){
+            checkResetPass(htmlspecialchars($_POST['password']), htmlspecialchars($_GET['code']));
+        }
         elseif($_GET['p'] == "login"){
             getLoginPage();
         }
@@ -54,7 +56,10 @@
         elseif($_GET['p'] == 'focus'){
             $id = htmlspecialchars($_GET['id']);
             getFocusPage($id);
-        }      
+        }
+        elseif($_GET['p'] == 'forgot-password'){
+            sendMailPassword(htmlspecialchars($_POST['email']));
+        }
         else{
             getHomePage();
         }
@@ -66,6 +71,9 @@
     }
     elseif(isset($_GET['code'])){
         checkActive(htmlspecialchars($_GET['code']));
+    }
+    elseif(isset($_GET['reset-pass'])){
+        getResetPage(htmlspecialchars($_GET['reset-pass']));
     }
     elseif (isset($_GET['up']) || isset($_GET['down'])) {
         if(isset($_SESSION['connected'])){

@@ -25,7 +25,7 @@
         ?>
         </div>
         <div class="col-sm bg-light login-form">
-            <form action="index.php?p=check-login" method="post">
+            <form action="index.php?p=check-login" method="POST">
                 <div class="form-group">
                     <label for="email">Email address</label>
                     <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
@@ -35,8 +35,11 @@
                     <label for="password">Password</label>
                     <input type="password" name="password" class="form-control" id="password" placeholder="Password">
                 </div>
-                <a href="#" data-toggle="modal" data-target="#register" class="btn btn-secondary"><i class="fas fa-address-book"></i> I'm not registered yet</a>
-                <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Login</button>
+                <div class="btn-group" role="group" aria-label="">
+                    <button type="button" data-toggle="modal" data-target="#register" class="btn btn-secondary"><i class="fas fa-address-book"></i> I'm not registered yet</button>
+                    <button type="button" data-toggle="modal" data-target="#passwordModal" class="btn btn-info"><i class="fas fa-brain"></i> Forgotten password</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Login</button>
+                </div>
             </form>
         </div>
         <div class="col-sm"></div>
@@ -45,7 +48,7 @@
 <?php $content = ob_get_clean(); ?>
 
 <?php ob_start(); ?>
-<div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="registerLabel" aria-hidden="true">
+<div class="modal fade" id="register" tabindex="-2" role="dialog" aria-labelledby="registerLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -53,7 +56,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-                <form action="index.php?p=check-insc" method="post">
+                <form action="index.php?p=check-insc" method="POST">
                     <div class="form-group">
                         <label for="username" class="col-form-label">Username</label>
                         <input type="text" class="form-control" name="username" id="username">
@@ -66,14 +69,33 @@
                     <div class="form-group">
                         <label for="password">Password</label>
                         <input type="password" name="password" class="form-control" id="password" placeholder="Password">
-                        <!-- <small id="passwordHelp" class="form-text text-muted">Your password must contain at least 8 letters and have a capital, lower case and a number.</small> -->
                         <small id="passwordHelp" class="form-text text-muted">Your password must contain at least 8 letters.</small>
                     </div>
                     <div class="form-group">
                         <label for="password2">Confirm your password</label>
                         <input type="password" name="password2" class="form-control" id="password2" placeholder="Confirm your password">
                     </div>
-                    <button class="btn btn-primary" type="submit"><i class="fas fa-address-book"></i> Confirm</button>
+                    <button class="btn btn-primary" type="submit"><i class="fas fa-check"></i> Confirm</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="passwordLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-Username" id="passwordLabel">Forgot your password?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form action="index.php?p=forgot-password" method="POST">
+                    <div class="form-group">
+                        <label for="email">Email address</label>
+                        <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+                    </div>
+                    <button class="btn btn-primary" type="submit"><i class="fas fa-check"></i> Confirm</button>
                 </form>
             </div>
         </div>

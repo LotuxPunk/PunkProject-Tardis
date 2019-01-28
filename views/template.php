@@ -11,8 +11,7 @@
         <meta property="og:url" content="https://punkproject.xyz/" />
         <meta property="og:image" content="https://punkproject.xyz/views/img/logo.png" />
         <!-- Font Awesome -->
-        <link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
-        <!-- Bootstrap CSS-->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">        <!-- Bootstrap CSS-->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     </head>
     <body class="bg-dark">

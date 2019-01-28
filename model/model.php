@@ -302,3 +302,15 @@
         $conn = null;
         return $number_of_rows;
     }
+
+    function updateCode($email, $code){
+        $conn = dbConnect();
+        $sql = "UPDATE user SET code = '{$code}' WHERE email = '{$email}'";
+        return $conn->query($sql) === TRUE;
+    }
+
+    function updatePassword($password, $code){
+        $conn = dbConnect();
+        $sql = "UPDATE user SET password = '{$password}' WHERE code = '{$code}'";
+        return $conn->query($sql) === TRUE;
+    }
