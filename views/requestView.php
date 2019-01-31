@@ -47,7 +47,7 @@
             if(isset($_SESSION['connected']) && $_SESSION['level'] >= 5){
                 $moderation = '<a class="btn btn-success" role="button" href="index.php?done='.$row['id'].'">Done !</a><a class="btn btn-danger" href="index.php?rejected='.$row['id'].'" role="button">Reject</a>';
             }
-            echo '<div class="border-bottom row"><div class="col-9"><h5>'.$row['title'].'<small> by '.$users[$i++].'</small></h5><p>'.$row['content'].'</p><div class="btn-group" style="margin-bottom:20px;" role="group">'.$moderation.'<a class="btn btn-secondary" role="button" href="index.php?p=focus&id='.$row['id'].'">Focus</a></div></div><div class="col-3">'.$vote.'</div></div>';
+            echo '<div class="border-bottom row"><div class="col-9"><h5>'.$row['title'].'<small> by '.$users[$i++].'</small></h5><p>'.htmlspecialchars_decode($row['content']).'</p><div class="btn-group" style="margin-bottom:20px;" role="group">'.$moderation.'<a class="btn btn-secondary" role="button" href="index.php?p=focus&id='.$row['id'].'">Focus</a></div></div><div class="col-3">'.$vote.'</div></div>';
         }
     } ?>
     <nav aria-label="Page navigation example">

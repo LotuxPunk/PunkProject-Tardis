@@ -70,7 +70,7 @@
     function addRequest($title, $content){
         $today = date('Y-m-d H:i:s');
         $result = setRequest($title, $content, $today);
-        sendWebhook($title, $content, $_SESSION['username'], getIDLastRequest());
+        sendWebhook($title, strip_tags(htmlspecialchars_decode($content)), $_SESSION['username'], getIDLastRequest());
         getHomePage($result);
     }
 
@@ -101,7 +101,7 @@
                 $pass = hash('sha256', $password);
                 $code = chaineAleatoire(20);
                 $today = date('Y-m-d H:i:s');
-                if(sendMail($email, $code)){
+                if(sendConfirmMail($email, $code)){
                     $success = setInsc($username, $pass, $email, $code, $today);
                     sendWebhookInsc($username);
                 }

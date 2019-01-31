@@ -39,7 +39,7 @@
         else{
             $vote = '<div class="float-right btn-group" style="margin-top:20px;" role="group"><a class="btn btn-success disabled" href="index.php?up='.$row['id'].'" role="button" aria-disabled="true"><i class="fas fa-thumbs-up"></i></a><span class="btn btn-secondary">'.$row['vote'].'</span><span class="btn btn-danger"><i class="fas fa-thumbs-down"></i></span></div>';
         }
-        echo '<div class="border-bottom row"><div class="col-9"><h5>'.$row['title'].'<small> by '.$users[$i++].'</small></h5><p>'.$row['content'].'</p></div><div class="col-3">'.$vote.'</div></div>';
+        echo '<div class="border-bottom row"><div class="col-9"><h5>'.$row['title'].'<small> by '.$users[$i++].'</small></h5><p>'.htmlspecialchars_decode($row['content']).'</p></div><div class="col-3">'.$vote.'</div></div>';
     } ?>
 </div>
 <?php $content = ob_get_clean(); ?>

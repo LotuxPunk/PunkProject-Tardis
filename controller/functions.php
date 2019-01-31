@@ -62,7 +62,7 @@
             'embeds' => [
                 [
                     'title' => 'Welcome '.$username.'!',
-                    'description' => 'A new member has come to add his suggestions on the PunkProject !',
+                    'description' => 'A new member has added their suggestions on the PunkProject!',
                     'url' => 'https://punkproject.xyz',
                     'color' => 0xB9FC81,
                     'timestamp' => (new DateTime())->format('c'),
@@ -100,7 +100,7 @@
             'embeds' => [
                 [
                     'title' => $title,
-                    'description' => $content,
+                    'description' => strip_tags($content),
                     'url' => 'https://punkproject.xyz/index.php?p=focus&id='.$id,
                     'color' => $color,
                     'timestamp' => (new DateTime())->format('c'),
