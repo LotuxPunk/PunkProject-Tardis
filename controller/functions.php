@@ -1,4 +1,6 @@
 <?php
+    $GLOBALS['webhook_url'] = "https://discordapp.com/api/webhooks/544426367647744001/lAwMrVcivSTpXTV5W_E5DaYJPhBUK9-w4Cmd3BTvQlhyVq5uhbzZpGwWkbnncLkQcAjQ";
+
     function sendMail($to, $subject,$message) {
         $headers = 'From: no-reply@punkproject.xyz' . "\r\n" . 'Reply-To: lotuxstyle@gmail.com' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
         
@@ -18,7 +20,6 @@
     }
 
     function sendWebhook($title, $content, $username,$id){
-        $url = "https://discordapp.com/api/webhooks/464923140036755456/CuY_mJflj43EfPK6X_dMYx_SztT578ts1NfV10BzwrCbCjLzG7yF9Gy4mwwd2kmpU1vr";
         #$image = 'https://via.placeholder.com/400x400';
         $data = json_encode([
             // These 2 should usually be left out
@@ -43,7 +44,7 @@
                 ]
             ]
         ]);
-        $ch = curl_init($url);
+        $ch = curl_init($GLOBALS['webhook_url']);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
@@ -55,7 +56,6 @@
     }
 
     function sendWebhookInsc($username){
-        $url = "https://discordapp.com/api/webhooks/464923140036755456/CuY_mJflj43EfPK6X_dMYx_SztT578ts1NfV10BzwrCbCjLzG7yF9Gy4mwwd2kmpU1vr";
         $data = json_encode([
             'username' => 'PunkProject',
             'content' => 'New member on PunkProject',
@@ -76,7 +76,7 @@
                 ]
             ]
         ]);
-        $ch = curl_init($url);
+        $ch = curl_init($GLOBALS['webhook_url']);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
@@ -94,7 +94,6 @@
             $color = 0x63F63B;
         }
 
-        $url = "https://discordapp.com/api/webhooks/464923140036755456/CuY_mJflj43EfPK6X_dMYx_SztT578ts1NfV10BzwrCbCjLzG7yF9Gy4mwwd2kmpU1vr";
         $data = json_encode([
             'username' => 'PunkProject',
             'embeds' => [
@@ -110,7 +109,7 @@
                 ]
             ]
         ]);
-        $ch = curl_init($url);
+        $ch = curl_init($GLOBALS['webhook_url']);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
@@ -134,4 +133,16 @@
 
     function checkPass($password){
         return strlen($password) > 7;
+    }
+
+    function isEmailValid($email){
+        $bannedProviders = file("./controller/banned.txt", FILE_IGNORE_NEW_LINES);
+        //var_dump($bannedProviders);
+        foreach($bannedProviders as $key => $value){
+            $pos = strpos($email, $value);
+            if($pos !== false){
+                return false;
+            }
+        }
+        return true;
     }

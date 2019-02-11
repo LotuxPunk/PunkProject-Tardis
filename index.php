@@ -6,6 +6,10 @@
     
     require('controller/controller.php');
 
+    if(isset($_SESSION['connected'])){
+        checkBan();
+    }
+
     if(isset($_GET['p'])){
         if(isset($_SESSION['connected'])){
             if($_GET['p'] == "logout"){

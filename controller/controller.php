@@ -85,7 +85,9 @@
             $_SESSION['level'] = getLevel($_SESSION['id']);
             $_SESSION['page'] = 1;
             $_SESSION['showdone'] = true;
-            getHomePage();
+            if(!checkBan()){
+                getHomePage();
+            }
         }
         else {
             $echec = "Incorrect credentials or inactive account";
@@ -96,26 +98,31 @@
     function checkInsc($username, $password, $password2, $email) {
         $echec ="";
         $success ="";
-        if(checkPass($password)){
-            if($password == $password2){
-                $pass = hash('sha256', $password);
-                $code = chaineAleatoire(20);
-                $today = date('Y-m-d H:i:s');
-                if(sendConfirmMail($email, $code)){
-                    $success = setInsc($username, $pass, $email, $code, $today);
-                    sendWebhookInsc($username);
+        if(isEmailValid($email)){
+            if(checkPass($password)){
+                if($password == $password2){
+                    $pass = hash('sha256', $password);
+                    $code = chaineAleatoire(20);
+                    $today = date('Y-m-d H:i:s');
+                    if(sendConfirmMail($email, $code)){
+                        $success = setInsc($username, $pass, $email, $code, $today);
+                        sendWebhookInsc($username);
+                    }
+                    else {
+                        $echec = "Email error";
+                    }
                 }
                 else {
-                    $echec = "Email error";
+                    $echec = "Passwords must be identical";
                 }
             }
             else {
-                $echec = "Passwords must be identical";
+                $echec = "Your password must contain at least 8 letters.";
             }
         }
-        else {
-            $echec = "Your password must contain at least 8 letters.";
-        }    
+        else{
+            $echec = "No.";
+        }
 
         getLoginPage($echec, $success);
     }
@@ -166,4 +173,13 @@
         $result = addStatus($isRejected, $id);
         sendWebhookStatus(!$isRejected, $id, getTitleRequestByID($id));
         getRequestView($_SESSION['page'],$result);
+    }
+
+    function checkBan(){
+        if($_SESSION['level'] < 0){
+            session_destroy();
+            getLoginPage("Banned, sorry dude.");
+            return true;
+        }
+        return false;
     }
