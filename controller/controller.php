@@ -68,10 +68,12 @@
     #Fonctions se servant des pages
 
     function addRequest($title, $content){
-        $today = date('Y-m-d H:i:s');
-        $result = setRequest($title, $content, $today);
-        sendWebhook($title, strip_tags(htmlspecialchars_decode($content)), $_SESSION['username'], getIDLastRequest());
-        getHomePage($result);
+        if(!checkBan()){
+            $today = date('Y-m-d H:i:s');
+            $result = setRequest($title, $content, $today);
+            sendWebhook($title, strip_tags(htmlspecialchars_decode($content)), $_SESSION['username'], getIDLastRequest());
+            getHomePage($result);
+        }
     }
 
     function checkConn($password, $email){
@@ -176,10 +178,32 @@
     }
 
     function checkBan(){
-        if($_SESSION['level'] < 0){
+        if(getLevel($_SESSION['id']) < 0){
             session_destroy();
             getLoginPage("Banned, sorry dude.");
             return true;
         }
         return false;
+    }
+
+    function handleBan($id_user){
+        $message ="";
+        if(banUser($id_user) && deletePostUser($is_user)){
+            $message = "User #{$id_user} sucessfully banned.";
+        }
+        else{
+            $message = "Error : ban user #{$id_user}.";
+        }
+        getHomePage($message);
+    }
+
+    function handleDeletePost($id){
+        $message ="";
+        if(deletePost($id)){
+            $message = "Post #{$id} sucessfully deleted.";
+        }
+        else{
+            $message = "Error : delete post #{$id}.";
+        }
+        getRequestView($_SESSION['page'],$message);
     }

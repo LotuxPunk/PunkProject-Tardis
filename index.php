@@ -69,9 +69,32 @@
         }
     }
     elseif(isset($_GET['done']) || isset($_GET['rejected'])){
-        $isRejected = (isset($_GET['done']))? false : true;
-        $id = (isset($_GET['done']))? htmlspecialchars($_GET['done']) : htmlspecialchars($_GET['rejected']);
-        setStatus($isRejected, $id);
+        if(isset($_SESSION['level']) && $_SESSION['level'] >= 5){
+            $isRejected = (isset($_GET['done']))? false : true;
+            $id = (isset($_GET['done']))? htmlspecialchars($_GET['done']) : htmlspecialchars($_GET['rejected']);
+            setStatus($isRejected, $id);
+        }
+        else{
+            getHomePage("You do not have the permission to execute that.");
+        }
+    }
+    elseif(isset($_GET['delete'])){
+        if(isset($_SESSION['level']) && $_SESSION['level'] >= 5){
+            $idToDelete = htmlspecialchars($_GET['delete']);
+            handleDeletePost($idToDelete);
+        }
+        else{
+            getHomePage("You do not have the permission to execute that.");
+        }
+    }
+    elseif(isset($_GET['ban'])){
+        if(isset($_SESSION['level']) && $_SESSION['level'] >= 5){
+            $idToBan = htmlspecialchars($_GET['ban']);
+            handleBan($idToBan);
+        }
+        else{
+            getHomePage("You do not have the permission to execute that.");
+        }
     }
     elseif(isset($_GET['code'])){
         checkActive(htmlspecialchars($_GET['code']));

@@ -314,3 +314,21 @@
         $sql = "UPDATE user SET password = '{$password}' WHERE code = '{$code}'";
         return $conn->query($sql) === TRUE;
     }
+
+    function deletePost($id){
+        $conn = dbConnect();
+        $sql = "DELETE FROM request WHERE id = '{$id}'";
+        return $conn->query($sql) === TRUE;
+    }
+
+    function deletePostUser($is_user){
+        $conn = dbConnect();
+        $sql = "DELETE FROM request WHERE id_user = '{$id_user}'";
+        return $conn->query($sql) === TRUE;
+    }
+
+    function banUser($id){
+        $conn = dbConnect();
+        $sql = "UPDATE user SET level = '-1' WHERE id = '{$id}'";
+        return $conn->query($sql) === TRUE;
+    }

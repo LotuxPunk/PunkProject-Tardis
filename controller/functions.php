@@ -3,7 +3,6 @@
 
     function sendMail($to, $subject,$message) {
         $headers = 'From: no-reply@punkproject.xyz' . "\r\n" . 'Reply-To: lotuxstyle@gmail.com' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
-        
         return mail($to,$subject,$message, $headers);
     }
 
