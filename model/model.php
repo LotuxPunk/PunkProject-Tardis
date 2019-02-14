@@ -332,3 +332,10 @@
         $sql = "UPDATE user SET level = '-1' WHERE id = '{$id}'";
         return $conn->query($sql) === TRUE;
     }
+
+    function getUserByID($id){
+        $conn = dbConnect();
+        $sql = "SELECT * FROM user WHERE id = '{$id}'";
+        $result = $conn->query($sql);
+        return $result;
+    }
