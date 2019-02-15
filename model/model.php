@@ -337,5 +337,24 @@
         $conn = dbConnect();
         $sql = "SELECT * FROM user WHERE id = '{$id}'";
         $result = $conn->query($sql);
+        $conn->close();
+        return $result;
+    }
+
+    function getProfilePicture($id_user){
+        $conn = dbConnect();
+        $sql = "SELECT filename FROM profile_picture WHERE id_user = '{$id_user}'";
+        $result = $conn->query($sql);
+        $conn->close();
+
+        $row = $result->fetch_assoc();
+        return $row['filename'];
+    }
+
+    function updateUsername($id, $username){
+        $conn = dbConnect();
+        $sql = "UPDATE user SET username = '{$username}' WHERE id = '{$id}'";
+        $result = $conn->query($sql) === TRUE;
+        $conn->close();
         return $result;
     }
