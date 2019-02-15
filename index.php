@@ -1,4 +1,5 @@
 <?php
+    $timestamp_start = microtime(true);
     ini_set('display_errors', 1);
     error_reporting(E_ALL);
 
@@ -78,6 +79,9 @@
             getHomePage("You do not have the permission to execute that.");
         }
     }
+    elseif(isset($_GET['profile'])){
+        getProfilePage(htmlspecialchars($_GET['profile']));
+    }
     elseif(isset($_GET['delete'])){
         if(isset($_SESSION['level']) && $_SESSION['level'] >= 5){
             $idToDelete = htmlspecialchars($_GET['delete']);
@@ -115,3 +119,6 @@
     else{
         getHomePage();
     }
+    $timestamp_end = microtime(true);
+    $difference_ms = $timestamp_end - $timestamp_start;
+    echo '<center>Page generated in : ' . $difference_ms . ' seconds.</center>';

@@ -27,7 +27,7 @@
                     <ul class="navbar-nav mr-auto">
                         <?= $nav ?>
                         <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#addRequest" href="#">Add a suggestion</a></li>
-                        <?php if(isset($_SESSION["username"])){?><li class="nav-item"><a class="nav-link" href="#">My profile (<?= $_SESSION['username'] ?>)</a></li><?php } ?>
+                        <?php if(isset($_SESSION["username"])){?><li class="nav-item"><a class="nav-link" href="index.php?profile=<?= $_SESSION['id'] ?>">My profile (<?= $_SESSION['username'] ?>)</a></li><?php } ?>
                     </ul>
                     <?php if(isset($_SESSION['connected'])) { ?>
                         <a class="float-right text-light" href="index.php?p=logout">Log out</a>

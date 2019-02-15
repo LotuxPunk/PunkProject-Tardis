@@ -35,7 +35,7 @@
                     'timestamp' => (new DateTime())->format('c'),
                     'author' => [
                         'name' => $username,
-                        'url' => 'https://punkproject.xyz'
+                        'url' => 'https://punkproject.xyz/index.php'
                     ],
                     'footer' => [
                         'text' => 'PunkProject by LotuxPunk'

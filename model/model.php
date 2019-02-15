@@ -276,6 +276,15 @@
         return $result;
     }
 
+    function getRequestByUserID($id){
+        $conn = dbConnect();
+        $sql = "SELECT * FROM request WHERE id_user = ".$id;
+        $result = $conn->query($sql);
+        $conn->close();
+
+        return $result;
+    }
+
     function getTitleRequestByID($id){
         $conn = dbConnect();
         $sql = "SELECT title FROM request WHERE id = ".$id;

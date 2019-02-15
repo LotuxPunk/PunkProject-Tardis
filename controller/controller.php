@@ -207,3 +207,20 @@
         }
         getRequestView($_SESSION['page'],$message);
     }
+
+    function getProfilePage($id){
+        $data = getUserByID($id);
+        $row_profile = $data->fetch_assoc();
+
+        if($row_profile != null){
+            $data_requests = getRequestByUserID($row_profile['id']);
+            $datetime1 = new DateTime($row_profile['date']);
+            $datetime2 = new DateTime('now');
+            $interval = $datetime1->diff($datetime2);
+            $days = $interval->format('%R%a days');
+            require('./views/profileView.php');
+        }
+        else{
+            getHomePage("No profile found");
+        }       
+    }

@@ -27,10 +27,10 @@
     $vote = "";
     while($row = $request->fetch_assoc()){
         if($row['done'] == 1){
-            echo '<div class="border-bottom row"><div class="col-12"><h5>'.$row['title'].'<small> by '.$users[$i++].'</small> <span class="badge badge-success">Done !</span></h5><p>'.htmlspecialchars_decode($row['content']).'</p></div></div>';
+            echo '<div class="border-bottom row"><div class="col-12"><h5>'.$row['title'].'<small> by <a href="index.php?profile='.$row['id_user'].'">'.$users[$i++].'</a></small> <span class="badge badge-success">Done !</span></h5><p>'.htmlspecialchars_decode($row['content']).'</p></div></div>';
         }
         elseif($row['rejected'] == 1){
-            echo '<div class="border-bottom row"><div class="col-12"><h5>'.$row['title'].'<small> by '.$users[$i++].'</small> <span class="badge badge-danger">Rejected !</span></h5><p>'.htmlspecialchars_decode($row['content']).'</p></div></div>';
+            echo '<div class="border-bottom row"><div class="col-12"><h5>'.$row['title'].'<small> by <a href="index.php?profile='.$row['id_user'].'">'.$users[$i++].'</a></small> <span class="badge badge-danger">Rejected !</span></h5><p>'.htmlspecialchars_decode($row['content']).'</p></div></div>';
         }
         else{
             if($voted[$i] == 0){
@@ -47,7 +47,7 @@
             if(isset($_SESSION['connected']) && $_SESSION['level'] >= 5){
                 $moderation = "<a class='btn btn-success' role='button' href='index.php?done={$row['id']}'><i class='fas fa-check'></i> Done</a><a class='btn btn-danger' href='index.php?rejected={$row['id']}' role='button'><i class='fas fa-times-circle'></i> Reject</a><a href='index.php?delete={$row['id']}' class='btn btn-danger' role='button'><i class='far fa-trash-alt'></i> Delete post</a><a href='index.php?ban={$row['id_user']}' class='btn btn-danger' role='button'><i class='fas fa-gavel'></i> Ban user</a>";
             }
-            echo '<div class="border-bottom row"><div class="col-9"><h5>'.$row['title'].'<small> by '.$users[$i++].'</small></h5><p>'.htmlspecialchars_decode($row['content']).'</p><div class="btn-group" style="margin-bottom:20px;" role="group">'.$moderation.'<a class="btn btn-secondary" role="button" href="index.php?p=focus&id='.$row['id'].'"><i class="far fa-eye"></i> Focus</a></div></div><div class="col-3">'.$vote.'</div></div>';
+            echo '<div class="border-bottom row"><div class="col-9"><h5>'.$row['title'].'<small> by <a href="index.php?profile='.$row['id_user'].'">'.$users[$i++].'</a></small></h5><p>'.htmlspecialchars_decode($row['content']).'</p><div class="btn-group" style="margin-bottom:20px;" role="group">'.$moderation.'<a class="btn btn-secondary" role="button" href="index.php?p=focus&id='.$row['id'].'"><i class="far fa-eye"></i> Focus</a></div></div><div class="col-3">'.$vote.'</div></div>';
         }
     } ?>
     <nav aria-label="Page navigation example">
