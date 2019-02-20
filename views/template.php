@@ -13,8 +13,8 @@
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">        <!-- Bootstrap CSS-->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-        <script src="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/js/medium-editor.min.js"></script>
-        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8">
+        <!-- Quill -->
+        <link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet">
     </head>
     <body class="bg-dark">
         <div class="sticky-top">
@@ -57,11 +57,16 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="description" class="col-form-label">Description:</label>
-                                    <div id="editormd">
-                                        <textarea class="form-control editable" name="description" id="description"></textarea>
+                                    <div id="toolbar">
+                                        <button class="ql-bold">Bold</button>
+                                        <button class="ql-italic">Italic</button>
+                                        <button class="ql-underline">Underline</button>
                                     </div>
+                                    <div id="editor"></div>
+                                    <textarea class="form-control" name="description" style="display:none" id="description"></textarea>
+
                                 </div>
-                                    <button type="submit" class="btn btn-primary">Propose</button>
+                                    <button type="submit" id="submit_request" class="btn btn-primary">Propose</button>
                             </form>
                         </div>
                     </div>
@@ -90,6 +95,18 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 
-        <script>var editor = new MediumEditor('.editable');</script>
+        <!-- Quill -->
+        <script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>
+        <script src="./views/js/main.js"></script>
+        <script>
+            var editor = new Quill('#editor', {
+                modules: { toolbar: '#toolbar' },
+                theme: 'snow'
+            });
+
+            document.getElementById("submit_request").onclick = () => {
+                document.getElementById("description").innerHTML = document.querySelector(".ql-editor").innerHTML;
+            }
+        </script>
     </body>
 </html>
