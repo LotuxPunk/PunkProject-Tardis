@@ -52,7 +52,7 @@
         require('./views/loginView.php');
     }
 
-    function getFocusPage($id){
+    function getFocusPage($id, $message = ""){
         $request = getRequestByID($id);
         $row = $request->fetch_assoc();
         $voted = 0;
@@ -223,4 +223,23 @@
         else{
             getHomePage("No profile found");
         }       
+    }
+
+    function editRequest($id, $title, $content){
+        $request = getRequestByID($id);
+        $row = $request->fetch_assoc();
+        $message = "";
+        if($row['id_user'] ==  $_SESSION['id']){
+            if(updateRequest($id, $title, $content)){
+                $message = "Request edited";
+            }
+            else{
+                $message = "Error on editing request";
+            }
+        }
+        else{
+            $message = "You're not allowed to edit this suggestion";
+        }
+
+        getFocusPage($id, $message);
     }

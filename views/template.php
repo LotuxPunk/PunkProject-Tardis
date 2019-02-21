@@ -104,6 +104,11 @@
                 theme: 'snow'
             });
 
+            var editEditor = new Quill('#editEditor', {
+                modules: { toolbar: '#editToolbar' },
+                theme: 'snow'
+            });
+
             document.getElementById("submit_request").onclick = () => {
                 document.getElementById("description").innerHTML = document.querySelector(".ql-editor").innerHTML;
             }

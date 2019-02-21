@@ -367,3 +367,11 @@
         $conn->close();
         return $result;
     }
+
+    function updateRequest($id, $title, $content){
+        $conn = dbConnect();
+        $sql = "UPDATE request SET title = '{$title}', content = '{$content}' WHERE id = '{$id}'";
+        $result = $conn->query($sql) === TRUE;
+        $conn->close();
+        return $result;
+    }

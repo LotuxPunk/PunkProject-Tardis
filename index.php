@@ -37,7 +37,15 @@
                     $_SESSION["showdone"] = false;
                 }
                 getRequestView($_SESSION["page"]);
-            }  
+            }
+            elseif($_GET['p'] == 'edit-request'){
+                if(isset($_GET['id'])){
+                    editRequest(htmlspecialchars($_GET['id']), htmlspecialchars($_POST['title']),htmlspecialchars($_POST['desc_edit']));
+                }
+                else{
+                    getHomePage();
+                }
+            }
             else{
                 getHomePage();
             }
@@ -120,5 +128,5 @@
         getHomePage();
     }
     $timestamp_end = microtime(true);
-    $difference_ms = $timestamp_end - $timestamp_start;
-    echo '<center>Page generated in : ' . $difference_ms . ' seconds.</center>';
+    $difference_ms = ($timestamp_end - $timestamp_start)*1000;
+    echo '<center>Page generated in : ' . $difference_ms . ' ms.</center>';
