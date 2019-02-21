@@ -39,7 +39,7 @@
     ?>
     <h3><?= $row['title'] ?><small> by <?= $user ?></small><?= $status ?></h3>
     <?php 
-        echo '<div class="row"><div class="col-9"><p>'.htmlspecialchars_decode($row['content']).'</p>'.$moderation.'</div><div class="col-3">'.$vote.'</div></div>';
+        echo '<div class="row"><div class="col-9"><p>'.htmlspecialchars_decode($row['content']).'</p><div class="btn-group" style="margin-bottom:20px;" role="group">'.$moderation.'</div></div><div class="col-3">'.$vote.'</div></div>';
      ?>
 </div>
 <?php $content = ob_get_clean(); ?>
