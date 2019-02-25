@@ -34,7 +34,7 @@
                 $vote = '<div class="float-right btn-group" style="margin-top:20px;" role="group"><a class="btn btn-success disabled" href="index.php?up='.$row['id'].'" role="button" aria-disabled="true"><i class="fas fa-thumbs-up"></i></a><span class="btn btn-secondary">'.$row['vote'].'</span><span class="btn btn-danger"><i class="fas fa-thumbs-down"></i></span></div>';
             }
 
-            if($_SESSION['id'] == $row['id_user']){
+            if(isset($_SESSION['id']) && $_SESSION['id'] == $row['id_user']){
                 $edit = "<a href='#' data-toggle='modal' data-target='#editRequest' class='btn btn-secondary' role='button'><i class='fas fa-pen'></i> Edit</a>";
             }
 
