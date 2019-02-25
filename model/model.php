@@ -1,9 +1,33 @@
 <?php
+    function getDbUsername(){
+        $json = file_get_contents('./config.json');
+        $json_data = json_decode($json,true);
+        return $json_data['username'];
+    }
+
+    function getDbPassword(){
+        $json = file_get_contents('./config.json');
+        $json_data = json_decode($json,true);
+        return $json_data['password'];
+    }
+
+    function getDbName(){
+        $json = file_get_contents('./config.json');
+        $json_data = json_decode($json,true);
+        return $json_data['dbname'];
+    }
+
+    function getDbServername(){
+        $json = file_get_contents('./config.json');
+        $json_data = json_decode($json,true);
+        return $json_data['servername'];
+    }
+
     function dbConnect(){
-        $servername = "punkprojhytardis.mysql.db";
-        $username = "punkprojhytardis";
-        $password = "Tardis2018";
-        $dbname = "punkprojhytardis";
+        $servername = getDbServername();
+        $username = getDbUsername();
+        $password = getDbPassword();
+        $dbname = getDbName();
 
         $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -26,10 +50,10 @@
     }
 
     function setInsc($name, $pass, $email, $code, $date_ins){
-        $servername = "punkprojhytardis.mysql.db";
-        $username = "punkprojhytardis";
-        $password = "Tardis2018";
-        $dbname = "punkprojhytardis";
+        $servername = getDbServername();
+        $username = getDbUsername();
+        $password = getDbPassword();
+        $dbname = getDbName();
         $active = false;
 
         try {
@@ -88,10 +112,10 @@
     }
 
     function setRequest($title, $content, $date){
-        $servername = "punkprojhytardis.mysql.db";
-        $username = "punkprojhytardis";
-        $password = "Tardis2018";
-        $dbname = "punkprojhytardis";
+        $servername = getDbServername();
+        $username = getDbUsername();
+        $password = getDbPassword();
+        $dbname = getDbName();
 
         try {
             $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
@@ -146,10 +170,10 @@
     }
 
     function addThumb($isUp,$id_request){
-        $servername = "punkprojhytardis.mysql.db";
-        $username = "punkprojhytardis";
-        $password = "Tardis2018";
-        $dbname = "punkprojhytardis";
+        $servername = getDbServername();
+        $username = getDbUsername();
+        $password = getDbPassword();
+        $dbname = getDbName();
 
         try {
             if(updateVote($id_request, $isUp)){
@@ -196,10 +220,10 @@
     }
 
     function isVoted($id_user, $id_request){
-        $servername = "punkprojhytardis.mysql.db";
-        $username = "punkprojhytardis";
-        $password = "Tardis2018";
-        $dbname = "punkprojhytardis";
+        $servername = getDbServername();
+        $username = getDbUsername();
+        $password = getDbPassword();
+        $dbname = getDbName();
 
         $conn = mysqli_connect($servername, $username, $password, $dbname);
 
@@ -296,10 +320,10 @@
     }
 
     function getNbRequest(){
-        $servername = "punkprojhytardis.mysql.db";
-        $username = "punkprojhytardis";
-        $password = "Tardis2018";
-        $dbname = "punkprojhytardis";
+        $servername = getDbServername();
+        $username = getDbUsername();
+        $password = getDbPassword();
+        $dbname = getDbName();
 
         $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
