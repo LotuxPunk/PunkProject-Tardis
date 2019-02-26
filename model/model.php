@@ -393,9 +393,25 @@
     }
 
     function updateRequest($id, $title, $content){
-        $conn = dbConnect();
-        $sql = "UPDATE request SET title = '{$title}', content = '{$content}' WHERE id = '{$id}'";
-        $result = $conn->query($sql) === TRUE;
-        $conn->close();
+        $servername = getDbServername();
+        $username = getDbUsername();
+        $password = getDbPassword();
+        $dbname = getDbName();
+
+        try {
+            $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $stmt = $conn->prepare("UPDATE request SET title = :title, content = :content WHERE id = :id");
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->bindParam(':title', $title, PDO::PARAM_STR);
+            $stmt->bindParam(':content', $content, PDO::PARAM_STR);
+            $stmt->execute();
+            $result = "Request edited";
+        }
+        catch(PDOException $e)
+            {
+                $result = "Error: " . $e->getMessage();
+            }
+        $conn = null;
         return $result;
     }

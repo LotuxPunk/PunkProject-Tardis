@@ -230,12 +230,7 @@
         $row = $request->fetch_assoc();
         $message = "";
         if($row['id_user'] ==  $_SESSION['id']){
-            if(updateRequest($id, $title, $content)){
-                $message = "Request edited";
-            }
-            else{
-                $message = "Error on editing request";
-            }
+            $message = updateRequest($id, $title, $content);
         }
         else{
             $message = "You're not allowed to edit this suggestion";

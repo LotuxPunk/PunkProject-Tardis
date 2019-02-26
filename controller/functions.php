@@ -51,7 +51,6 @@
             'Content-Length: ' . strlen($data)
         ]);
         curl_exec($ch);
-        
     }
 
     function sendWebhookInsc($username){
@@ -116,8 +115,6 @@
             'Content-Length: ' . strlen($data)
         ]);
         curl_exec($ch);
-        
-
     }
 
     function chaineAleatoire($nb_car) {

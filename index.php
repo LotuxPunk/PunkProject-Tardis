@@ -40,7 +40,10 @@
             }
             elseif($_GET['p'] == 'edit-request'){
                 if(isset($_GET['id'])){
-                    editRequest(htmlspecialchars($_GET['id']), htmlspecialchars($_POST['title']),htmlspecialchars($_POST['desc_edit']));
+                    $id = htmlspecialchars($_GET['id']);
+                    $title = htmlspecialchars($_POST['title'], ENT_QUOTES);
+                    $content = htmlspecialchars($_POST['desc_edit'], ENT_QUOTES);
+                    editRequest($id, $title,$content);
                 }
                 else{
                     getHomePage();
