@@ -9,6 +9,13 @@ function getRoleBadge($level){
         return '<span class="badge badge-primary">Owner</span>';
     elseif($level == 10)
         return '<span class="badge badge-info">Admin</span>';
-    else
-        return "";
+    return "";
+}
+
+function getStatusBadge($done, $rejected){
+    if($done == 1)
+        return '<span class="badge badge-success">Done !</span>';
+    if($rejected == 1)
+        return '<span class="badge badge-danger">Rejected !</span>';
+    return "";
 }

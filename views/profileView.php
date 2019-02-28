@@ -1,4 +1,5 @@
 <?php
+    require('viewsFunctions.php');
     $title = "{$row_profile['username']} - PunkProject";
     $desc = "Profile of {$row_profile['username']}";
 ?>
@@ -18,15 +19,19 @@
         <div class="col-md-9">
             <div class="jumbotron jumbotron-fluid rounded">
                 <div class="container">
-                    <h1><?=$row_profile['username']?> <?php if($row_profile['level'] == 1) echo '<span class="badge badge-success">Donator</span>'; elseif($row_profile['level'] == 5)echo '<span class="badge badge-secondary">Team</span>';elseif($row_profile['level'] == 9) echo '<span class="badge badge-primary">Owner</span>'; elseif($row_profile['level'] == 10) echo '<span class="badge badge-info">Admin</span>';?></h1>
+                    <h1><?=$row_profile['username']?> <?php getRoleBadge($row_profile['level']);?></h1>
                     <p class="lead">Member since : <?= $days ?></p>
                 </div>
             </div>
             <div class="bg-white rounded mb-3 request">
-            <?php
-            while($row = $data_requests->fetch_assoc()){
-                echo '<div class="border-bottom row"><div class="col-9"><a href="index.php?p=focus&id='.$row['id'].'"><h5>'.$row['title'].'</h5></a><p>'.htmlspecialchars_decode($row['content']).'</p></div></div>';
-            } ?>
+                <ul class="list-group list-group-flush">    
+                    <?php
+                        while($row = $data_requests->fetch_assoc()){
+                            $status = getStatusBadge($row['done'], $row['rejected']);
+                            echo "<li class='list-group-item'><a href='index.php?p=focus&id={$row['id']}'>{$row['title']}</a> {$status}<div class='float-right'><span class='badge badge-primary'><i class='fas fa-thumbs-up'></i> {$row['vote']}</span></div></li>";
+                        }
+                    ?>
+                </ul>
             </div>
         </div>
     </div>
