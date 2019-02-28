@@ -19,7 +19,7 @@
         <div class="col-md-9">
             <div class="jumbotron jumbotron-fluid rounded">
                 <div class="container">
-                    <h1><?=$row_profile['username']?> <?php getRoleBadge($row_profile['level']);?></h1>
+                    <h1><?=$row_profile['username']?> <?php echo getRoleBadge($row_profile['level']);?></h1>
                     <p class="lead">Member since : <?= $days ?></p>
                 </div>
             </div>
