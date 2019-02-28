@@ -1,5 +1,5 @@
 <?php
-    $GLOBALS['webhook_url'] = "https://discordapp.com/api/webhooks/544426367647744001/lAwMrVcivSTpXTV5W_E5DaYJPhBUK9-w4Cmd3BTvQlhyVq5uhbzZpGwWkbnncLkQcAjQ";
+    $GLOBALS['webhook_url'] = "https://discordapp.com/api/webhooks/549752859835760643/LChLD5LH--K9zz7ZZdyNzqEiCZjpXfPXU70BW0udDKFpDfd-dNSF6PRuHowOXzLlPLa6";
 
     function sendMail($to, $subject,$message) {
         $headers = 'From: no-reply@punkproject.xyz' . "\r\n" . 'Reply-To: lotuxstyle@gmail.com' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
