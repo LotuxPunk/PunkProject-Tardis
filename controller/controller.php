@@ -65,6 +65,15 @@
         require('./views/singleView.php');
     }
 
+    function getResetPage($code){
+        require('./views/resetPasswordView.php');
+    }
+
+    function getMemberListPage(){
+        $membersData = getUsersInfo();
+        require('./views/membersListView.php');
+    }
+
     #Fonctions se servant des pages
 
     function addRequest($title, $content){
@@ -145,10 +154,6 @@
             $echec = "Email not found";
         }
         getLoginPage($echec, $success);
-    }
-
-    function getResetPage($code){
-        require('./views/resetPasswordView.php');
     }
 
     function checkResetPass($password, $code){

@@ -49,6 +49,9 @@
                     getHomePage();
                 }
             }
+            elseif($_GET['p'] == "memberslist"){
+                getMemberListPage();
+            }
             else{
                 getHomePage();
             }
@@ -75,6 +78,9 @@
         }
         elseif($_GET['p'] == 'forgot-password'){
             sendMailPassword(htmlspecialchars($_POST['email']));
+        }
+        elseif($_GET['p'] == "memberslist"){
+            getMemberListPage();
         }
         else{
             getHomePage();

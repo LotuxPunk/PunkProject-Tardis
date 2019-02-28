@@ -23,6 +23,15 @@
         return $json_data['servername'];
     }
 
+    function getUsersInfo(){
+        $conn = dbConnect();
+        $sql = "SELECT id, username, level FROM user WHERE active = 1";
+        $result = $conn->query($sql);
+        $conn->close();
+
+        return $result;
+    }
+
     function dbConnect(){
         $servername = getDbServername();
         $username = getDbUsername();
