@@ -60,7 +60,7 @@
             'embeds' => [
                 [
                     'title' => 'Welcome '.$username.'!',
-                    'description' => 'A new member has added their suggestions on the PunkProject!',
+                    'description' => 'A new member has come to add their suggestions to the PunkProject!',
                     'url' => 'https://punkproject.xyz',
                     'color' => 0xB9FC81,
                     'timestamp' => (new DateTime())->format('c'),
