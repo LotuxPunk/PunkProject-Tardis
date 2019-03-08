@@ -166,5 +166,5 @@
     * @author Yousef Ismaeil Cliprz.
     */
     function check_file_uploaded_length ($filename) {
-        return (bool) mb_strlen($filename,"UTF-8") > 225);
+        return (bool) mb_strlen($filename,"UTF-8") > 225;
     }
