@@ -132,13 +132,19 @@
     }
 
     function isEmailValid($email){
+        $ch = curl_init("https://raw.githubusercontent.com/andreis/disposable-email-domains/master/domains.txt");
+        $fp = fopen("./controller/banned.txt", "w+");
+
+        curl_setopt($ch, CURLOPT_FILE, $fp);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+
+        curl_exec($ch);
+        curl_close($ch);
+        fclose($fp);
+
         $bannedProviders = file("./controller/banned.txt", FILE_IGNORE_NEW_LINES);
-        //var_dump($bannedProviders);
         foreach($bannedProviders as $key => $value){
-            $pos = strpos($email, $value);
-            if($pos !== false){
-                return false;
-            }
+            if(preg_match("/\b({$value}\w*)\b/", $email)) return false;
         }
         return true;
     }
