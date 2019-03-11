@@ -1,4 +1,5 @@
 <?php
+    require('viewsFunctions.php');
     $title = $row['title'];
     $desc = $row['content'];
 ?>

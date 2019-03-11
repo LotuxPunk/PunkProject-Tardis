@@ -1,4 +1,5 @@
 <?php 
+    require('viewsFunctions.php');
     $title = 'Requests - PunkProject';
     $desc = 'All requests for the NEW TARDIS MOD - Page '. $page;
 ?>
