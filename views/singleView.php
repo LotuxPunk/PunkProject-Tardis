@@ -40,7 +40,7 @@
             }
 
             if(isset($_SESSION['connected']) && $_SESSION['level'] >= 5){
-                $moderation = "<a class='btn btn-success' role='button' href='index.php?done={$row['id']}'><i class='fas fa-check'></i> Done</a><a class='btn btn-danger' href='index.php?rejected={$row['id']}' role='button'><i class='fas fa-times-circle'></i> Reject</a><a href='index.php?delete={$row['id']}' class='btn btn-danger' role='button'><i class='far fa-trash-alt'></i> Delete post</a><a href='index.php?ban={$row['id_user']}' class='btn btn-danger' role='button'><i class='fas fa-gavel'></i> Ban user</a>";
+                $moderation = getModeratorBar($row['id'], $row['id_user']);
             }
         }
     ?>
