@@ -27,7 +27,7 @@
                 <ul class="list-group list-group-flush">    
                     <?php
                         while($row = $data_requests->fetch_assoc()){
-                            $status = getStatusBadge($row['done'], $row['rejected']);
+                            $status = getStatusBadge($row['done'], $row['rejected'], $row['id_duplicate']);
                             echo "<li class='list-group-item'><a href='index.php?p=focus&id={$row['id']}'>{$row['title']}</a> {$status}<div class='float-right'><span class='badge badge-primary'><i class='fas fa-thumbs-up'></i> {$row['vote']}</span></div></li>";
                         }
                     ?>

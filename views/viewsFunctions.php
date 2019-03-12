@@ -12,11 +12,14 @@ function getRoleBadge($level){
     return "";
 }
 
-function getStatusBadge($done, $rejected){
+function getStatusBadge($done, $rejected, $duplicate){
     if($done == 1)
-        return '<span class="badge badge-success">Done !</span>';
+        return '<span class="badge badge-success">Done</span>';
     if($rejected == 1)
-        return '<span class="badge badge-danger">Rejected !</span>';
+        return '<span class="badge badge-danger">Rejected</span>';
+    if($duplicate > 0){
+        return '<span class="badge badge-primary"><a href="index.php?p=focus&id='.$duplicate.'">Duplicated</a></span>';
+    }
     return "";
 }
 

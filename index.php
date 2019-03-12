@@ -52,6 +52,11 @@
             elseif($_GET['p'] == "memberslist"){
                 getMemberListPage();
             }
+            elseif($_GET['p'] == "duplicate"){
+                $id = htmlspecialchars($_GET['id']);
+                $id_dup = $_POST['post'];
+                handleDuplicate($id, $id_dup);
+            }
             else{
                 getHomePage();
             }

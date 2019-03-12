@@ -28,11 +28,9 @@
     <?php $i = 0; 
     $vote = "";
     while($row = $request->fetch_assoc()){
-        if($row['done'] == 1){
-            echo '<div class="border-bottom row"><div class="col-12"><h5>'.$row['title'].'<small> by <a href="index.php?profile='.$row['id_user'].'">'.$users[$i++].'</a></small> <span class="badge badge-success">Done !</span></h5><p>'.htmlspecialchars_decode($row['content']).'</p></div></div>';
-        }
-        elseif($row['rejected'] == 1){
-            echo '<div class="border-bottom row"><div class="col-12"><h5>'.$row['title'].'<small> by <a href="index.php?profile='.$row['id_user'].'">'.$users[$i++].'</a></small> <span class="badge badge-danger">Rejected !</span></h5><p>'.htmlspecialchars_decode($row['content']).'</p></div></div>';
+        $status = getStatusBadge($row['done'], $row['rejected'], $row['id_duplicate']);
+        if($status != ""){
+            echo '<div class="border-bottom row"><div class="col-12"><h5>'.$row['title'].'<small> by <a href="index.php?profile='.$row['id_user'].'">'.$users[$i++].'</a></small> '.$status.'</h5><p>'.htmlspecialchars_decode($row['content']).'</p></div></div>';
         }
         else{
             if($voted[$i] == 0){
