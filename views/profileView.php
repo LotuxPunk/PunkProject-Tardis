@@ -15,6 +15,14 @@
     <div class="row align-items-start">
         <div class="col-sm-3 position-sticky">
             <img src="./data/p_img/default.png" class="img-thumbnail rounded d-block">
+            <div class="btn-group-vertical">
+                <?php if(isset($_SESSION['connected'])){?>
+                    <a class='btn btn-primary' href='#'><i class="far fa-star"></i> Star</a>
+                    <?php if($_SESSION['level'] >= 5){?>
+                        <a href='index.php?ban=<?php echo $row_profile['id']; ?>' class='btn btn-danger' role='button'><i class='fas fa-gavel'></i> Ban user</a>
+                    <?php } ?>
+                <?php } ?>
+            </div>
         </div>
         <div class="col-md-9">
             <div class="jumbotron jumbotron-fluid rounded">
@@ -63,7 +71,6 @@
         </div>
     </div>
 </div>
-
 <?php $modal = ob_get_clean(); ?>
 
 <?php require('template.php'); ?>
