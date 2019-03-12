@@ -95,7 +95,7 @@
                         <label for="postTitle">Posts</label>
                         <select class="form-control" id="postTitle">
                         <?php while($row = $postsData->fetch_assoc()){
-                            echo "<option value='{$row['id']}>{$row['title']}</option>";
+                            echo "<option value='{$row['id']}'>{$row['title']}</option>";
                         }?>
                         </select>
                     </div>
