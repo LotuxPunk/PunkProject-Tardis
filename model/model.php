@@ -424,3 +424,11 @@
         $conn = null;
         return $result;
     }
+
+    function getPostTitle($id){
+        $conn = dbConnect();
+        $sql = "SELECT id, title FROM request WHERE id <> '{$id}'";
+        $result = $conn->query($sql);
+        $conn->close();
+        return $result;
+    }
