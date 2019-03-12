@@ -54,6 +54,7 @@
 
     function getFocusPage($id, $message = ""){
         $request = getRequestByID($id);
+        $postsData = getPostTitle($id);
         $row = $request->fetch_assoc();
         $voted = 0;
         $user = getUsernameByID($row['id_user']);

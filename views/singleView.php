@@ -1,4 +1,5 @@
 <?php
+    require('viewsFunctions.php');
     $title = $row['title'];
     $desc = $row['content'];
 ?>
@@ -40,7 +41,7 @@
             }
 
             if(isset($_SESSION['connected']) && $_SESSION['level'] >= 5){
-                $moderation = "<a class='btn btn-success' role='button' href='index.php?done={$row['id']}'><i class='fas fa-check'></i> Done</a><a class='btn btn-danger' href='index.php?rejected={$row['id']}' role='button'><i class='fas fa-times-circle'></i> Reject</a><a href='index.php?delete={$row['id']}' class='btn btn-danger' role='button'><i class='far fa-trash-alt'></i> Delete post</a><a href='index.php?ban={$row['id_user']}' class='btn btn-danger' role='button'><i class='fas fa-gavel'></i> Ban user</a>";
+                $moderation = getModeratorBar($row['id'], $row['id_user'])."<a class='btn btn-primary' href='#' data-toggle='modal' data-target='#duplicateModal'><i class='far fa-clone'></i> Duplicate</a>";
             }
         }
     ?>
@@ -76,6 +77,29 @@
                         <textarea class="form-control" name="desc_edit" style="display:none" id="desc_edit"></textarea>
                     </div>
                         <button type="submit" id="submit_edit_request" class="btn btn-primary">Confirm</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="duplicateModal" tabindex="-1" role="dialog" aria-labelledby="duplicateLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-Username" id="duplicateLabel">Duplicate</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form action="index.php?p=duplicate" method="POST">
+                    <div class="form-group">
+                        <label for="postTitle">Posts</label>
+                        <select class="form-control" id="postTitle">
+                        <?php while($row = $postsData->fetch_assoc()){
+                            echo "<option value='{$row['id']}'>{$row['title']}</option>";
+                        }?>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" type="submit"><i class="fas fa-check"></i> Confirm</button>
                 </form>
             </div>
         </div>
