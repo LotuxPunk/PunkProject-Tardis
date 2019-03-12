@@ -1,6 +1,4 @@
 <?php
-    $GLOBALS['webhook_url'] = "https://discordapp.com/api/webhooks/549752859835760643/LChLD5LH--K9zz7ZZdyNzqEiCZjpXfPXU70BW0udDKFpDfd-dNSF6PRuHowOXzLlPLa6";
-
     function sendMail($to, $subject,$message) {
         $headers = 'From: no-reply@punkproject.xyz' . "\r\n" . 'Reply-To: lotuxstyle@gmail.com' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
         return mail($to,$subject,$message, $headers);
@@ -16,6 +14,41 @@
         $subject = "Password reset : PunkProject";
         $message = "Click here to reset your password: https://punkproject.xyz/index.php?reset-pass={$code}";
         return sendMail($to,$subject,$message);
+    }
+
+    function sendDuplicateHook($title, $username, $id){
+        discordHook("Duplicate", "The suggestion".$title."has been marked as duplicated", $username, "https://punkproject.xyz/index.php?p=focus&id=".$id, 0x47C0BA);
+    }
+
+    function discordHook($title, $content, $username, $url, $color){
+        #$image = 'https://via.placeholder.com/400x400';
+        $data = json_encode([
+            'username' => 'PunkProject',
+            'embeds' => [
+                [
+                    'title' => $title,
+                    'description' => $content,
+                    'url' => $url,
+                    'color' => $color,
+                    'timestamp' => (new DateTime())->format('c'),
+                    'author' => [
+                        'name' => $username,
+                        'url' => 'https://punkproject.xyz/index.php'
+                    ],
+                    'footer' => [
+                        'text' => 'PunkProject by LotuxPunk'
+                    ]
+                ]
+            ]
+        ]);
+        $ch = curl_init(getWebhook());
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($data)
+        ]);
+        curl_exec($ch);
     }
 
     function sendWebhook($title, $content, $username,$id){
@@ -43,7 +76,7 @@
                 ]
             ]
         ]);
-        $ch = curl_init($GLOBALS['webhook_url']);
+        $ch = curl_init(getWebhook());
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
@@ -74,7 +107,7 @@
                 ]
             ]
         ]);
-        $ch = curl_init($GLOBALS['webhook_url']);
+        $ch = curl_init(getWebhook());
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
@@ -107,7 +140,7 @@
                 ]
             ]
         ]);
-        $ch = curl_init($GLOBALS['webhook_url']);
+        $ch = curl_init(getWebhook());
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
@@ -167,4 +200,8 @@
     */
     function check_file_uploaded_length ($filename) {
         return (bool) mb_strlen($filename,"UTF-8") > 225;
+    }
+
+    function getWebhook(){
+        return "https://discordapp.com/api/webhooks/549752859835760643/LChLD5LH--K9zz7ZZdyNzqEiCZjpXfPXU70BW0udDKFpDfd-dNSF6PRuHowOXzLlPLa6";
     }

@@ -14,35 +14,26 @@
 <?php if($message != ""){?><div class="alert alert-info" role="alert"><?= $message ?></div><?php } ?>
 <div class="bg-white rounded mb-3 request">
     <?php
-        $status = "";
         $vote = "";
         $moderation = "";
         $edit = "";
-        
-        if($row['done'] == 1){
-            $status = ' <span class="badge badge-success">Done !</span>';
+        $status = getStatusBadge($row['done'], $row['rejected'], $row['id_duplicate']);
+        if($voted == 0){
+            $vote = '<div class="float-right btn-group" style="margin-top:20px;" role="group"><a class="btn btn-success" role="button" href="index.php?up='.$row['id'].'"><i class="fas fa-thumbs-up"></i></a><span class="btn btn-secondary">'.$row['vote'].'</span><a class="btn btn-danger" href="index.php?down='.$row['id'].'" role="button"><i class="fas fa-thumbs-down"></i></a></div>';
         }
-        elseif($row['rejected'] == 1){
-            $status = ' <span class="badge badge-danger">Rejected !</span>';
+        elseif($voted == 1){
+            $vote = '<div class="float-right btn-group" style="margin-top:20px;" role="group"><span class="btn btn-success"><i class="fas fa-thumbs-up"></i></span><span class="btn btn-secondary">'.$row['vote'].'</span><a class="btn btn-danger disabled" href="index.php?down='.$row['id'].'" role="button" aria-disabled="true"><i class="fas fa-thumbs-down"></i></a></div>';
         }
         else{
-            if($voted == 0){
-                $vote = '<div class="float-right btn-group" style="margin-top:20px;" role="group"><a class="btn btn-success" role="button" href="index.php?up='.$row['id'].'"><i class="fas fa-thumbs-up"></i></a><span class="btn btn-secondary">'.$row['vote'].'</span><a class="btn btn-danger" href="index.php?down='.$row['id'].'" role="button"><i class="fas fa-thumbs-down"></i></a></div>';
-            }
-            elseif($voted == 1){
-                $vote = '<div class="float-right btn-group" style="margin-top:20px;" role="group"><span class="btn btn-success"><i class="fas fa-thumbs-up"></i></span><span class="btn btn-secondary">'.$row['vote'].'</span><a class="btn btn-danger disabled" href="index.php?down='.$row['id'].'" role="button" aria-disabled="true"><i class="fas fa-thumbs-down"></i></a></div>';
-            }
-            else{
-                $vote = '<div class="float-right btn-group" style="margin-top:20px;" role="group"><a class="btn btn-success disabled" href="index.php?up='.$row['id'].'" role="button" aria-disabled="true"><i class="fas fa-thumbs-up"></i></a><span class="btn btn-secondary">'.$row['vote'].'</span><span class="btn btn-danger"><i class="fas fa-thumbs-down"></i></span></div>';
-            }
+            $vote = '<div class="float-right btn-group" style="margin-top:20px;" role="group"><a class="btn btn-success disabled" href="index.php?up='.$row['id'].'" role="button" aria-disabled="true"><i class="fas fa-thumbs-up"></i></a><span class="btn btn-secondary">'.$row['vote'].'</span><span class="btn btn-danger"><i class="fas fa-thumbs-down"></i></span></div>';
+        }
 
-            if(isset($_SESSION['id']) && $_SESSION['id'] == $row['id_user']){
-                $edit = "<a href='#' data-toggle='modal' data-target='#editRequest' class='btn btn-secondary' role='button'><i class='fas fa-pen'></i> Edit</a>";
-            }
+        if(isset($_SESSION['id']) && $_SESSION['id'] == $row['id_user']){
+            $edit = "<a href='#' data-toggle='modal' data-target='#editRequest' class='btn btn-secondary' role='button'><i class='fas fa-pen'></i> Edit</a>";
+        }
 
-            if(isset($_SESSION['connected']) && $_SESSION['level'] >= 5){
-                $moderation = getModeratorBar($row['id'], $row['id_user'])."<a class='btn btn-primary' href='#' data-toggle='modal' data-target='#duplicateModal'><i class='far fa-clone'></i> Duplicate</a>";
-            }
+        if(isset($_SESSION['connected']) && $_SESSION['level'] >= 5){
+            $moderation = getModeratorBar($row['id'], $row['id_user'])."<a class='btn btn-primary' href='#' data-toggle='modal' data-target='#duplicateModal'><i class='far fa-clone'></i> Duplicate</a>";
         }
     ?>
     <h3><?= $row['title'] ?><small> by <?= $user ?></small><?= $status ?></h3>
@@ -90,10 +81,10 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-                <form action="index.php?p=duplicate" method="POST">
+                <form action="index.php?p=duplicate&id=<?php echo $row['id']; ?>" method="POST">
                     <div class="form-group">
                         <label for="postTitle">Posts</label>
-                        <select class="form-control" id="postTitle">
+                        <select class="form-control" name="post" id="postTitle">
                         <?php while($row = $postsData->fetch_assoc()){
                             echo "<option value='{$row['id']}'>{$row['title']}</option>";
                         }?>

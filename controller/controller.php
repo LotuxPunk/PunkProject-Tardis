@@ -54,7 +54,7 @@
 
     function getFocusPage($id, $message = ""){
         $request = getRequestByID($id);
-        $postsData = getPostTitle($id);
+        $postsData = getPostsTitle($id);
         $row = $request->fetch_assoc();
         $voted = 0;
         $user = getUsernameByID($row['id_user']);
@@ -242,5 +242,19 @@
             $message = "You're not allowed to edit this suggestion";
         }
 
+        getFocusPage($id, $message);
+    }
+
+    function handleDuplicate($id, $id_dup){
+        if(isset($_SESSION['level']) && $_SESSION['level'] >= 5){
+            if(addDuplicate($id, $id_dup)){
+                $message = "Duplication noted";
+                $title = getPostTitle($id);
+                sendDuplicateHook($title, $_SESSION['username'], $id);
+            }
+            else{
+                $message = "Error when reporting duplication";
+            }
+        }
         getFocusPage($id, $message);
     }

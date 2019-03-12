@@ -425,10 +425,27 @@
         return $result;
     }
 
-    function getPostTitle($id){
+    function getPostsTitle($id){
         $conn = dbConnect();
         $sql = "SELECT id, title FROM request WHERE id <> '{$id}'";
         $result = $conn->query($sql);
+        $conn->close();
+        return $result;
+    }
+
+    function getPostTitle($id){
+        $conn = dbConnect();
+        $sql = "SELECT title FROM request WHERE id = '{$id}'";
+        $result = $conn->query($sql);
+        $conn->close();
+        $row = $result->fetch_assoc();
+        return $row['title'];
+    }
+
+    function addDuplicate($id, $id_dup){
+        $conn = dbConnect();
+        $sql = "UPDATE request SET id_duplicate = '{$id_dup}' WHERE id = '{$id}'";
+        $result = $conn->query($sql) === TRUE;
         $conn->close();
         return $result;
     }
