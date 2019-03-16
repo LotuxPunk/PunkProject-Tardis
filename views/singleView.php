@@ -36,7 +36,7 @@
             $moderation = getModeratorBar($row['id'], $row['id_user'])."<a class='btn btn-primary' href='#' data-toggle='modal' data-target='#duplicateModal'><i class='far fa-clone'></i> Duplicate</a>";
         }
     ?>
-    <h3><?= $row['title'] ?><small> by <?= $user ?></small><?= $status ?></h3>
+    <h3><?= $row['title'] ?><small> by <?= $user ?></small> <?= $status ?></h3>
     <?php 
         echo '<div class="row"><div class="col-9"><p>'.htmlspecialchars_decode($row['content']).'</p><div class="btn-group" style="margin-bottom:20px;" role="group">'.$moderation . $edit .'</div></div><div class="col-3">'.$vote.'</div></div>';
      ?>

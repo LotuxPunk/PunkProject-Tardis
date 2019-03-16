@@ -17,7 +17,7 @@
     }
 
     function sendDuplicateHook($title, $username, $id){
-        discordHook("Duplicate", "The suggestion".$title."has been marked as duplicated", $username, "https://punkproject.xyz/index.php?p=focus&id=".$id, 0x47C0BA);
+        discordHook("Duplicate", "The suggestion ".$title." has been marked as duplicated", $username, "https://punkproject.xyz/index.php?p=focus&id=".$id, 0x47C0BA);
     }
 
     function discordHook($title, $content, $username, $url, $color){

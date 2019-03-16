@@ -18,7 +18,7 @@ function getStatusBadge($done, $rejected, $duplicate){
     if($rejected == 1)
         return '<span class="badge badge-danger">Rejected</span>';
     if($duplicate > 0){
-        return '<span class="badge badge-primary"><a href="index.php?p=focus&id='.$duplicate.'">Duplicated</a></span>';
+        return '<span class="badge badge-primary">Duplicated</span> <a href="index.php?p=focus&id='.$duplicate.'"><i class="fas fa-link"></i></a>';
     }
     return "";
 }
