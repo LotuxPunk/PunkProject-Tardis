@@ -150,18 +150,17 @@
         $page = ($page - 1) * $nb;
         $sql = "";
         if ($homePage) {
-            $sql = "SELECT * FROM request WHERE rejected = 0 AND done = 0 ORDER BY id DESC LIMIT ".$page.",".$nb;
+            $sql = "SELECT request.id, request.title, request.content, request.date, user.username, request.vote FROM request JOIN user ON(request.id_user = user.id) WHERE rejected = 0 AND done = 0 ORDER BY id DESC LIMIT ".$page.",".$nb;
         }
         else{
             if(isset($_SESSION['showdone']) && $_SESSION['showdone'] || !isset($_SESSION['connected'])){
-                $sql = "SELECT * FROM request ORDER BY id DESC LIMIT ".$page.",".$nb;
+                $sql = "SELECT request.id, request.title, request.content, request.date, user.username, request.vote, request.done, request.rejected, request.id_duplicate, request.id_user FROM request JOIN user ON(request.id_user = user.id) ORDER BY id DESC LIMIT ".$page.",".$nb;
             }
             else{
-                $sql = "SELECT * FROM request WHERE rejected = 0 AND done = 0 ORDER BY id DESC LIMIT ".$page.",".$nb;
+                $sql = "SELECT request.id, request.title, request.content, request.date, user.username, request.vote, request.id_duplicate FROM request JOIN user ON(request.id_user = user.id) WHERE rejected = 0 AND done = 0 ORDER BY id DESC LIMIT ".$page.",".$nb;
             }
             
         }
-        
         $result = $conn->query($sql);
         $conn->close();
         return $result;

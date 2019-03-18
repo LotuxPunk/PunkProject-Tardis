@@ -7,10 +7,8 @@
 
         $request = getLastRequest(10,1,true);
         $data = getLastRequest(10,1,true);
-        $users = array();
         $voted = array();
         while($row = $data->fetch_assoc()){
-            $users[] = getUsernameByID($row['id_user']);
             if (isset($_SESSION['connected'])) {
                 $voted[] = isVoted($_SESSION['id'], $row['id']);
             }
@@ -37,7 +35,6 @@
         $users = array();
         $voted = array();
         while($row = $data->fetch_assoc()){
-            $users[] = getUsernameByID($row['id_user']);
             if (isset($_SESSION['connected'])) {
                 $voted[] = isVoted($_SESSION['id'], $row['id']);
             }
