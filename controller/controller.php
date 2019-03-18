@@ -54,7 +54,6 @@
         $postsData = getPostsTitle($id);
         $row = $request->fetch_assoc();
         $voted = 0;
-        $user = getUsernameByID($row['id_user']);
 
         if (isset($_SESSION['connected'])) {
             $voted = isVoted($_SESSION['id'], $row['id']);

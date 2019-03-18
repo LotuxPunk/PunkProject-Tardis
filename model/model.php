@@ -301,7 +301,7 @@
 
     function getRequestByID($id){
         $conn = dbConnect();
-        $sql = "SELECT * FROM request WHERE id = ".$id;
+        $sql = "SELECT request.id, request.title, request.content, request.date, user.username, request.vote, request.done, request.rejected, request.id_duplicate, request.id_user FROM request JOIN user ON(request.id_user = user.id) WHERE request.id = ".$id;
         $result = $conn->query($sql);
         $conn->close();
 
