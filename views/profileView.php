@@ -14,12 +14,15 @@
 <div class="container">
     <div class="row align-items-start">
         <div class="col-sm-3 position-sticky">
-            <img src="./data/p_img/default.png" class="img-thumbnail rounded d-block">
-            <div class="btn-group-vertical">
+            <img src="./data/p_img/default.png" class="img-thumbnail rounded d-block"><br/>
+            <div class="btn-group-vertical col-sm">
                 <?php if(isset($_SESSION['connected'])){?>
-                    <a class='btn btn-primary' href='#'><i class="far fa-star"></i> Star</a>
+                    <a class='btn btn-warning' href='#'><i class="far fa-star"></i> Star</a>
                     <?php if($_SESSION['level'] >= 5){?>
                         <a href='index.php?ban=<?php echo $row_profile['id']; ?>' class='btn btn-danger' role='button'><i class='fas fa-gavel'></i> Ban user</a>
+                    <?php } ?>
+                    <?php if($_SESSION['id'] == $row_profile['id']){?>
+                        <a href='index.php?ban=<?php echo $row_profile['id']; ?>' class='btn btn-secondary' role='button'><i class='fas fa-pen'></i> Edit profile</a>
                     <?php } ?>
                 <?php } ?>
             </div>
