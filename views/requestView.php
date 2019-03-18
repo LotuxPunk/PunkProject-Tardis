@@ -30,7 +30,7 @@
     while($row = $request->fetch_assoc()){
         $status = getStatusBadge($row['done'], $row['rejected'], $row['id_duplicate']);
         if($status != ""){
-            echo '<div class="border-bottom row"><div class="col-12"><h5>'.$row['title'].'<small> by <a href="index.php?profile='.$row['id_user'].'">'.$users[$i++].'</a></small> '.$status.'</h5><p>'.htmlspecialchars_decode($row['content']).'</p></div></div>';
+            echo '<div class="border-bottom row"><div class="col-12"><h5>'.$row['title'].'<small> by <a href="index.php?profile='.$row['id_user'].'">'.$row['username'].'</a></small> '.$status.'</h5><p>'.htmlspecialchars_decode($row['content']).'</p></div></div>';
         }
         else{
             if($voted[$i] == 0){
@@ -47,7 +47,8 @@
             if(isset($_SESSION['connected']) && $_SESSION['level'] >= 5){
                 $moderation = getModeratorBar($row['id'], $row['id_user']);
             }
-            echo '<div class="border-bottom row"><div class="col-9"><h5>'.$row['title'].'<small> by <a href="index.php?profile='.$row['id_user'].'">'.$users[$i++].'</a></small></h5><p>'.htmlspecialchars_decode($row['content']).'</p><div class="btn-group" style="margin-bottom:20px;" role="group">'.$moderation.'<a class="btn btn-secondary" role="button" href="index.php?p=focus&id='.$row['id'].'"><i class="far fa-eye"></i> Focus</a></div></div><div class="col-3">'.$vote.'</div></div>';
+            echo '<div class="border-bottom row"><div class="col-9"><h5>'.$row['title'].'<small> by <a href="index.php?profile='.$row['id_user'].'">'.$row['username'].'</a></small></h5><p>'.htmlspecialchars_decode($row['content']).'</p><div class="btn-group" style="margin-bottom:20px;" role="group">'.$moderation.'<a class="btn btn-secondary" role="button" href="index.php?p=focus&id='.$row['id'].'"><i class="far fa-eye"></i> Focus</a></div></div><div class="col-3">'.$vote.'</div></div>';
+            $i++;
         }
     } ?>
     <nav aria-label="Page navigation example">
