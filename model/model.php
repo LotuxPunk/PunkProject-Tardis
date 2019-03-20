@@ -150,18 +150,17 @@
         $page = ($page - 1) * $nb;
         $sql = "";
         if ($homePage) {
-            $sql = "SELECT * FROM request WHERE rejected = 0 AND done = 0 ORDER BY id DESC LIMIT ".$page.",".$nb;
+            $sql = "SELECT request.id, request.title, request.content, request.date, user.username, request.vote FROM request JOIN user ON(request.id_user = user.id) WHERE rejected = 0 AND done = 0 ORDER BY id DESC LIMIT ".$page.",".$nb;
         }
         else{
             if(isset($_SESSION['showdone']) && $_SESSION['showdone'] || !isset($_SESSION['connected'])){
-                $sql = "SELECT * FROM request ORDER BY id DESC LIMIT ".$page.",".$nb;
+                $sql = "SELECT request.id, request.title, request.content, request.date, user.username, request.vote, request.done, request.rejected, request.id_duplicate, request.id_user FROM request JOIN user ON(request.id_user = user.id) ORDER BY id DESC LIMIT ".$page.",".$nb;
             }
             else{
-                $sql = "SELECT * FROM request WHERE rejected = 0 AND done = 0 ORDER BY id DESC LIMIT ".$page.",".$nb;
+                $sql = "SELECT request.id, request.title, request.content, request.date, user.username, request.vote, request.id_duplicate FROM request JOIN user ON(request.id_user = user.id) WHERE rejected = 0 AND done = 0 ORDER BY id DESC LIMIT ".$page.",".$nb;
             }
             
         }
-        
         $result = $conn->query($sql);
         $conn->close();
         return $result;
@@ -302,7 +301,7 @@
 
     function getRequestByID($id){
         $conn = dbConnect();
-        $sql = "SELECT * FROM request WHERE id = ".$id;
+        $sql = "SELECT request.id, request.title, request.content, request.date, user.username, request.vote, request.done, request.rejected, request.id_duplicate, request.id_user FROM request JOIN user ON(request.id_user = user.id) WHERE request.id = ".$id;
         $result = $conn->query($sql);
         $conn->close();
 
@@ -422,5 +421,30 @@
                 $result = "Error: " . $e->getMessage();
             }
         $conn = null;
+        return $result;
+    }
+
+    function getPostsTitle($id){
+        $conn = dbConnect();
+        $sql = "SELECT id, title FROM request WHERE id <> '{$id}'";
+        $result = $conn->query($sql);
+        $conn->close();
+        return $result;
+    }
+
+    function getPostTitle($id){
+        $conn = dbConnect();
+        $sql = "SELECT title FROM request WHERE id = '{$id}'";
+        $result = $conn->query($sql);
+        $conn->close();
+        $row = $result->fetch_assoc();
+        return $row['title'];
+    }
+
+    function addDuplicate($id, $id_dup){
+        $conn = dbConnect();
+        $sql = "UPDATE request SET id_duplicate = '{$id_dup}' WHERE id = '{$id}'";
+        $result = $conn->query($sql) === TRUE;
+        $conn->close();
         return $result;
     }

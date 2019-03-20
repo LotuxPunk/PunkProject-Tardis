@@ -7,10 +7,8 @@
 
         $request = getLastRequest(10,1,true);
         $data = getLastRequest(10,1,true);
-        $users = array();
         $voted = array();
         while($row = $data->fetch_assoc()){
-            $users[] = getUsernameByID($row['id_user']);
             if (isset($_SESSION['connected'])) {
                 $voted[] = isVoted($_SESSION['id'], $row['id']);
             }
@@ -37,7 +35,6 @@
         $users = array();
         $voted = array();
         while($row = $data->fetch_assoc()){
-            $users[] = getUsernameByID($row['id_user']);
             if (isset($_SESSION['connected'])) {
                 $voted[] = isVoted($_SESSION['id'], $row['id']);
             }
@@ -54,9 +51,9 @@
 
     function getFocusPage($id, $message = ""){
         $request = getRequestByID($id);
+        $postsData = getPostsTitle($id);
         $row = $request->fetch_assoc();
         $voted = 0;
-        $user = getUsernameByID($row['id_user']);
 
         if (isset($_SESSION['connected'])) {
             $voted = isVoted($_SESSION['id'], $row['id']);
@@ -241,5 +238,19 @@
             $message = "You're not allowed to edit this suggestion";
         }
 
+        getFocusPage($id, $message);
+    }
+
+    function handleDuplicate($id, $id_dup){
+        if(isset($_SESSION['level']) && $_SESSION['level'] >= 5){
+            if(addDuplicate($id, $id_dup)){
+                $message = "Duplication noted";
+                $title = getPostTitle($id);
+                sendDuplicateHook($title, $_SESSION['username'], $id);
+            }
+            else{
+                $message = "Error when reporting duplication";
+            }
+        }
         getFocusPage($id, $message);
     }
