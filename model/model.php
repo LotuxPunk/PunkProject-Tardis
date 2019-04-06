@@ -177,6 +177,17 @@
         return $result;
     }
 
+    function getUsernameByCode($code){
+        $conn = dbConnect();
+        $sql = "SELECT username FROM user WHERE code = ".$code;
+        $result = $conn->query($sql);
+        $conn->close();
+
+        $row = $result->fetch_assoc();
+        $result = $row['username'];
+        return $result;
+    }
+
     function addThumb($isUp,$id_request){
         $servername = getDbServername();
         $username = getDbUsername();

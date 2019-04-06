@@ -114,7 +114,6 @@
                     $today = date('Y-m-d H:i:s');
                     if(sendConfirmMail($email, $code)){
                         $success = setInsc($username, $pass, $email, $code, $today);
-                        sendWebhookInsc($username);
                     }
                     else {
                         $echec = "Email error";
@@ -165,6 +164,7 @@
 
     function checkActive($code){
         $activation = setActif($code);
+        sendWebhookInsc(getUsernameByCode($code));
         getLoginPage("","",$activation);
     } 
 
