@@ -110,7 +110,7 @@
             if(checkPass($password)){
                 if($password == $password2){
                     $pass = hash('sha256', $password);
-                    $code = chaineAleatoire(20);
+                    $code = uniqid("", true);
                     $today = date('Y-m-d H:i:s');
                     if(sendConfirmMail($email, $code)){
                         $success = setInsc($username, $pass, $email, $code, $today);
