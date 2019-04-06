@@ -135,7 +135,7 @@
     }
 
     function sendMailPassword($email){
-        $code = chaineAleatoire(20);
+        $code = uniqid("", true);
         $echec = "";
         $success = "";      
         if(updateCode($email, $code)){

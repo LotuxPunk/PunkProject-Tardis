@@ -150,17 +150,7 @@
         curl_exec($ch);
     }
 
-    function chaineAleatoire($nb_car) {
-        $caracteres = "123ABcDE456fGHiJKLMN789PQRSTUVWXYZ";
-        $chaine = "";
-        srand(time());
-        for ($i=0;$i<=$nb_car;$i++) {
-            $chaine.=substr($caracteres,(rand()%(strlen($caracteres))),1);
-        }
-        return $chaine;
-    }
-
-    function checkPass($password){
+    function checkPass($password){ //TODO : I have to refactor this stupid check
         return strlen($password) > 7;
     }
 
