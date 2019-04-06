@@ -203,5 +203,7 @@
     }
 
     function getWebhook(){
-        return "https://discordapp.com/api/webhooks/549752859835760643/LChLD5LH--K9zz7ZZdyNzqEiCZjpXfPXU70BW0udDKFpDfd-dNSF6PRuHowOXzLlPLa6";
+        $json = file_get_contents('./config.json');
+        $json_data = json_decode($json,true);
+        return $json_data['discord'];
     }
