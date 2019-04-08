@@ -179,7 +179,7 @@
 
     function getUsernameByCode($code){
         $conn = dbConnect();
-        $sql = "SELECT username FROM user WHERE code = ".$code;
+        $sql = "SELECT username FROM user WHERE code = '{$code}'";
         $result = $conn->query($sql);
         $conn->close();
 
