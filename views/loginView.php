@@ -34,7 +34,7 @@
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+                    <input type="password" name="password" class="form-control" id="password-field" placeholder="Password">
                 </div>
                 <div class="btn-group" role="group" aria-label="">
                     <button type="button" data-toggle="modal" data-target="#register" class="btn btn-secondary"><i class="fas fa-address-book"></i> I'm not registered yet</button>
@@ -76,7 +76,7 @@
                         <label for="password2">Confirm your password</label>
                         <input type="password" name="password2" class="form-control" id="password2" placeholder="Confirm your password">
                     </div>
-                    <button class="btn btn-primary" type="submit"><i class="fas fa-check"></i> Confirm</button>
+                    <button class="btn btn-primary" id="btnConfirm" type="submit"><i class="fas fa-check"></i> Confirm</button>
                 </form>
             </div>
         </div>

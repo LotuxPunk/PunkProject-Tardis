@@ -26,7 +26,7 @@
                     <input type="password" name="password2" class="form-control" id="password2" placeholder="Confirm your password">
                 </div>
                 <div class="btn-group" role="group" aria-label="">
-                    <button type="submit" id="btnResetPwd" class="btn btn-primary disabled" disabled><i class="fas fa-check"></i> Confirm</button>
+                    <button type="submit" id="btnConfirm" class="btn btn-primary disabled" disabled><i class="fas fa-check"></i> Confirm</button>
                 </div>
             </form>
         </div>
