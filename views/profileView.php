@@ -40,11 +40,11 @@
 <?php $content = ob_get_clean(); ?>
 
 <?php ob_start(); ?>
-<div class="modal fade" id="addRequest" tabindex="-1" role="dialog" aria-labelledby="addRequestLabel" aria-hidden="true">
+<div class="modal fade" id="editProfile" tabindex="-1" role="dialog" aria-labelledby="editProfileLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addRequestLabel">Edit profile</h5>
+                <h5 class="modal-title" id="editProfileLabel">Edit profile</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
