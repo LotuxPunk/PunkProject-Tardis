@@ -102,7 +102,7 @@
         </div>
     </div>
 </div>
-
+<script src="./views/js/password.js"></script>
 <?php $modal = ob_get_clean(); ?>
 
 <?php require('template.php'); ?>
