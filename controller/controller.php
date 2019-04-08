@@ -175,7 +175,7 @@
             sendWebhookInsc(getUsernameByCode($code));
         }
         else{
-            $error = "Account already activated"
+            $error = "Account already activated";
         }
         
         getLoginPage($error,"",$activation);
