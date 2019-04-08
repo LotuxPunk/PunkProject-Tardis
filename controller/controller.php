@@ -107,28 +107,33 @@
         $echec ="";
         $success ="";
         if(isEmailValid($email)){
-            if(checkPass($password)){
-                if($password == $password2){
-                    $pass = hash('sha256', $password);
-                    $code = uniqid("", true);
-                    $today = date('Y-m-d H:i:s');
-                    if(sendConfirmMail($email, $code)){
-                        $success = setInsc($username, $pass, $email, $code, $today);
+            if($username != ""){
+                if(checkPass($password)){
+                    if($password == $password2){
+                        $pass = hash('sha256', $password);
+                        $code = uniqid("", true);
+                        $today = date('Y-m-d H:i:s');
+                        if(sendConfirmMail($email, $code)){
+                            $success = setInsc($username, $pass, $email, $code, $today);
+                        }
+                        else {
+                            $echec = "Error : something wrong with email";
+                        }
                     }
                     else {
-                        $echec = "Email error";
+                        $echec = "Passwords must be identical";
                     }
                 }
                 else {
-                    $echec = "Passwords must be identical";
+                    $echec = "Your password must contain at least 8 letters";
                 }
             }
             else {
-                $echec = "Your password must contain at least 8 letters.";
+                $echec = "Your have to provide an username";
             }
         }
         else{
-            $echec = "No.";
+            $echec = "Your email provider isn't approved";
         }
 
         getLoginPage($echec, $success);
