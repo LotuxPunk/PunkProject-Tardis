@@ -86,13 +86,24 @@
         return $result;
     }
 
-    function setActif($code){
+    function getActive($code){
+        $conn = dbConnect();
+        $sql = "SELECT active FROM user WHERE code = '{$code}'";
+        $result = $conn->query($sql);
+        $conn->close();
+
+        $row = $result->fetch_assoc();
+        $result = $row['active'];
+        return $result;
+    }
+
+    function setActive($code){
         $conn = dbConnect();
         $sql = "UPDATE user SET active = 1 WHERE code = '".$code."'";
         if ($conn->query($sql) === TRUE) {
-            $result = "Account activated. Congratulations !";            
+            $result = "Account activated. Congratulations!";            
         } else {
-            $result = "Error, it's embarassing.";
+            $result = "Error, it's embarassing";
         }
         $conn->close();
         return $result;

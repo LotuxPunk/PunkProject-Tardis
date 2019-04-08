@@ -168,9 +168,17 @@
     }
 
     function checkActive($code){
-        $activation = setActif($code);
-        sendWebhookInsc(getUsernameByCode($code));
-        getLoginPage("","",$activation);
+        $activation = "";
+        $error = "";
+        if(getActive($code) == 0){
+            $activation = setActive($code);
+            sendWebhookInsc(getUsernameByCode($code));
+        }
+        else{
+            $error = "Account already activated"
+        }
+        
+        getLoginPage($error,"",$activation);
     } 
 
     function setVote($isUp, $id){
