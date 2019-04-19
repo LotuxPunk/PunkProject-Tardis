@@ -57,6 +57,9 @@
                 $id_dup = $_POST['post'];
                 handleDuplicate($id, $id_dup);
             }
+            elseif($_GET['p'] == "submissions"){
+                getSubmissions();
+            }
             else{
                 getHomePage();
             }
@@ -86,6 +89,9 @@
         }
         elseif($_GET['p'] == "memberslist"){
             getMemberListPage();
+        }
+        elseif($_GET['p'] == "submissions"){
+            getSubmissions();
         }
         else{
             getHomePage();

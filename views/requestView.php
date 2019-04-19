@@ -8,6 +8,7 @@
 <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
 <li class="nav-item active"><a class="nav-link" href="index.php?p=request&n=1">All requests</a></li>
 <li class="nav-item"><a class="nav-link" href="index.php?p=memberslist">Members list</a></li>
+<li class="nav-item"><a class="nav-link" href="index.php?p=submissions">Assets submissions</a></li>
 <?php $nav = ob_get_clean(); ?>
 
 <?php ob_start(); ?>
@@ -47,7 +48,7 @@
             if(isset($_SESSION['connected']) && $_SESSION['level'] >= 5){
                 $moderation = getModeratorBar($row['id'], $row['id_user']);
             }
-            echo '<div class="border-bottom row"><div class="col-9"><h5>'.$row['title'].'<small> by <a href="index.php?profile='.$row['id_user'].'">'.$row['username'].'</a></small></h5><p>'.htmlspecialchars_decode($row['content']).'</p><div class="btn-group" style="margin-bottom:20px;" role="group">'.$moderation.'<a class="btn btn-secondary" role="button" href="index.php?p=focus&id='.$row['id'].'"><i class="far fa-eye"></i> Focus</a></div></div><div class="col-3">'.$vote.'</div></div>';
+            echo '<div class="border-bottom row"><div class="col-9"><h5>'.$row['title'].'<small> by <a href="index.php?profile='.$row['id_user'].'">'.$row['username'].'</a></small></h5><p>'.htmlspecialchars_decode($row['content']).'</p><div class="btn-group admin-bar" style="margin-bottom:20px;" role="group">'.$moderation.'<a class="btn btn-secondary" role="button" href="index.php?p=focus&id='.$row['id'].'"><i class="far fa-eye"></i> Focus</a></div></div><div class="col-3">'.$vote.'</div></div>';
             $i++;
         }
     } ?>

@@ -267,3 +267,7 @@
         }
         getFocusPage($id, $message);
     }
+
+    function getSubmissions($message = ""){
+        require('./views/submissionsView.php');
+    }

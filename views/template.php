@@ -72,6 +72,33 @@
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="addSubmission" tabindex="-1" role="dialog" aria-labelledby="addSubmissionLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addSubmissionLabel">Submit an asset</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="index.php?p=add-asset" method="post" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="title">Title</label>
+                                <input type="text" class="form-control" id="title" placeholder="New Box ABC, Interior XYZ, Texture for Adipose,...">
+                            </div>
+                            <div class="form-group">
+                                <input type="file" class="form-control-file" accept=".json,.nbt,.png,.zip,.java" id="assetFile" multiple>
+                                <label for="assetFile">Choose file(s)</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input" id="acceptRights">
+                                <label for="acceptRights">By checking this box, I agree to allow The Tardis Team to use my assets/submission in their Project</label>
+                            </div>
+                            <button type="submit" id="submit_asset" class="btn btn-primary disabled" disabled>Confirm</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
             <?php } else { ?>
             <div class="modal fade" id="addRequest" tabindex="-1" role="dialog" aria-labelledby="addRequestLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -89,6 +116,22 @@
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="addSubmission" tabindex="-1" role="dialog" aria-labelledby="addSubmissionLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addSubmissionLabel">It's embarassing...</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body bg-info"><p>You must be logged in to share your assets!</p><img src="https://media.giphy.com/media/MiAQGelCbH0ha/giphy.gif" alt="" style="width:80%;"></div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         <?php } ?>
         <!-- Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -99,6 +142,7 @@
         <script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>
         <script src="./views/js/main.js"></script>
         <script>
+            //Stuff for request form
             var editor = new Quill('#editor', {
                 modules: { toolbar: '#toolbar' },
                 theme: 'snow'
@@ -112,6 +156,24 @@
             document.getElementById("submit_request").onclick = () => {
                 document.getElementById("description").innerHTML = document.querySelector(".ql-editor").innerHTML;
             }
+
+            //Stuff for submission form
+            function acceptRight(){
+                let buttonConfirm = document.getElementById("submit_asset");  
+                const fileList = document.getElementById("assetFile").files;
+                let value = document.getElementById("acceptRights").checked && fileList.length > 0;
+
+                if(value){
+                    buttonConfirm.removeAttribute('disabled');
+                }
+                else{
+                    buttonConfirm.setAttribute('disabled', value);
+                }
+                buttonConfirm.classList.toggle("disabled", !value);
+            }
+
+            document.getElementById("assetFile").onchange = acceptRight;
+            document.getElementById("acceptRights").onclick = acceptRight;
         </script>
     </body>
 </html>
