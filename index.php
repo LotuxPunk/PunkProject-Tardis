@@ -60,6 +60,9 @@
             elseif($_GET['p'] == "submissions"){
                 getSubmissions();
             }
+            elseif($_GET['p'] == "add-asset"){
+                addAsset();
+            }
             else{
                 getHomePage();
             }

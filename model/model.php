@@ -234,8 +234,6 @@
             }
         $conn = null;
         return $result;
-
-
     }
 
     function updateVote($id_request, $isUp){
@@ -469,4 +467,32 @@
         $result = $conn->query($sql) === TRUE;
         $conn->close();
         return $result;
+    }
+
+    function addAssetDB($screenshot,$asset, $title){
+        $servername = getDbServername();
+        $username = getDbUsername();
+        $password = getDbPassword();
+        $dbname = getDbName();
+
+        try {
+            $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $stmt = $conn->prepare("INSERT INTO asset (id_user, filename, screenshot, title) VALUES (:id_user, :filename, :screenshot, :title)");
+            $stmt->bindParam(':id_user', $_SESSION['id']);
+            $stmt->bindParam(':filename', $asset);
+            $stmt->bindParam(':screenshot', $screenshot);
+            $stmt->bindParam(':title', $title);
+            $stmt->execute();
+            
+            $result = "Asset submited";
+        }
+        catch(PDOException $e)
+            {
+                $result = "Error: " . $e->getMessage();
+            }
+        $conn = null;
+        return $result;
+
+
     }

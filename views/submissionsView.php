@@ -15,6 +15,7 @@
 
 <!-- Content -->
 <?php ob_start(); ?>
+<?php if($message != ""){?><div class="alert alert-info" role="alert"><?= $message ?></div><?php } ?>
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addSubmission"><i class="fas fa-palette"></i> I have an asset!</button>
 <?php $content = ob_get_clean(); ?>
 

@@ -52,7 +52,7 @@
             $i++;
         }
     } ?>
-    <nav aria-label="Page navigation example">
+    <nav>
         <ul class="pagination">
             <?php
                 if($page > 1){
