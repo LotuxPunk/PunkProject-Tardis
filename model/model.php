@@ -168,7 +168,7 @@
                 $sql = "SELECT request.id, request.title, request.content, request.date, user.username, request.vote, request.done, request.rejected, request.id_duplicate, request.id_user FROM request JOIN user ON(request.id_user = user.id) ORDER BY id DESC LIMIT ".$page.",".$nb;
             }
             else{
-                $sql = "SELECT request.id, request.title, request.content, request.date, user.username, request.vote, request.id_duplicate FROM request JOIN user ON(request.id_user = user.id) WHERE rejected = 0 AND done = 0 ORDER BY id DESC LIMIT ".$page.",".$nb;
+                $sql = "SELECT request.id, request.title, request.content, request.date, user.username, request.vote, request.id_duplicate, request.id_user FROM request JOIN user ON(request.id_user = user.id) WHERE rejected = 0 AND done = 0 AND id_duplicate = 0 ORDER BY id DESC LIMIT ".$page.",".$nb;
             }
             
         }
@@ -234,8 +234,6 @@
             }
         $conn = null;
         return $result;
-
-
     }
 
     function updateVote($id_request, $isUp){
@@ -469,4 +467,44 @@
         $result = $conn->query($sql) === TRUE;
         $conn->close();
         return $result;
+    }
+
+    function addAssetDB($screenshot,$asset, $title){
+        $servername = getDbServername();
+        $username = getDbUsername();
+        $password = getDbPassword();
+        $dbname = getDbName();
+
+        try {
+            $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $stmt = $conn->prepare("INSERT INTO asset (id_user, filename, screenshot, title) VALUES (:id_user, :filename, :screenshot, :title)");
+            $stmt->bindParam(':id_user', $_SESSION['id']);
+            $stmt->bindParam(':filename', $asset);
+            $stmt->bindParam(':screenshot', $screenshot);
+            $stmt->bindParam(':title', $title);
+            $stmt->execute();
+            
+            $result = "Asset submited";
+        }
+        catch(PDOException $e)
+            {
+                $result = "Error: " . $e->getMessage();
+            }
+        $conn = null;
+        return $result;
+    }
+
+    function getAssets(){
+        $conn = dbConnect();
+        $sql = "SELECT asset.title, asset.filename, asset.screenshot, user.username, asset.id_user, asset.id FROM asset JOIN user ON(asset.id_user = user.id) ORDER BY asset.id DESC";
+        $result = $conn->query($sql);
+        $conn->close();
+        return $result;
+    }
+
+    function deleteAsset($id){
+        $conn = dbConnect();
+        $sql = "DELETE FROM asset WHERE id = '{$id}'";
+        return $conn->query($sql) === TRUE;
     }

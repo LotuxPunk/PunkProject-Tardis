@@ -57,6 +57,12 @@
                 $id_dup = $_POST['post'];
                 handleDuplicate($id, $id_dup);
             }
+            elseif($_GET['p'] == "submissions"){
+                getSubmissions();
+            }
+            elseif($_GET['p'] == "add-asset"){
+                addAsset();
+            }
             else{
                 getHomePage();
             }
@@ -86,6 +92,9 @@
         }
         elseif($_GET['p'] == "memberslist"){
             getMemberListPage();
+        }
+        elseif($_GET['p'] == "submissions"){
+            getSubmissions();
         }
         else{
             getHomePage();
@@ -120,6 +129,15 @@
         }
         else{
             getHomePage("You do not have the permission to execute that.");
+        }
+    }
+    elseif (isset($_GET['delete-asset'])) {
+        if(isset($_SESSION['level']) && $_SESSION['level'] >= 5){
+            $id = htmlspecialchars($_GET['delete-asset']);
+            handleDeleteAsset($id);
+        }
+        else{
+            getSubmissions("You do not have the permission to execute that.");
         }
     }
     elseif(isset($_GET['code'])){

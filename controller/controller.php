@@ -203,7 +203,7 @@
 
     function handleBan($id_user){
         $message ="";
-        if(banUser($id_user) && deletePostUser($is_user)){
+        if(banUser($id_user)){
             $message = "User #{$id_user} sucessfully banned.";
         }
         else{
@@ -266,4 +266,73 @@
             }
         }
         getFocusPage($id, $message);
+    }
+
+    function getSubmissions($message = ""){
+        $dataAssets = getAssets();
+        require('./views/submissionsView.php');
+    }
+
+    function addAsset(){
+        $uploads_dir = "./data/uploads";
+        $assets_dir = $uploads_dir."/assets";
+        $screenshot_dir = $uploads_dir."/screenshots";
+        $temp_dir = $uploads_dir."/temp";
+
+        $title = htmlspecialchars($_POST['title']);
+
+        if($_FILES['screenshotFile']['error'] > 0 || $title == ""){
+            var_dump($_FILES['screenshotFile']['error'] > 0, $_FILES['assetFile']['error'] > 0, $title == "");
+            getSubmissions("Error : something happen while the transfer");
+        }
+        else{
+            $zip = new ZipArchive();
+            $name = uniqid("", true);
+
+            //Saving screenshot
+            $tmp_name = $_FILES["screenshotFile"]["tmp_name"];
+            $name_screenshot = $_FILES["screenshotFile"]["name"];
+            $ext = pathinfo($name_screenshot, PATHINFO_EXTENSION);
+            move_uploaded_file($tmp_name, "$screenshot_dir/$name.$ext");
+
+            //Saving assets
+            $filesToZip = array();
+            $total = count($_FILES['assetFile']['name']);
+
+            for( $i=0 ; $i < $total ; $i++ ) {
+                $tmp_name = $_FILES["assetFile"]["tmp_name"][$i];
+                $name_file = basename($_FILES["assetFile"]["name"][$i]);
+                $filesToZip[] = $name_file;
+                move_uploaded_file($tmp_name, "$temp_dir/$name_file");
+            }
+
+            if ($zip->open("$assets_dir/$name.zip", ZipArchive::CREATE)!==TRUE) {
+                exit("File <$name> can't be open.\n");
+            }
+            else{
+                foreach ($filesToZip as $filename) {
+                    $zip->addFile("$temp_dir/$filename", $filename);
+                }
+                $zip->close();
+            }
+
+            foreach($filesToZip as $filename){
+                unlink("$temp_dir/$filename");
+            }
+
+            $message = addAssetDB("$name.$ext","$name.zip", $title);
+            sendAssetWebhook($title, $_SESSION['username']);
+            getSubmissions($message);
+        }
+    }
+
+    function handleDeleteAsset($id){
+        $message = "";
+        if(deleteAsset($id)){
+            $message = "Asset deleted";
+        }
+        else{
+            $message = "Error : Asset not deleted";
+        }
+        getSubmissions($message);
     }

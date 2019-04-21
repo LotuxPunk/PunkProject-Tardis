@@ -7,6 +7,7 @@
 <li class="nav-item active"><a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a></li>
 <li class="nav-item"><a class="nav-link" href="index.php?p=request&n=1">All requests</a></li>
 <li class="nav-item"><a class="nav-link" href="index.php?p=memberslist">Members list</a></li>
+<li class="nav-item"><a class="nav-link" href="index.php?p=submissions">Assets submissions</a></li>
 <?php $nav = ob_get_clean(); ?>
 
 <?php ob_start(); ?>
@@ -16,8 +17,11 @@
     <p class="lead">This project is set up to group and follow-up the requests for improvement of the "<a href="https://minecraft.curseforge.com/projects/new-tardis-mod" target="_blank">New TARDIS mod</a>".</p>
     <hr class="my-4">
     <p>You have a suggestion, an idea, or a remark to improve the mod ? Go ahead, we're listening!</p>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRequest"><i class="far fa-lightbulb"></i> I have an idea!</button>
-    <a href="https://github.com/LotuxPunk/PunkProject-Tardis" class="btn btn-secondary" target="_blank"><i class="fab fa-github"></i> Fork me on Github!</a>
+    <div class="btn-group" id="btn-group-home-jumbotron" role="group">
+        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#addRequest"><i class="far fa-lightbulb"></i> I have an idea!</button>
+        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#addSubmission"><i class="fas fa-palette"></i> I have an asset!</button>
+        <a href="https://github.com/LotuxPunk/PunkProject-Tardis" class="btn btn-outline-dark" target="_blank"><i class="fab fa-github"></i> Fork me on Github!</a>
+    </div>
 </div>
 <div class="bg-white rounded mb-3 request">
     <h3>Latest requests</h3>

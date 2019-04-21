@@ -20,6 +20,10 @@
         discordHook("Duplicate", "The suggestion ".$title." has been marked as duplicated", $username, "https://punkproject.xyz/index.php?p=focus&id=".$id, 0x47C0BA);
     }
 
+    function sendAssetWebhook($title, $username){
+        discordHook("Asset", $title, $username, "https://punkproject.xyz/index.php?p=submissions", 0x3A6C94);
+    }
+
     function discordHook($title, $content, $username, $url, $color){
         #$image = 'https://via.placeholder.com/400x400';
         $data = json_encode([
