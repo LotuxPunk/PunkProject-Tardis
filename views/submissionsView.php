@@ -29,7 +29,7 @@
                 <div class="card" style="margin-bottom:10px;">
                     <img class="card-img-top" src="<?php echo "./data/uploads/screenshots/{$row['screenshot']}";?>" alt="Card image cap">
                     <div class="card-body">
-                        <h5 class="card-title"><?php echo $row["title"];?> <small>by <?php echo $row["username"]; ?></small></h5>
+                        <h5 class="card-title"><strong><?php echo $row["title"];?></strong> <small>by <?php echo $row["username"]; ?></small></h5>
                         <div class="btn-group">
                             <?php if(isset($_SESSION['level']) && $_SESSION['level'] >= 5) {?>
                                 <a href="<?php echo "./data/uploads/assets/{$row['filename']}";?>" class="btn btn-primary"><i class="fas fa-download"></i> Download</a>
