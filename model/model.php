@@ -493,6 +493,12 @@
             }
         $conn = null;
         return $result;
+    }
 
-
+    function getAssets(){
+        $conn = dbConnect();
+        $sql = "SELECT asset.title, asset.filename, asset.screenshot, user.username FROM asset JOIN user ON(asset.id_user = user.id) ORDER BY asset.id DESC";
+        $result = $conn->query($sql);
+        $conn->close();
+        return $result;
     }

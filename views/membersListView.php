@@ -12,6 +12,9 @@
 <?php $nav = ob_get_clean(); ?>
 
 <?php ob_start(); ?>
+<div class="jumbotron">
+    <h2 class="display-4">Members list</h2>
+</div>
 <div class="container bg-white rounded mb-3">
     <ul class="list-group list-group-flush">    
     <?php 

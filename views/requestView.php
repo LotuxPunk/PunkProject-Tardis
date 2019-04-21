@@ -13,17 +13,19 @@
 
 <?php ob_start(); ?>
 <?php if($message != ""){?><div class="alert alert-info" role="alert"><?= $message ?></div><?php } ?>
-<?php if(isset($_SESSION["showdone"])){?>
-<div class="bg-white rounded mb-3 request">
-    <form action="index.php?p=showdone" method="post">
-        <div class="form-group form-check">
-            <input type="checkbox" class="form-check-input" name="showdone" id="showdone" <?php echo ($_SESSION["showdone"])? "checked" : "";?>>
-            <label class="form-check-label" for="showdone">Show implemented suggestion ?</label>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+
+<div class="jumbotron">
+    <h2 class="display-4">Features requests</h2>
+    <?php if(isset($_SESSION["showdone"])){?>
+        <form action="index.php?p=showdone" method="post">
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" name="showdone" id="showdone" <?php echo ($_SESSION["showdone"])? "checked" : "";?>>
+                <label class="form-check-label" for="showdone">Show implemented suggestion ?</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    <?php } ?>
 </div>
-<?php } ?>
 <div class="bg-white rounded mb-3 request">
     <h3>Page <?= $page ?></h3>
     <?php $i = 0; 

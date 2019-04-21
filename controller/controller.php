@@ -269,6 +269,7 @@
     }
 
     function getSubmissions($message = ""){
+        $dataAssets = getAssets();
         require('./views/submissionsView.php');
     }
 
@@ -280,8 +281,8 @@
 
         $title = htmlspecialchars($_POST['title']);
 
-        //Saving screenshot
-        if($_FILES['screenshotFile']['error'] > 0 || $_FILES['assetFile']['error'] > 0 || $title == ""){
+        if($_FILES['screenshotFile']['error'] > 0 || $title == ""){
+            var_dump($_FILES['screenshotFile']['error'] > 0, $_FILES['assetFile']['error'] > 0, $title == "");
             getSubmissions("Error : something happen while the transfer");
         }
         else{
@@ -310,7 +311,7 @@
             }
             else{
                 foreach ($filesToZip as $filename) {
-                    $zip->addFile("$temp_dir/$filename");
+                    $zip->addFile("$temp_dir/$filename", $filename);
                 }
                 $zip->close();
             }
@@ -319,8 +320,8 @@
                 unlink("$temp_dir/$filename");
             }
 
-            $message = addAssetDB("$name.$ext","$name.zip");
-
+            $message = addAssetDB("$name.$ext","$name.zip", $title);
+            sendAssetWebhook($title, $_SESSION['username']);
             getSubmissions($message);
         }
     }
