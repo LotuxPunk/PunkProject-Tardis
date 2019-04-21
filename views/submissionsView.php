@@ -1,7 +1,7 @@
 <!-- SEO & Title stuff -->
 <?php
     require('viewsFunctions.php');
-    $title = "Assets submission";
+    $title = "Assets submissions";
     $desc = "All assets submissions for the NEW TARDIS MOD";
 ?>
 
