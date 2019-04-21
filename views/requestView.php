@@ -31,7 +31,11 @@
     <?php $i = 0; 
     $vote = "";
     while($row = $request->fetch_assoc()){
-        $status = getStatusBadge($row['done'], $row['rejected'], $row['id_duplicate']);
+        $status = "";
+        if(isset($_SESSION["showdone"]) && $_SESSION["showdone"]){
+            $status = getStatusBadge($row['done'], $row['rejected'], $row['id_duplicate']);
+        }
+        
         if($status != ""){
             echo '<div class="border-bottom row"><div class="col-12"><h5>'.$row['title'].'<small> by <a href="index.php?profile='.$row['id_user'].'">'.$row['username'].'</a></small> '.$status.'</h5><p>'.htmlspecialchars_decode($row['content']).'</p></div></div>';
         }

@@ -168,7 +168,7 @@
                 $sql = "SELECT request.id, request.title, request.content, request.date, user.username, request.vote, request.done, request.rejected, request.id_duplicate, request.id_user FROM request JOIN user ON(request.id_user = user.id) ORDER BY id DESC LIMIT ".$page.",".$nb;
             }
             else{
-                $sql = "SELECT request.id, request.title, request.content, request.date, user.username, request.vote, request.id_duplicate FROM request JOIN user ON(request.id_user = user.id) WHERE rejected = 0 AND done = 0 ORDER BY id DESC LIMIT ".$page.",".$nb;
+                $sql = "SELECT request.id, request.title, request.content, request.date, user.username, request.vote, request.id_duplicate, request.id_user FROM request JOIN user ON(request.id_user = user.id) WHERE rejected = 0 AND done = 0 ORDER BY id DESC LIMIT ".$page.",".$nb;
             }
             
         }
