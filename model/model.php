@@ -497,8 +497,14 @@
 
     function getAssets(){
         $conn = dbConnect();
-        $sql = "SELECT asset.title, asset.filename, asset.screenshot, user.username FROM asset JOIN user ON(asset.id_user = user.id) ORDER BY asset.id DESC";
+        $sql = "SELECT asset.title, asset.filename, asset.screenshot, user.username, asset.id_user, asset.id FROM asset JOIN user ON(asset.id_user = user.id) ORDER BY asset.id DESC";
         $result = $conn->query($sql);
         $conn->close();
         return $result;
+    }
+
+    function deleteAsset($id){
+        $conn = dbConnect();
+        $sql = "DELETE FROM asset WHERE id = '{$id}'";
+        return $conn->query($sql) === TRUE;
     }

@@ -203,7 +203,7 @@
 
     function handleBan($id_user){
         $message ="";
-        if(banUser($id_user) && deletePostUser($is_user)){
+        if(banUser($id_user)){
             $message = "User #{$id_user} sucessfully banned.";
         }
         else{
@@ -324,4 +324,15 @@
             sendAssetWebhook($title, $_SESSION['username']);
             getSubmissions($message);
         }
+    }
+
+    function handleDeleteAsset($id){
+        $message = "";
+        if(deleteAsset($id)){
+            $message = "Asset deleted";
+        }
+        else{
+            $message = "Error : Asset not deleted";
+        }
+        getSubmissions($message);
     }

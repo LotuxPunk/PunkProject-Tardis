@@ -30,7 +30,14 @@
                     <img class="card-img-top" src="<?php echo "./data/uploads/screenshots/{$row['screenshot']}";?>" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title"><?php echo $row["title"];?> <small>by <?php echo $row["username"]; ?></small></h5>
-                        <?php if(isset($_SESSION['level']) && $_SESSION['level'] >= 5) {?><a href="<?php echo "./data/uploads/assets/{$row['filename']}";?>" class="btn btn-primary"><i class="fas fa-download"></i> Download</a><?php }?>
+                        <div class="btn-group">
+                            <?php if(isset($_SESSION['level']) && $_SESSION['level'] >= 5) {?>
+                                <a href="<?php echo "./data/uploads/assets/{$row['filename']}";?>" class="btn btn-primary"><i class="fas fa-download"></i> Download</a>
+                                <a href='index.php?ban=<?php echo $row["id_user"];?>' class='btn btn-danger' role='button'><i class='fas fa-gavel'></i> Ban user</a>
+                                <a href='index.php?delete-asset=<?php echo $row["id"];?>' class='btn btn-danger' role='button'><i class='far fa-trash-alt'></i> Delete post</a>
+                            <?php }?>
+                        </div>
+                        
                     </div>
                 </div>
             <?php } ?>

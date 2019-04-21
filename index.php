@@ -131,6 +131,15 @@
             getHomePage("You do not have the permission to execute that.");
         }
     }
+    elseif (isset($_GET['delete-asset'])) {
+        if(isset($_SESSION['level']) && $_SESSION['level'] >= 5){
+            $id = htmlspecialchars($_GET['delete-asset']);
+            handleDeleteAsset($id);
+        }
+        else{
+            getSubmissions("You do not have the permission to execute that.");
+        }
+    }
     elseif(isset($_GET['code'])){
         checkActive(htmlspecialchars($_GET['code']));
     }
