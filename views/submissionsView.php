@@ -19,7 +19,7 @@
 <div class="jumbotron">
     <h2 class="display-4">Assets submissions</h2>
     <p class="lead">Here you can submit your artwork and graphic assets to contribute to the "<a href="https://minecraft.curseforge.com/projects/new-tardis-mod" target="_blank">New TARDIS mod</a>".</p>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addSubmission"><i class="fas fa-palette"></i> I have an asset!</button>
+    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#addSubmission"><i class="fas fa-palette"></i> I have an asset!</button>
 </div>
 <div class="container">
     <div class="row">
