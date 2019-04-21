@@ -87,18 +87,19 @@
                             </div>
                             <div class="form-group">
                                 <input type="hidden" name="MAX_FILE_SIZE" value="4194304" />
-                                <label for="screenshotFile">Choose a screenshot</label>
+                                <label for="screenshotFile">Please choose a preview image (4MB max)</label>
                                 <input type="file" name="screenshotFile" class="form-control-file" accept=".png,.jpeg,.jpg" id="screenshotFile">
                             </div>
                             <div class="form-group">
                                 <input type="hidden" name="MAX_FILE_SIZE" value="8388608" />
-                                <label for="assetFile">Choose asset(s) file(s)</label>
+                                <label for="assetFile">Choose asset(s) file(s) (8MB max, supported formats : ".json,.nbt,.png,.zip,.java,.ogg")</label>
                                 <input type="file" class="form-control-file" accept=".json,.nbt,.png,.zip,.java,.ogg" name="assetFile[]" id="assetFile" multiple>
                             </div>
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="acceptRights">
                                 <label class="custom-control-label" for="acceptRights">By checking this box, I agree to allow The Tardis Team to use my assets/submission in their Project</label>
                             </div>
+                            <p><strong>All fields are required.</strong></p>
                             <button type="submit" id="submit_asset" class="btn btn-primary disabled" disabled>Confirm</button>
                         </form>
                     </div>
