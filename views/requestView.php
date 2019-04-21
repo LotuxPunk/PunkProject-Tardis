@@ -32,7 +32,7 @@
     $vote = "";
     while($row = $request->fetch_assoc()){
         $status = "";
-        if(isset($_SESSION["showdone"]) && $_SESSION["showdone"]){
+        if((isset($_SESSION["showdone"]) && $_SESSION["showdone"]) || !isset($_SESSION["showdone"])){
             $status = getStatusBadge($row['done'], $row['rejected'], $row['id_duplicate']);
         }
         
