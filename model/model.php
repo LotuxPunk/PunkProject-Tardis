@@ -25,7 +25,7 @@
 
     function getUsersInfo(){
         $conn = dbConnect();
-        $sql = "SELECT id, username, level FROM user WHERE active = 1";
+        $sql = "SELECT id, username, level FROM user WHERE active = 1 AND level >= 0";
         $result = $conn->query($sql);
         $conn->close();
 
