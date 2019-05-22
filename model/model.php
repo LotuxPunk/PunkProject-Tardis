@@ -200,39 +200,52 @@
     }
 
     function addThumb($isUp,$id_request){
-        $servername = getDbServername();
-        $username = getDbUsername();
-        $password = getDbPassword();
-        $dbname = getDbName();
+        $conn = dbConnect();
+        $sql = "SELECT * FROM vote WHERE id_request = '{$id_request}' AND id_user = '{$_SESSION['id']}'";
+        $result = $conn->query($sql);
+        $conn->close();
 
-        try {
-            if(updateVote($id_request, $isUp)){
-                $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-                $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                $stmt = $conn->prepare("INSERT INTO vote (id_request, id_user, is_positive) VALUES (:id_request, :id_user, :is_positive)");
-                $stmt->bindParam(':id_request', $id_request);
-                $stmt->bindParam(':id_user', $_SESSION['id']);
-                $stmt->bindParam(':is_positive', $isUp);
-                $stmt->execute();
+        $row = $result->fetch_assoc();
 
-                if($isUp){
-                    $result = 'Request liked';    
+        if(count($row) == 0){
+            $servername = getDbServername();
+            $username = getDbUsername();
+            $password = getDbPassword();
+            $dbname = getDbName();
+    
+            try {
+                if(updateVote($id_request, $isUp)){
+                    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    $stmt = $conn->prepare("INSERT INTO vote (id_request, id_user, is_positive) VALUES (:id_request, :id_user, :is_positive)");
+                    $stmt->bindParam(':id_request', $id_request);
+                    $stmt->bindParam(':id_user', $_SESSION['id']);
+                    $stmt->bindParam(':is_positive', $isUp);
+                    $stmt->execute();
+    
+                    if($isUp){
+                        $result = 'Request liked';    
+                    }
+                    else{
+                        $result = 'Request unliked';
+                    }
                 }
                 else{
-                    $result = 'Request unliked';
+                    $result = "Error when updating vote";
                 }
+    
+                
             }
-            else{
-                $result = "Error when updating vote";
-            }
-
-            
+            catch(PDOException $e)
+                {
+                    $result = "Error: " . $e->getMessage();
+                }
+            $conn = null;
         }
-        catch(PDOException $e)
-            {
-                $result = "Error: " . $e->getMessage();
-            }
-        $conn = null;
+        else{
+            $result = "Error: You can't vote twice.";
+        }
+
         return $result;
     }
 
