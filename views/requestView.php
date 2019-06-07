@@ -25,10 +25,10 @@
 <?php ob_start(); ?>
 <script>
     let requests = <?php echo $jsonRequests; ?>;
+    const level =  <?php if(isset($_SESSION["level"])) echo $_SESSION["level"]; else echo 0; ?>;
     let block = document.getElementById("requests");
 
     for (const request of requests) {
-        //'<p>'.htmlspecialchars_decode($row['content']).'</p><div class="btn-group admin-bar" style="margin-bottom:20px;" role="group">'.$moderation.'<a class="btn btn-secondary" role="button" href="index.php?p=focus&id='.$row['id'].'"><i class="far fa-eye"></i> Focus</a></div></div><div class="col-3">'.$vote.'</div></div>';
         let elem = document.createElement("div");
         elem.classList.add("border-bottom","row");
 
@@ -40,7 +40,18 @@
         let content = document.createElement("p");
         content.innerHTML = request.content;
         elemContent.appendChild(content);
-        
+
+        let btnbar = document.createElement("div");
+        btnbar.classList.add("btn-group","admin-bar");
+        btnbar.style = "margin-bottom:20px;"
+        btnbar.setAttribute("role","group");
+        let barHtml = "";
+        if(level >= 5)
+            barHtml = "<a class='btn btn-success' role='button' href='index.php?done="+request.id+"'><i class='fas fa-check'></i> Done</a><a class='btn btn-danger' href='index.php?rejected="+request.id+"' role='button'><i class='fas fa-times-circle'></i> Reject</a><a href='index.php?delete="+request.id+"' class='btn btn-danger' role='button'><i class='far fa-trash-alt'></i> Delete post</a><a href='index.php?ban="+request.idUser+"' class='btn btn-danger' role='button'><i class='fas fa-gavel'></i> Ban user</a>";
+        barHtml += '<a class="btn btn-secondary" role="button" href="index.php?p=focus&id='+request.id+'"><i class="far fa-eye"></i> Focus</a></div></div></div>';
+        btnbar.innerHTML = barHtml;
+        elemContent.appendChild(btnbar);
+
         block.appendChild(elem);
     }
 </script>
