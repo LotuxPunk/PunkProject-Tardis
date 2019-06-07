@@ -23,8 +23,7 @@
                 addRequest(htmlspecialchars($_POST['title']), htmlspecialchars($_POST['description']));
             }
             elseif($_GET['p'] == "request"){
-                $page = htmlspecialchars($_GET['n']);
-                getRequestView($page);
+                getRequestView();
             }
             elseif($_GET['p'] == 'focus'){
                 $id = htmlspecialchars($_GET['id']);
@@ -82,8 +81,7 @@
             getLoginPage();
         }
         elseif($_GET['p'] == "request"){
-            $page = htmlspecialchars($_GET['n']);
-            getRequestView($page);
+            getRequestView();
         }
         elseif($_GET['p'] == 'focus'){
             $id = htmlspecialchars($_GET['id']);

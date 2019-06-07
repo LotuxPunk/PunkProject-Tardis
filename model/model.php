@@ -177,6 +177,14 @@
         return $result;
     }
 
+    function getAllRequests(){
+        $conn = dbConnect();
+        $sql = "SELECT request.id, request.title, request.content, request.date, user.username, request.vote, request.done, request.rejected, request.id_duplicate, request.id_user FROM request JOIN user ON(request.id_user = user.id) ORDER BY id DESC";
+        $result = $conn->query($sql);
+        $conn->close();
+        return $result;
+    }
+
     function getUsernameByID($id){
         $conn = dbConnect();
         $sql = "SELECT username FROM user WHERE id = ".$id;

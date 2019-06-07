@@ -19,29 +19,15 @@
         require('./views/homeView.php');
     }
 
-    function getRequestView($page = 1, $message = ""){
-        $_SESSION['page'] = $page;
-
-        $nb_elem = 10;
-        if(isset($_SESSION['nb_elem'])){
-            $nb_elem = $_SESSION['nb_elem'];
-        }
-
-        $nb_requests = getNbRequest();
-        $nb_pages = intdiv($nb_requests, $nb_elem) + 1;
-
-        $request = getLastRequest($nb_elem, $page);
-        $data = getLastRequest($nb_elem, $page);
-        $users = array();
-        $voted = array();
+    function getRequestView($message = ""){
+        $data = getAllRequests();
+        $requests = array();
         while($row = $data->fetch_assoc()){
-            if (isset($_SESSION['connected'])) {
-                $voted[] = isVoted($_SESSION['id'], $row['id']);
-            }
-            else{
-                $voted[] = 0;
-            }
+            $elem = array('id' => $row['id'], 'title' => $row['title'], 'content' => htmlspecialchars_decode($row['content']), 'username' => $row['username'], 'idUser' => $row['id_user'], 'vote'=> $row['vote'], 'idDuplicate' => $row['id_duplicate'], 'done' => $row['done'], 'rejected' => $row['rejected']);
+            array_push($requests, $elem);
         }
+        $jsonRequests = json_encode($requests);
+
         require('./views/requestView.php');
     }
 
@@ -91,8 +77,6 @@
             $_SESSION['id'] = getId($email);
             $_SESSION['nb_elem'] = 10;
             $_SESSION['level'] = getLevel($_SESSION['id']);
-            $_SESSION['page'] = 1;
-            $_SESSION['showdone'] = true;
             if(!checkBan()){
                 getHomePage();
             }
@@ -183,13 +167,13 @@
 
     function setVote($isUp, $id){
         $result = addThumb($isUp, $id);
-        getRequestView($_SESSION['page'],$result);
+        getRequestView($result);
     }
 
     function setStatus($isRejected, $id){
         $result = addStatus($isRejected, $id);
         sendWebhookStatus(!$isRejected, $id, getTitleRequestByID($id));
-        getRequestView($_SESSION['page'],$result);
+        getRequestView($result);
     }
 
     function checkBan(){
@@ -220,7 +204,7 @@
         else{
             $message = "Error : delete post #{$id}.";
         }
-        getRequestView($_SESSION['page'],$message);
+        getRequestView($message);
     }
 
     function getProfilePage($id){
