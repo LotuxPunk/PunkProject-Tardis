@@ -34,7 +34,7 @@
 
         let elemContent = document.createElement("div");
         elemContent.classList.add("col-9");
-        elemContent.innerHTML = '<h5>' + request.title + '<small> by <a href="index.php?profile=' + request.idUser + '">' + request.username + '</a></small></h5>'
+        elemContent.innerHTML = '<h5>' + request.title + '<small> by <a href="index.php?profile=' + request.idUser + '">' + request.username + '</a></small> ' + getStatusBadge(request.done, request.rejected, request.idDuplicate)+'</h5>';
         elem.appendChild(elemContent);
 
         let content = document.createElement("p");
@@ -46,13 +46,26 @@
         btnbar.style = "margin-bottom:20px;"
         btnbar.setAttribute("role","group");
         let barHtml = "";
-        if(level >= 5)
-            barHtml = "<a class='btn btn-success' role='button' href='index.php?done="+request.id+"'><i class='fas fa-check'></i> Done</a><a class='btn btn-danger' href='index.php?rejected="+request.id+"' role='button'><i class='fas fa-times-circle'></i> Reject</a><a href='index.php?delete="+request.id+"' class='btn btn-danger' role='button'><i class='far fa-trash-alt'></i> Delete post</a><a href='index.php?ban="+request.idUser+"' class='btn btn-danger' role='button'><i class='fas fa-gavel'></i> Ban user</a>";
-        barHtml += '<a class="btn btn-secondary" role="button" href="index.php?p=focus&id='+request.id+'"><i class="far fa-eye"></i> Focus</a></div></div></div>';
+        if(level >= 5 && request.done == 0 && request.rejected == 0 && request.idDuplicate == 0)
+            barHtml = "<a class='btn btn-success' role='button' href='index.php?done=" + request.id + "'><i class='fas fa-check'></i> Done</a><a class='btn btn-danger' href='index.php?rejected=" + request.id + "' role='button'><i class='fas fa-times-circle'></i> Reject</a><a href='index.php?delete=" + request.id + "' class='btn btn-danger' role='button'><i class='far fa-trash-alt'></i> Delete post</a><a href='index.php?ban=" + request.idUser + "' class='btn btn-danger' role='button'><i class='fas fa-gavel'></i> Ban user</a>";
+        barHtml += '<a class="btn btn-secondary" role="button" href="index.php?p=focus&id=' + request.id + '"><i class="far fa-eye"></i> Focus</a></div></div></div>';
         btnbar.innerHTML = barHtml;
         elemContent.appendChild(btnbar);
 
         block.appendChild(elem);
+    }
+
+    function getStatusBadge(done, rejected, duplicate){
+        if(done == 1){
+            return '<span class="badge badge-success">Done</span>';
+        }
+        if(rejected == 1){
+            return '<span class="badge badge-danger">Rejected</span>';
+        }
+        if(duplicate > 0){
+            return '<span class="badge badge-primary">Duplicated</span> <a href="index.php?p=focus&id='+duplicate+'"><i class="fas fa-link"></i></a>';
+        }
+        return "";
     }
 </script>
 <?php $modal = ob_get_clean(); ?>
