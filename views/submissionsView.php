@@ -22,28 +22,24 @@
     <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#addSubmission"><i class="fas fa-palette"></i> I have an asset!</button>
 </div>
 <div class="container-fluid">
+    <div class="card-columns">
     <?php while($row = $dataAssets->fetch_assoc()){ ?>
-    <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-6">
-            <div class="card" style="margin-bottom:10px;">
-                <img class="card-img-top" src="<?php echo "./data/uploads/screenshots/{$row['screenshot']}";?>" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title"><strong><?php echo $row["title"];?></strong> <small>by <?php echo $row["username"]; ?></small></h5>
-                    <div class="btn-group">
-                        <?php if(isset($_SESSION['level']) && $_SESSION['level'] >= 5) {?>
-                            <a href="<?php echo "./data/uploads/assets/{$row['filename']}";?>" class="btn btn-primary"><i class="fas fa-download"></i> Download</a>
-                            <a href='index.php?ban=<?php echo $row["id_user"];?>' class='btn btn-danger' role='button'><i class='fas fa-gavel'></i> Ban user</a>
-                            <a href='index.php?delete-asset=<?php echo $row["id"];?>' class='btn btn-danger' role='button'><i class='far fa-trash-alt'></i> Delete post</a>
-                        <?php }?>
-                    </div>
-                    
+        <div class="card" style="margin-bottom:10px;">
+            <img class="card-img-top" src="<?php echo "./data/uploads/screenshots/{$row['screenshot']}";?>" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title"><strong><?php echo $row["title"];?></strong> <small>by <?php echo $row["username"]; ?></small></h5>
+                <div class="btn-group">
+                    <?php if(isset($_SESSION['level']) && $_SESSION['level'] >= 5) {?>
+                        <a href="<?php echo "./data/uploads/assets/{$row['filename']}";?>" class="btn btn-primary"><i class="fas fa-download"></i> Download</a>
+                        <a href='index.php?ban=<?php echo $row["id_user"];?>' class='btn btn-danger' role='button'><i class='fas fa-gavel'></i> Ban user</a>
+                        <a href='index.php?delete-asset=<?php echo $row["id"];?>' class='btn btn-danger' role='button'><i class='far fa-trash-alt'></i> Delete post</a>
+                    <?php }?>
                 </div>
+                
             </div>
         </div>
-        <div class="col-md-3"></div>
-    </div>
     <?php } ?>
+    </div>
 </div>
 <?php $content = ob_get_clean(); ?>
 
