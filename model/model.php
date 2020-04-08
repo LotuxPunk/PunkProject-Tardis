@@ -76,7 +76,7 @@
             $stmt->bindParam(':active', $active);
             $stmt->bindParam(':date', $date_ins);
             $stmt->execute();
-            $result = 'New account created! Check your email to activate it !';
+            $result = 'New account created! Check your email to activate it (Spams included) !';
         }
         catch(PDOException $e)
             {

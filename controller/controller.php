@@ -115,6 +115,7 @@
                         $today = date('Y-m-d H:i:s');
                         if(sendConfirmMail($email, $code)){
                             $success = setInsc($username, $pass, $email, $code, $today);
+                            sendWebhookInsc($username);
                         }
                         else {
                             $echec = "Error : something wrong with email";
@@ -172,7 +173,6 @@
         $error = "";
         if(getActive($code) == 0){
             $activation = setActive($code);
-            sendWebhookInsc(getUsernameByCode($code));
         }
         else{
             $error = "Account already activated";
