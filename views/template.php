@@ -93,7 +93,7 @@
                             </div>
                             <div class="form-group">
                                 <input type="hidden" name="MAX_FILE_SIZE" value="8388608" />
-                                <label for="assetFile">Choose asset(s) file(s) (8MB max, supported formats : ".json,.nbt,.png,.zip,.java,.ogg, .bbmodel")</label>
+                                <label for="assetFile">Choose asset(s) file(s) (8MB max, supported formats : ".json,.nbt,.png,.zip,.java,.ogg,.bbmodel")</label>
                                 <input type="file" class="form-control-file" accept=".json,.nbt,.png,.zip,.java,.ogg,.bbmodel" name="assetFile[]" id="assetFile" multiple>
                             </div>
                             <div class="custom-control custom-checkbox">
