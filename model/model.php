@@ -63,7 +63,7 @@
         $username = getDbUsername();
         $password = getDbPassword();
         $dbname = getDbName();
-        $active = false;
+        $active = 0;
 
         try {
             $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
