@@ -49,10 +49,16 @@ class User
      */
     private $votes;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Asset::class, mappedBy="author", orphanRemoval=true)
+     */
+    private $assets;
+
     public function __construct()
     {
         $this->requests = new ArrayCollection();
         $this->votes = new ArrayCollection();
+        $this->assets = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -160,6 +166,37 @@ class User
     {
         if ($this->votes->contains($vote)) {
             $this->votes->removeElement($vote);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Asset[]
+     */
+    public function getAssets(): Collection
+    {
+        return $this->assets;
+    }
+
+    public function addAsset(Asset $asset): self
+    {
+        if (!$this->assets->contains($asset)) {
+            $this->assets[] = $asset;
+            $asset->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAsset(Asset $asset): self
+    {
+        if ($this->assets->contains($asset)) {
+            $this->assets->removeElement($asset);
+            // set the owning side to null (unless already changed)
+            if ($asset->getAuthor() === $this) {
+                $asset->setAuthor(null);
+            }
         }
 
         return $this;
