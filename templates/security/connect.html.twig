@@ -1,0 +1,33 @@
+{% extends 'security/base.security.html.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-sm">
+        {% if error %}
+            <div class="alert alert-danger" role="alert">
+                {{ error.messageKey | trans(error.messagedata, 'security') }}
+            </div>
+        {% endif %}
+    </div>
+    <div class="col-sm">
+        <div class="card p-3 rounded-lg bg-light">
+            <form action="{{path('connect')}}" class="form-signin" method="POST">
+                <img class="mb-4" src="{{asset('images/punkproject.png')}}" alt="" class="rounded mx-auto d-block" width="72" height="72">
+                <h3>Please sign in</h3>
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" required name="_username" value="{{lastUsername}}" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" required name="_password" class="form-control">
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            </form>
+        </div>
+    </div>
+    <div class="col-sm"></div>
+</div>
+{% endblock %}

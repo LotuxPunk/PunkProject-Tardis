@@ -2,15 +2,26 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\Asset;
+use App\Entity\Request;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\EqualTo;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(fields={"email"}, message="This email is already used.")
+ * @UniqueEntity(fields={"username"}, message="This username is already used.")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -21,18 +32,27 @@ class User
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Email(message = "The email '{{ value }}' is not a valid email.")
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\NotCompromisedPassword
      */
     private $password;
+
+    /**
+     * @Assert\EqualTo(propertyPath="password", message="Password have to be identical")
+     */
+    private $validationPassword;
 
     /**
      * @ORM\OneToMany(targetEntity=Request::class, mappedBy="user", orphanRemoval=true)
@@ -53,6 +73,11 @@ class User
      * @ORM\OneToMany(targetEntity=Asset::class, mappedBy="author", orphanRemoval=true)
      */
     private $assets;
+
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
 
     public function __construct()
     {
@@ -198,6 +223,52 @@ class User
                 $asset->setAuthor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRoles(): ?array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function eraseCredentials()
+    {
+
+    }
+
+    public function getSalt()
+    {
+
+    }
+
+    /**
+     * Get the value of validationPassword
+     */ 
+    public function getValidationPassword()
+    {
+        return $this->validationPassword;
+    }
+
+    /**
+     * Set the value of validationPassword
+     *
+     * @return  self
+     */ 
+    public function setValidationPassword($validationPassword)
+    {
+        $this->validationPassword = $validationPassword;
 
         return $this;
     }
