@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-secondary sticky-top">
 
     <a class="navbar-brand" href="{{path('home')}}">
-        <img src="{{asset('images/spytennis.png')}}" class="rounded d-inline-block align-top" width="30" height="30" alt="Logo Raquette">
+        <img src="{{asset('images/punkproject.png')}}" class="rounded d-inline-block align-top" width="30" height="30" alt="PunkProject's logo">
         PunkProject
     </a>
 
@@ -14,33 +14,24 @@
             {% if is_granted('ROLE_ADMIN') %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Administration
+                        Dashboard
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{{path('admin')}}">Utilisateurs</a>
-                    <a class="dropdown-item" href="{{path('admin_courts')}}">Terrains</a>
-                    <a class="dropdown-item" href="{{path('add_member')}}">Ajouter un membre</a>
-                    <a class="dropdown-item" href="{{path('add_court')}}">Ajouter un terrain</a>
-                    <a class="dropdown-item" href="{{path('add_event')}}">Ajouter un événement</a>
-
+                        <a class="dropdown-item" href="#">Link</a>
+                    </div>
                     
-                </li>
-            {% endif %}
-            {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{path('client')}}">Réservations</a>
                 </li>
             {% endif %}
             {% if not app.user %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{path('registration')}}">Inscription</a>
+                    <a class="nav-link" href="{{path('registration')}}">Register</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{path('connect')}}">Connexion</a>
+                    <a class="nav-link" href="{{path('connect')}}">Login</a>
                 </li>
             {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{path('disconnect')}}">Déconnexion</a>
+                    <a class="nav-link" href="{{path('disconnect')}}">Logout</a>
                 </li>
             {% endif %}
         </ul>
