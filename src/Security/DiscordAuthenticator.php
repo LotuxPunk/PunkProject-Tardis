@@ -33,7 +33,7 @@ class DiscordAuthenticator extends AbstractGuardAuthenticator
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
         //LOGIC => GET USER FROM DISCORD
-        $this->discordProvider->loadUserFromDiscord($credentials['code']);
+        return $this->discordProvider->loadUserFromDiscord($credentials['code']);
     }
 
     public function checkCredentials($credentials, UserInterface $user)
