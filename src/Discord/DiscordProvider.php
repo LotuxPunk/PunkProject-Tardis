@@ -3,6 +3,8 @@
 namespace App\Discord;
 
 use App\Entity\User;
+use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\Mime\Part\Multipart\FormDataPart;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -13,13 +15,17 @@ class DiscordProvider
     private $discordClientSecret;
     private $httpClient;
     private $urlGeneratorInterface;
+    private UserRepository $repository;
+    private EntityManagerInterface $manager;
 
-    public function __construct($discordClientId, $discordClientSecret, HttpClientInterface $httpClient, UrlGeneratorInterface $urlGeneratorInterface)
+    public function __construct($discordClientId, $discordClientSecret, HttpClientInterface $httpClient, UrlGeneratorInterface $urlGeneratorInterface, UserRepository $repository, EntityManagerInterface $manager)
     {
         $this->discordClientId = $discordClientId;
         $this->discordClientSecret = $discordClientSecret;
         $this->httpClient = $httpClient;
         $this->urlGeneratorInterface = $urlGeneratorInterface;
+        $this->repository = $repository;
+        $this->manager = $manager;
     }
 
     public function loadUserFromDiscord(string $code)
@@ -46,6 +52,15 @@ class DiscordProvider
 
         //return new User($response->toArray());
 
-        //TODO : Register the user if not in database and get it
+        $result =$this->repository->findByDiscordId($response->toArray()['id']);
+
+        if (empty($result)) {
+            $user = new User($response->toArray());
+            $user->setRoles(["ROLE_USER"]);
+            $this->manager->persist($user);
+            $this->manager->flush();
+            return $user;
+        }
+        return $result[0];
     }
 }
