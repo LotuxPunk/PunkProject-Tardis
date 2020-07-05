@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DashboardController!{% endblock %}
+
+{% block body %}
+<h2>Adding a new product</h2>
+
+{{ form_start(form) }}
+    {{ form_row(form.title) }}
+    {{ form_row(form.comment) }}
+    {{ form_row(form.thumbnail) }}
+    {{ form_row(form.asset) }}
+    {{ form_row(form.submit, { 'label': 'Submit me' }) }}
+{{ form_end(form) }}
+{% endblock %}

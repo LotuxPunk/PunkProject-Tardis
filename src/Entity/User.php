@@ -31,7 +31,7 @@ class User implements UserInterface
     private $roles = [];
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string")
      */
     private $discordId;
 

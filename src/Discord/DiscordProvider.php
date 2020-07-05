@@ -44,6 +44,8 @@ class DiscordProvider
 
         $token = $response->toArray()['access_token'];
 
+        //dd($token);
+
         $response = $this->httpClient->request("GET", "https://discord.com/api/users/@me", [
             'headers'=>[
                 'Authorization'=>"Bearer $token"
@@ -52,7 +54,11 @@ class DiscordProvider
 
         //return new User($response->toArray());
 
-        $result =$this->repository->findByDiscordId($response->toArray()['id']);
+        //dd($response->toArray());
+
+        $result = $this->repository->findByDiscordId($response->toArray()['id']);
+        
+        //dd($result);
 
         if (empty($result)) {
             $user = new User($response->toArray());

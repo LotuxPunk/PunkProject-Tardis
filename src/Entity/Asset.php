@@ -33,6 +33,16 @@ class Asset
      */
     private $comment;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $thumbnailFilename;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $assetFilename;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -70,6 +80,30 @@ class Asset
     public function setComment(string $comment): self
     {
         $this->comment = $comment;
+
+        return $this;
+    }
+
+    public function getThumbnailFilename(): ?string
+    {
+        return $this->thumbnailFilename;
+    }
+
+    public function setThumbnailFilename(?string $thumbnailFilename): self
+    {
+        $this->thumbnailFilename = $thumbnailFilename;
+
+        return $this;
+    }
+
+    public function getAssetFilename(): ?string
+    {
+        return $this->assetFilename;
+    }
+
+    public function setAssetFilename(string $assetFilename): self
+    {
+        $this->assetFilename = $assetFilename;
 
         return $this;
     }
