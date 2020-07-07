@@ -4,18 +4,77 @@
 
 {% block body %}
 <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    body {
+        background-color: #f7f9fb;
+        font-size: 14px;
+    }
+
+    .brand {
+        width: 90px;
+        height: 90px;
+        overflow: hidden;
+        border-radius: 50%;
+        margin: 40px auto;
+        box-shadow: 0 4px 8px rgba(0,0,0,.05);
+        position: relative;
+        z-index: 1;
+    }
+
+    .brand img {
+        width: 100%;
+    }
+
+    .card-wrapper {
+        width: 400px;
+    }
+
+    .card {
+        border-color: transparent;
+        box-shadow: 0 4px 8px rgba(0,0,0,.05);
+    }
+
+    .btn.btn-block {
+        padding: 12px 10px;
+    }
+
+    .card .card-title {
+        margin-bottom: 30px;
+    }
+
+    .card.fat {
+        padding: 10px;
+    }
+
+    @media screen and (max-width: 425px) {
+        .my-login-page .card-wrapper {
+            width: 90%;
+            margin: 0 auto;
+        }
+    }
+
+    .btn.btn-block {
+        padding: 12px 10px;
+    }
 </style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-    <a href="{{path('discord')}}">Connect via Discord</a>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'D:/LotuxPunk/Documents/Github/PunkProject/PunkProject-Tardis/src/Controller/LoginController.php'|file_link(0) }}">src/Controller/LoginController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'D:/LotuxPunk/Documents/Github/PunkProject/PunkProject-Tardis/templates/login/index.html.twig'|file_link(0) }}">templates/login/index.html.twig</a></code></li>
-    </ul>
-</div>
+<section class="h-100">
+    <div class="container h-100">
+        <div class="row justify-content-md-center h-100">
+            <div class="card-wrapper">
+                <div class="brand">
+                    <img src="{{asset('images/punkproject.png')}}"  alt="logo">
+                </div>
+                <h2 class="text-center">PunkProject</h2>
+                <div class="card fat">
+                    <div class="card-body">
+                        <h4 class="card-title">Login</h4>
+                        <a href="{{path('discord')}}" class="btn btn-light w-100" style="color: #7289DA;"><img src="{{asset('images/discord-logo-color.svg')}}" height="30"/> Connect with Discord</a>
+                    </div>
+                </div>
+                <!-- <div class="footer">
+                    
+                </div> -->
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}
