@@ -67,6 +67,11 @@ class DiscordProvider
             $this->manager->flush();
             return $user;
         }
-        return $result[0];
+        $user = $result[0];
+        $user->setAvatar($response->toArray()['avatar']);
+        $this->manager->persist($user);
+        $this->manager->flush();
+
+        return $user;
     }
 }
