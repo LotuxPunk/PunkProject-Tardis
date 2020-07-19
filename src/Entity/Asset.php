@@ -18,7 +18,7 @@ class Asset
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=user::class, inversedBy="assets")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="assets")
      * @ORM\JoinColumn(nullable=false)
      */
     private $author;
