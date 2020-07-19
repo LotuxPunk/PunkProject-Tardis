@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard | {% block subtitle %}{% endblock %}{% endblock %}
+
+{% block body %}
+<div class="container-fluid pt-2">
+    <div class="row">
+        <div class="col-sm-3">
+            <h2>Actions</h2>
+            {% include "dashboard/menu.dashboard.html.twig" %}
+        </div>
+        <div class="col-sm-9">
+            {% block body_dashboard %}{% endblock %}
+        </div>
+    </div>
+    
+</div>
+{% endblock %}

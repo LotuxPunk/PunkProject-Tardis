@@ -1,15 +1,27 @@
-{% extends 'base.html.twig' %}
+{% extends 'dashboard/base.dashboard.html.twig' %}
 
-{% block title %}Hello DashboardController!{% endblock %}
+{% block subtitle %}Asset{% endblock %}
 
-{% block body %}
-<h2>Adding a new product</h2>
+{% block body_dashboard %}
+<div class="container-fluid">
+    <h2>Adding a new asset</h2>
+    {{ form_start(form) }}
+        {{ form_row(form.title) }}
+        {{ form_row(form.comment) }}
+        {{ form_row(form.thumbnail) }}
+        {{ form_row(form.asset) }}
+        {{ form_row(form.submit, { 'label': 'Submit me', 'attr': {'class': 'btn btn-primary'} }) }}
+    {{ form_end(form) }} 
+</div>
+<script>
+    let handleFileName = function (e, id){
+        var fileName = document.getElementById(id).files[0].name;
+        var nextSibling = e.target.nextElementSibling
+        nextSibling.innerText = fileName
+    }
 
-{{ form_start(form) }}
-    {{ form_row(form.title) }}
-    {{ form_row(form.comment) }}
-    {{ form_row(form.thumbnail) }}
-    {{ form_row(form.asset) }}
-    {{ form_row(form.submit, { 'label': 'Submit me' }) }}
-{{ form_end(form) }}
+    document.getElementById('asset_thumbnail').addEventListener('change', e => handleFileName(e, "asset_thumbnail"));
+    document.getElementById('asset_asset').addEventListener('change', e => handleFileName(e, "asset_asset"));
+
+</script>
 {% endblock %}
