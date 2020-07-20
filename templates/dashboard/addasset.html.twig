@@ -3,16 +3,16 @@
 {% block subtitle %}Asset{% endblock %}
 
 {% block body_dashboard %}
-<div class="container-fluid">
-    <h2>Adding a new asset</h2>
-    {{ form_start(form) }}
-        {{ form_row(form.title) }}
-        {{ form_row(form.comment) }}
-        {{ form_row(form.thumbnail) }}
-        {{ form_row(form.asset) }}
-        {{ form_row(form.submit, { 'label': 'Submit me', 'attr': {'class': 'btn btn-primary'} }) }}
-    {{ form_end(form) }} 
-</div>
+<h2>Adding a new asset</h2>
+{{ form_start(form) }}
+    {{ form_row(form.title) }}
+    {{ form_row(form.comment) }}
+    {{ form_row(form.thumbnail) }}
+    {{ form_row(form.asset) }}
+    {{ form_row(form.submit, { 'label': 'Submit me', 'attr': {'class': 'btn btn-primary'} }) }}
+{{ form_end(form) }} 
+{% endblock %}
+{% block javascripts %}
 <script>
     let handleFileName = function (e, id){
         var fileName = document.getElementById(id).files[0].name;

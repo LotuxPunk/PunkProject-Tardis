@@ -6,11 +6,15 @@
 <div class="container-fluid pt-2">
     <div class="row">
         <div class="col-sm-3">
-            <h2>Actions</h2>
-            {% include "dashboard/menu.dashboard.html.twig" %}
+            <div class="container-fluid border p-1 rounded-lg bg-light shadow">
+                <h2>Actions</h2>
+                {% include "dashboard/menu.dashboard.html.twig" %}
+            </div>
         </div>
         <div class="col-sm-9">
-            {% block body_dashboard %}{% endblock %}
+            <div class="container-fluid border p-1 rounded-lg bg-light shadow">
+                {% block body_dashboard %}{% endblock %}
+            </div>
         </div>
     </div>
     
