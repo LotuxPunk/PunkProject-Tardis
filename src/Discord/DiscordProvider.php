@@ -17,8 +17,10 @@ class DiscordProvider
     private $urlGeneratorInterface;
     private UserRepository $repository;
     private EntityManagerInterface $manager;
+    private DiscordWebhookHelper $webhookHelper;
+    private DiscordAvatarHelper $avatarHelper;
 
-    public function __construct($discordClientId, $discordClientSecret, HttpClientInterface $httpClient, UrlGeneratorInterface $urlGeneratorInterface, UserRepository $repository, EntityManagerInterface $manager)
+    public function __construct($discordClientId, $discordClientSecret, HttpClientInterface $httpClient, UrlGeneratorInterface $urlGeneratorInterface, UserRepository $repository, EntityManagerInterface $manager, DiscordWebhookHelper $webhookHelper, DiscordAvatarHelper $avatarHelper)
     {
         $this->discordClientId = $discordClientId;
         $this->discordClientSecret = $discordClientSecret;
@@ -26,6 +28,8 @@ class DiscordProvider
         $this->urlGeneratorInterface = $urlGeneratorInterface;
         $this->repository = $repository;
         $this->manager = $manager;
+        $this->webhookHelper = $webhookHelper;
+        $this->avatarHelper = $avatarHelper;
     }
 
     public function loadUserFromDiscord(string $code)
@@ -65,6 +69,20 @@ class DiscordProvider
             $user->setRoles(["ROLE_USER"]);
             $this->manager->persist($user);
             $this->manager->flush();
+            
+            $username = $user->getUsername();
+            $avatar = $this->avatarHelper->getAvatarFromUser($user);
+
+            $this->webhookHelper->sendEmbedMessage(
+                $username,
+                "A new user has arrived!",
+                "$username joined the PunkProject for the first time.",
+                "#7BE337",
+                null,
+                $avatar,
+                $avatar
+            );
+
             return $user;
         }
         $user = $result[0];

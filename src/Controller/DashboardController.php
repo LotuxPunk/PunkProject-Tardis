@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Discord\DiscordAvatarHelper;
+use App\Discord\DiscordWebhookHelper;
 use App\Entity\Asset;
 use App\Form\AssetType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,7 +28,7 @@ class DashboardController extends AbstractController
     /**
      * @Route("/dashboard/addasset", name="add_asset")
      */
-    public function addAsset(Request $request, SluggerInterface $slugger, EntityManagerInterface $manager)
+    public function addAsset(Request $request, SluggerInterface $slugger, EntityManagerInterface $manager, DiscordAvatarHelper $avatarHelper, DiscordWebhookHelper $webhookHelper)
     {
         $asset = new Asset();
         $form = $this->createForm(AssetType::class, $asset);
@@ -74,6 +76,15 @@ class DashboardController extends AbstractController
 
             $manager->persist($asset);
             $manager->flush();
+
+            $webhookHelper->sendEmbedMessage(
+                $this->getUser()->getUsername(),
+                $form->get('title')->getNormData(),
+                $form->get('comment')->getNormData(),
+                "#3AC98A",
+                null,
+                $avatarHelper->getAvatarFromUser($this->getUser())                
+            );
 
             return $this->redirect($this->generateUrl('dashboard'));
         }

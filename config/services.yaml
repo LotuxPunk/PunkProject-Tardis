@@ -17,6 +17,7 @@ services:
         bind:
             $discordClientId: '%env(resolve:DISCORD_CLIENT_ID)%'
             $discordClientSecret: '%env(resolve:DISCORD_CLIENT_SECRET)%'
+            $discordWebhook: '%env(resolve:WEBHOOK_LINK)%'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
