@@ -6,6 +6,7 @@ use App\Discord\DiscordAvatarHelper;
 use App\Discord\DiscordWebhookHelper;
 use App\Entity\Asset;
 use App\Form\AssetType;
+use App\Repository\AssetRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -49,7 +50,8 @@ class DashboardController extends AbstractController
                         $newFilename
                     );
                 } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
+                    $this->addFlash('error', 'Error while adding asset');
+                    return $this->redirect($this->generateUrl('dashboard'));
                 }
 
                 $asset->setThumbnailFilename($newFilename);
@@ -66,7 +68,8 @@ class DashboardController extends AbstractController
                         $newFilename
                     );
                 } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
+                    $this->addFlash('error', 'Error while adding asset');
+                    return $this->redirect($this->generateUrl('dashboard'));
                 }
 
                 $asset->setAssetFilename($newFilename);
@@ -76,6 +79,8 @@ class DashboardController extends AbstractController
 
             $manager->persist($asset);
             $manager->flush();
+
+            $this->addFlash('success', 'Asset added!');
 
             $webhookHelper->sendEmbedMessage(
                 $this->getUser()->getUsername(),
@@ -92,4 +97,16 @@ class DashboardController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    /**
+     * @Route("/dashboard/assets", name="my_assets")
+     */
+    public function myAssets(AssetRepository $assetRepository)
+    {
+        return $this->render('dashboard/myassets.html.twig', [
+            'assets' => $assetRepository->findByUser($this->getUser())
+        ]);
+    }
+
+    
 }

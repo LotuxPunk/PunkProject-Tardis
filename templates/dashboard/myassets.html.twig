@@ -1,0 +1,37 @@
+{% extends 'dashboard/base.dashboard.html.twig' %}
+
+{% block subtitle %}My assets{% endblock %}
+
+{% block body_dashboard %}
+<h2>My assets</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Comment</th>
+            <th>ThumbnailFilename</th>
+            <th>AssetFilename</th>
+            <th>actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for asset in assets %}
+        <tr>
+            <td>{{ asset.id }}</td>
+            <td>{{ asset.title }}</td>
+            <td>{{ asset.comment }}</td>
+            <td>{{ asset.thumbnailFilename }}</td>
+            <td>{{ asset.assetFilename }}</td>
+            <td>
+                {{ include('asset/_delete_form.html.twig') }}
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="6">no records found</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

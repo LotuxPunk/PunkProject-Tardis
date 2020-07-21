@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Asset{% endblock %}
+
+{% block body %}
+    <h1>Asset</h1>
+
+    <span>Still WIP</span>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ asset.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ asset.title }}</td>
+            </tr>
+            <tr>
+                <th>Comment</th>
+                <td>{{ asset.comment }}</td>
+            </tr>
+            <tr>
+                <th>ThumbnailFilename</th>
+                <td>{{ asset.thumbnailFilename }}</td>
+            </tr>
+            <tr>
+                <th>AssetFilename</th>
+                <td>{{ asset.assetFilename }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}
