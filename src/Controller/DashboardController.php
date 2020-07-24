@@ -82,13 +82,16 @@ class DashboardController extends AbstractController
 
             $this->addFlash('success', 'Asset added!');
 
+            $thumbnailFile = $asset->getThumbnailFilename();
+
             $webhookHelper->sendEmbedMessage(
                 $this->getUser()->getUsername(),
                 $form->get('title')->getNormData(),
                 $form->get('comment')->getNormData(),
                 "#3AC98A",
                 null,
-                $avatarHelper->getAvatarFromUser($this->getUser())                
+                $avatarHelper->getAvatarFromUser($this->getUser()),
+                "https://beta.punkproject.xyz/public/uploads/thumbnails/$thumbnailFile"
             );
 
             return $this->redirect($this->generateUrl('dashboard'));
