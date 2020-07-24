@@ -90,8 +90,7 @@ class DashboardController extends AbstractController
                 $form->get('comment')->getNormData(),
                 "#3AC98A",
                 null,
-                $avatarHelper->getAvatarFromUser($this->getUser()),
-                "https://beta.punkproject.xyz/public/uploads/thumbnails/$thumbnailFile"
+                $avatarHelper->getAvatarFromUser($this->getUser())
             );
 
             return $this->redirect($this->generateUrl('dashboard'));
