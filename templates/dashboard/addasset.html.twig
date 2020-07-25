@@ -10,7 +10,11 @@
     {{ form_row(form.thumbnail) }}
     {{ form_row(form.asset) }}
     {{ form_row(form.submit, { 'label': 'Submit me', 'attr': {'class': 'btn btn-primary'} }) }}
-{{ form_end(form) }} 
+{{ form_end(form) }}
+<hr/>
+<div class="alert alert-info" role="alert">
+    By submitting this asset, I agree to allow The Tardis Team to use my assets/submission in their project(s)
+</div>
 {% endblock %}
 {% block javascripts %}
 <script>
