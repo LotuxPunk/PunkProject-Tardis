@@ -16,7 +16,7 @@
         </tr>
     </thead>
     <tbody>
-    {% for asset in assets %}
+    {% for asset in assets|reverse %}
         <tr>
             <td>{{ asset.id }}</td>
             <td>{{ asset.title }}</td>
