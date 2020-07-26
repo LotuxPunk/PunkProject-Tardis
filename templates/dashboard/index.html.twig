@@ -3,5 +3,15 @@
 {% block subtitle %}Home{% endblock %}
 
 {% block body_dashboard %}
-<h2>Coming soon</h2>
+<h2>Latest assets</h2>
+<div class="card-group">
+    {% for asset in assets %}
+        {% include "asset/asset.card.html.twig" %}
+    {% else %}
+        <div>
+            <p>No records found</p>
+        </div>
+    {% endfor %}
+</div>
+
 {% endblock %}

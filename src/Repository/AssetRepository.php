@@ -29,7 +29,39 @@ class AssetRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('a')
             ->andWhere('a.author = :author')
             ->setParameter('author', $user)
-            ->orderBy('a.id', 'ASC')
+            ->orderBy('a.id', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @return Asset[] Returns an array of Asset objects
+     */
+
+    public function findLatestsByUser(User $user, int $number)
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.author = :author')
+            ->setParameter('author', $user)
+            ->orderBy('a.id', 'DESC')
+            ->setMaxResults($number)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @return Asset[] Returns an array of Asset objects
+     */
+
+    public function findLatests(User $user, int $number)
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.author = :author')
+            ->setParameter('author', $user)
+            ->orderBy('a.id', 'DESC')
+            ->setMaxResults($number)
             ->getQuery()
             ->getResult()
         ;

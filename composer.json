@@ -30,6 +30,7 @@
         "symfony/validator": "5.1.*",
         "symfony/web-link": "5.1.*",
         "symfony/yaml": "5.1.*",
+        "twig/string-extra": "^3.0",
         "woeler/phpdiscord": "^2.0"
     },
     "require-dev": {

@@ -19,19 +19,7 @@
     </div>
     <div class="card-columns">
         {% for asset in assets|reverse %}
-            <div class="card" style="margin-bottom:10px;">
-                <img class="card-img-top" src="{{asset('uploads/thumbnails/'~ asset.thumbnailFilename) | imagine_filter('asset')}}" alt="Image of {{asset.title}}">
-                <div class="card-body">
-                    <h5 class="card-title">{{asset.title}} <small>by {{asset.author.username}}</small></h5>
-                    <p class="card-text">{{asset.comment}}</p>
-                    <div class="btn-group">
-                        <a href="{{ path('asset_show', {'id': asset.id}) }}" class='btn btn-secondary'>Show</a>
-                        {% if app.user == asset.author or is_granted('ROLE_ADMIN') %}
-                            <a href="{{asset('uploads/assets/'~ asset.assetFilename)}}" class="btn btn-primary" target="_blank">{# <i class="fas fa-download"></i> #}Download</a>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
+            {% include "asset/asset.card.html.twig" %}
         {% else %}
             <div>
                 <p>No records found</p>

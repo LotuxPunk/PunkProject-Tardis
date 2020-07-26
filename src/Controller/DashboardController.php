@@ -19,10 +19,10 @@ class DashboardController extends AbstractController
     /**
      * @Route("/dashboard", name="dashboard")
      */
-    public function index()
+    public function index(AssetRepository $assetRepository)
     {
         return $this->render('dashboard/index.html.twig', [
-            'controller_name' => 'DashboardController',
+            'assets' => $assetRepository->findLatestsByUser($this->getUser(), 3),
         ]);
     }
 
