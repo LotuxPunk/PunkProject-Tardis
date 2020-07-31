@@ -48,7 +48,7 @@ class AssetType extends AbstractType
                             'image/jpeg',
                             'image/png'
                         ],
-                        'mimeTypesMessage' => 'Please upload a valid asset file',
+                        'mimeTypesMessage' => 'Please upload a valid asset file Current : {{ type }}, Allowed : {{ types }}',
                     ])
                 ],
             ])
