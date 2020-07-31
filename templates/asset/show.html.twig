@@ -1,34 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Asset{% endblock %}
+{% block title %}Asset | {{ asset.title }}{% endblock %}
 
 {% block body %}
-    <h1>Asset</h1>
 
-    <span>Still WIP</span>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ asset.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ asset.title }}</td>
-            </tr>
-            <tr>
-                <th>Comment</th>
-                <td>{{ asset.comment }}</td>
-            </tr>
-            <tr>
-                <th>ThumbnailFilename</th>
-                <td>{{ asset.thumbnailFilename }}</td>
-            </tr>
-            <tr>
-                <th>AssetFilename</th>
-                <td>{{ asset.assetFilename }}</td>
-            </tr>
-        </tbody>
-    </table>
+<div class="container-fluid mt-2">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{path('asset_index')}}">Assets</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ asset.title }}</li>
+        </ol>
+    </nav>
+    <div class="row">
+        <div class="col-md-4">
+            <img src="{{asset('uploads/thumbnails/'~ asset.thumbnailFilename) | imagine_filter('asset')}}" class="img-fluid rounded" alt="Image of {{asset.title}}">
+        </div>
+        <div class="col-md-7 bg-light rounded-lg p-2">
+            <h2>{{ asset.title }}</h2>
+            <p class="lead">{{ asset.comment }}</p>
+            {% if app.user == asset.author or is_granted('ROLE_ADMIN') %}
+                <a href="{{asset('uploads/assets/'~ asset.assetFilename)}}" class="btn btn-primary" target="_blank">{# <i class="fas fa-download"></i> #}Download</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
 {% endblock %}
