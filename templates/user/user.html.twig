@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home | User | {{user.username}}{% endblock %}
+
+{% block body %}
+<div class="container-fluid mt-2">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="bg-light rounded p-3">
+                <img class="img-thumbnail mx-auto d-block rounded-circle border border-dark" src="https://cdn.discordapp.com/avatars/{{user.discordId}}/{{user.avatar}}.png"/>
+                <h4 class="text-center">{{user.username}}</h4>
+            </div>
+        </div>
+        <div class="col-md-10">
+            <div class="card-columns">
+                {% for asset in user.assets|reverse %}
+                    {% include "asset/asset.card.html.twig" %}
+                {% else %}
+                    <div>
+                        <p>No records found</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>    
+</div>
+{% endblock %}

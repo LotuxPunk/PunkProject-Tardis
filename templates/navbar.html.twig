@@ -30,7 +30,8 @@
             </span>
         {% else %}
             <span class="navbar-text">
-                <img src="https://cdn.discordapp.com/avatars/{{app.user.discordId}}/{{app.user.avatar}}.png" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy"> {{app.user.username}}
+                <img src="https://cdn.discordapp.com/avatars/{{app.user.discordId}}/{{app.user.avatar}}.png" width="30" height="30" class="d-inline-block align-top rounded-circle" alt="" loading="lazy"> 
+                <a href="{{ path('user_show', {'id': app.user.id}) }}">{{app.user.username}}</a>
             </span>
         {% endif %}
     </div>
