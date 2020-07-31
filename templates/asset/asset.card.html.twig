@@ -1,5 +1,7 @@
 <div class="card" style="margin-bottom:10px;">
-    <img class="card-img-top" src="{{asset('uploads/thumbnails/'~ asset.thumbnailFilename) | imagine_filter('asset')}}" alt="Image of {{asset.title}}">
+    {% if asset.thumbnailFilename %}
+        <img class="card-img-top" src="{{asset('uploads/thumbnails/'~ asset.thumbnailFilename) | imagine_filter('asset')}}" alt="Image of {{asset.title}}">
+    {% endif %}
     <div class="card-body">
         <h5 class="card-title">{{asset.title}} <small>by {{asset.author.username}}</small></h5>
         <p class="card-text">{{asset.comment | u.truncate(200, '...')}}</p>
