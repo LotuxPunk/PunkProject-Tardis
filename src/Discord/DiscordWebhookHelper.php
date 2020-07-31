@@ -29,7 +29,7 @@ class DiscordWebhookHelper
             ->setImage(is_null($image)?"":$image)
             ->setTimestamp(new DateTime())
             ->setAuthorName($username)
-            ->setAuthorUrl("https://punkproject.xyz")
+            ->setAuthorUrl("https://beta.punkproject.xyz")
             ->setAuthorIcon(is_null($avatar)?"":$avatar);
 
         $this->webhook->send($message);
