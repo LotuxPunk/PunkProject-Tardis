@@ -22,7 +22,7 @@ class DashboardController extends AbstractController
     public function index(AssetRepository $assetRepository)
     {
         return $this->render('dashboard/index.html.twig', [
-            'assets' => $assetRepository->findLatestsByUser($this->getUser(), 3),
+            'assets' => $assetRepository->findLatestsByUser($this->getUser(), 4),
         ]);
     }
 
