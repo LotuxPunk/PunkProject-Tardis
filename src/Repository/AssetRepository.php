@@ -55,11 +55,9 @@ class AssetRepository extends ServiceEntityRepository
      * @return Asset[] Returns an array of Asset objects
      */
 
-    public function findLatests(User $user, int $number)
+    public function findLatests(int $number)
     {
         return $this->createQueryBuilder('a')
-            ->andWhere('a.author = :author')
-            ->setParameter('author', $user)
             ->orderBy('a.id', 'DESC')
             ->setMaxResults($number)
             ->getQuery()

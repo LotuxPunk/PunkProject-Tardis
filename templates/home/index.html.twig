@@ -5,8 +5,23 @@
 {% block body %}
 <div class="container-fluid mt-2">
     <div class="jumbotron mt-2">
-        <h2 class="display-4">The new PunkProject !</h2>
+        <h2 class="display-4">Welcome on the new PunkProject !</h2>
         <p class="lead">The features are coming! Welcome to the beta-test to see if it works!</p>
     </div>
+</div>
+<div class="container-fluid mt-2">
+    <div class="container-fluid bg-light rounded border">
+        <h2>Latest assets submitted</h2>
+        <div class="card-group">
+            {% for asset in assets %}
+                {% include "asset/asset.card.html.twig" %}
+            {% else %}
+                <div>
+                    <p>No records found</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    
 </div>
 {% endblock %}
