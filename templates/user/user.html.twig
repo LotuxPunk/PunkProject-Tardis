@@ -16,6 +16,10 @@
             <div class="bg-light rounded p-3">
                 <img class="img-thumbnail mx-auto d-block rounded-circle border border-dark" src="https://cdn.discordapp.com/avatars/{{user.discordId}}/{{user.avatar}}.png"/>
                 <h4 class="text-center">{{user.username}}</h4>
+                <ul class="list-group list-group-flush ">
+                    <li class="list-group-item bg-light"><b>{{user.assets|length }}</b> {% if user.assets|length > 1 %}assets{% else %}asset{% endif %} submitted</li>
+                    <li class="list-group-item bg-light">{{random(['Amazing!', 'Talented!', 'A beautiful person!'])}}</li>
+                </ul>
             </div>
         </div>
         <div class="col-md-10">
