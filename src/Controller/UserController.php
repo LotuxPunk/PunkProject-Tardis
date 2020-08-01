@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,6 +18,16 @@ class UserController extends AbstractController
         return $this->render('user/user.html.twig', [
             'user' => $user,
             'assets' => $user ->getAssets()
+        ]);
+    }
+
+    /**
+     * @Route("/users", name="user_index")
+     */
+    public function users(UserRepository $userRepository): Response
+    {
+        return $this->render('user/users.html.twig', [
+            'users' => $userRepository->findAll(),
         ]);
     }
 }
