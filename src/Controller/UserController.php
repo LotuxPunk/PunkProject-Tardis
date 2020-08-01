@@ -10,12 +10,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/{id}", name="user_show", methods={"GET"})
+     * @Route("/user/{id}", name="user_show", methods={"GET"})
      */
     public function user(User $user): Response
     {
         return $this->render('user/user.html.twig', [
             'user' => $user,
+            'assets' => $user ->getAssets()
         ]);
     }
 }
