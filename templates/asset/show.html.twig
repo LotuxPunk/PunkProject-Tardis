@@ -13,14 +13,23 @@
     </nav>
     <div class="row">
         <div class="col-md-4">
-            <img src="{{asset('uploads/thumbnails/'~ asset.thumbnailFilename) | imagine_filter('asset')}}" class="img-fluid rounded" alt="Image of {{asset.title}}">
+            {% if asset.thumbnailFilename %}
+                <img src="{{asset('uploads/thumbnails/'~ asset.thumbnailFilename) | imagine_filter('asset')}}" class="img-fluid rounded" alt="Image of {{asset.title}}">
+            {% else %}
+                <img src="{{asset('images/floppy.png') | imagine_filter('asset')}}" class="img-fluid rounded" alt="Image of {{asset.title}}">
+            {% endif %}
+            
         </div>
         <div class="col-md-7 bg-light rounded-lg p-2">
             <h2>{{ asset.title }}</h2>
             <p class="lead">{{ asset.comment }}</p>
             {% if app.user == asset.author or is_granted('ROLE_ADMIN') %}
+                <hr>
                 <a href="{{asset('uploads/assets/'~ asset.assetFilename)}}" class="btn btn-primary" target="_blank">{# <i class="fas fa-download"></i> #}Download</a>
             {% endif %}
+            <hr>
+            <img class="img-thumbnail mx-auto rounded-circle" src="https://cdn.discordapp.com/avatars/{{asset.author.discordId}}/{{asset.author.avatar}}.png"/>
+            <h4 class="text-wrap d-inline ml-2"><a href="{{ path('user_show', {'id': asset.author.id}) }}" class="stretched-link text-dark">{{asset.author.username}}</a> {% if "ROLE_ADMIN" in asset.author.roles %}<div class="badge badge-primary">Admin</div>{% endif %}</h4>            
         </div>
     </div>
 </div>
