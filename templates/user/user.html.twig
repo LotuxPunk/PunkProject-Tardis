@@ -20,7 +20,7 @@
                     <li class="list-group-item bg-light">{{random(['Amazing!', 'Talented!', 'A beautiful person!'])}}</li>
                 </ul>
             </div>
-            {% if is_granted('ROLE_ADMIN') and not "ROLE_ADMIN" in user.roles %}
+            {% if is_granted('ROLE_ADMIN') and "ROLE_ADMIN" in user.roles == false %}
                 {% if user.banned %}
                     {{ include('user/_unban_form.html.twig') }}
                 {% else %}
