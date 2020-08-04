@@ -12,14 +12,21 @@
     </nav>
     <div class="row">
         <div class="col-md-3">
-            <div class="bg-light rounded p-3">
+            <div class="bg-light rounded p-3 mb-2">
                 <img class="img-thumbnail mx-auto d-block rounded-circle" src="https://cdn.discordapp.com/avatars/{{user.discordId}}/{{user.avatar}}.png"/>
-                <h4 class="text-center text-wrap">{{user.username}} {% if "ROLE_ADMIN" in user.roles %}<div class="badge badge-primary">Admin</div>{% endif %}</h4>
+                <h4 class="text-center text-wrap">{{user.username}} {% if "ROLE_ADMIN" in user.roles %}<div class="badge badge-primary">Admin</div>{% endif %}{% if user.banned %}<div class="badge badge-danger">Banned</div>{% endif %}</h4>
                 <ul class="list-group list-group-flush ">
                     <li class="list-group-item bg-light"><b>{{user.assets|length }}</b> {% if user.assets|length > 1 %}assets{% else %}asset{% endif %} submitted</li>
                     <li class="list-group-item bg-light">{{random(['Amazing!', 'Talented!', 'A beautiful person!'])}}</li>
                 </ul>
             </div>
+            {% if is_granted('ROLE_ADMIN') and not "ROLE_ADMIN" in user.roles %}
+                {% if user.banned %}
+                    {{ include('user/_unban_form.html.twig') }}
+                {% else %}
+                    {{ include('user/_ban_form.html.twig') }}
+                {% endif %}
+            {% endif %}
         </div>
         <div class="col-md-9">
             {% include "asset/assets.cards.html.twig" %}

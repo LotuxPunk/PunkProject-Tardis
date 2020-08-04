@@ -45,6 +45,11 @@ class User implements UserInterface
      */
     private $assets;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $banned;
+
     public function __construct(array $data = [])
     {
         $this->username = $data['username'];
@@ -80,6 +85,10 @@ class User implements UserInterface
      */
     public function getRoles(): array
     {
+        // if ($this->getBanned()) {
+        //     return [];
+        // }
+
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
@@ -170,6 +179,18 @@ class User implements UserInterface
                 $asset->setAuthor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getBanned(): ?bool
+    {
+        return $this->banned;
+    }
+
+    public function setBanned(bool $banned): self
+    {
+        $this->banned = $banned;
 
         return $this;
     }
