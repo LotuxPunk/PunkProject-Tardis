@@ -36,7 +36,7 @@
             {% endif %}
             <hr>
             <img class="img-thumbnail mx-auto rounded-circle" src="https://cdn.discordapp.com/avatars/{{asset.author.discordId}}/{{asset.author.avatar}}.png"/>
-            <h4 class="text-wrap d-inline ml-2"><a href="{{ path('user_show', {'id': asset.author.id}) }}" class="stretched-link text-dark">{{asset.author.username}}</a></h4>            
+            <h4 class="text-wrap d-inline ml-2"><a href="{{ path('user_show', {'id': asset.author.id}) }}" class="text-dark">{{asset.author.username}}</a></h4>            
         </div>
     </div>
 </div>
