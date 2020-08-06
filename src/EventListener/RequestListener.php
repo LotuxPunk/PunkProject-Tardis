@@ -25,11 +25,13 @@ class RequestListener
             return;
         }
 
-        $user = $this->tokenStorage->getToken()->getUser();
-        if ($user instanceof User && $user->getBanned()) {
-            $url = $this->router->generate('app_logout');
-            $response = new RedirectResponse($url);
-            $event->setResponse($response);
+        if($this->tokenStorage->getToken() != null){
+            $user = $this->tokenStorage->getToken()->getUser();
+            if ($user instanceof User && $user->getBanned()) {
+                $url = $this->router->generate('app_logout');
+                $response = new RedirectResponse($url);
+                $event->setResponse($response);
+            }
         }
     }
 }
