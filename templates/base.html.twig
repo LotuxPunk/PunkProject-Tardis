@@ -4,15 +4,15 @@
         <meta charset="UTF-8">
         <title>PunkProject | {% block title %}Welcome!{% endblock %}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <style>
+            html,body {
+                height: 100%;
+                background-color: #505562 !important;
+            }
+        </style>
         {% block stylesheets %}{% endblock %}
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     </head>
-    <style>
-        html,body {
-            height: 100%;
-            background-color: #505562;
-        }
-    </style>
     <body>
         {% include "navbar.html.twig" %}
         {% block body %}{% endblock %}
