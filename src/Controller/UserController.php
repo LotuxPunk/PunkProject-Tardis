@@ -33,11 +33,11 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="user_ban", methods={"BAN"})
+     * @Route("/{id}", name="user_ban", methods={"POST"})
      */
     public function ban(Request $request, User $user): Response
     {
-        if ($this->isCsrfTokenValid('ban'.$user->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('post'.$user->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $user->setBanned(true);
             $entityManager->persist($user);
@@ -50,11 +50,11 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="user_unban", methods={"UNBAN"})
+     * @Route("/{id}", name="user_unban", methods={"POST"})
      */
     public function unban(Request $request, User $user): Response
     {
-        if ($this->isCsrfTokenValid('unban'.$user->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('post'.$user->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $user->setBanned(false);
             $entityManager->persist($user);
