@@ -56,6 +56,7 @@ class User implements UserInterface
         $this->discordId = $data['id'];
         $this->avatar = $data['avatar'];
         $this->assets = new ArrayCollection();
+        $this->banned = false;
     }
 
     public function getId(): ?int
