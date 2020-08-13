@@ -43,6 +43,17 @@ class Asset
      */
     private $assetFilename;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=AssetCategory::class, inversedBy="assets")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $category;
+
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $pictures = [];
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +115,30 @@ class Asset
     public function setAssetFilename(string $assetFilename): self
     {
         $this->assetFilename = $assetFilename;
+
+        return $this;
+    }
+
+    public function getCategory(): ?AssetCategory
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?AssetCategory $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getPictures(): ?array
+    {
+        return $this->pictures;
+    }
+
+    public function setPictures(array $pictures): self
+    {
+        $this->pictures = $pictures;
 
         return $this;
     }
