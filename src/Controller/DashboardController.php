@@ -2,11 +2,14 @@
 
 namespace App\Controller;
 
-use App\Discord\DiscordAvatarHelper;
-use App\Discord\DiscordWebhookHelper;
 use App\Entity\Asset;
 use App\Form\AssetType;
+use App\Entity\AssetCategory;
+use App\Form\AssetCategoryType;
 use App\Repository\AssetRepository;
+use App\Discord\DiscordAvatarHelper;
+use App\Discord\DiscordWebhookHelper;
+use Symfony\Component\Asset\Packages;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,7 +32,7 @@ class DashboardController extends AbstractController
     /**
      * @Route("/dashboard/addasset", name="add_asset")
      */
-    public function addAsset(Request $request, SluggerInterface $slugger, EntityManagerInterface $manager, DiscordAvatarHelper $avatarHelper, DiscordWebhookHelper $webhookHelper)
+    public function addAsset(Request $request, SluggerInterface $slugger, EntityManagerInterface $manager, DiscordAvatarHelper $avatarHelper, DiscordWebhookHelper $webhookHelper, Packages $assetsManager)
     {
         $asset = new Asset();
         $form = $this->createForm(AssetType::class, $asset);
@@ -89,7 +92,7 @@ class DashboardController extends AbstractController
                 $form->get('title')->getNormData(),
                 $form->get('comment')->getNormData(),
                 "#3AC98A",
-                null,
+                $assetsManager->getUrl("uploads/thumbnails/$thumbnailFile"),
                 $avatarHelper->getAvatarFromUser($this->getUser())
             );
 
@@ -107,6 +110,28 @@ class DashboardController extends AbstractController
     {
         return $this->render('dashboard/myassets.html.twig', [
             'assets' => $assetRepository->findByUser($this->getUser())
+        ]);
+    }
+
+    /**
+     * @Route("/dashboard/admin/add_asset_category", name="add_category")
+     */
+    public function addCategory(Request $request, EntityManagerInterface $manager)
+    {
+        $category = new AssetCategory();
+        $form = $this->createForm(AssetCategoryType::class, $category);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager->persist($category);
+            $manager->flush();
+
+            $this->addFlash('success', 'Category added!');
+
+            return $this->redirect($this->generateUrl('add_category'));
+        }
+        return $this->render('dashboard/admin/admin.addcategory.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 

@@ -3,8 +3,11 @@
 namespace App\Form;
 
 use App\Entity\Asset;
+use App\Entity\AssetCategory;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -51,6 +54,15 @@ class AssetType extends AbstractType
                         'mimeTypesMessage' => 'Please upload a valid asset file Current : {{ type }}, Allowed : {{ types }}',
                     ])
                 ],
+            ])
+            ->add('category', EntityType::class, [
+                'class' => AssetCategory::class,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('c')
+                        ->orderBy('c.name', 'ASC');
+                },
+                'choice_label' => 'name',
+                'required' => true,
             ])
             ->add('submit', SubmitType::class, [
                 'attr' => ['class' => 'save'],

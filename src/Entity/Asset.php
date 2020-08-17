@@ -45,7 +45,7 @@ class Asset
 
     /**
      * @ORM\ManyToOne(targetEntity=AssetCategory::class, inversedBy="assets")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $category;
 
