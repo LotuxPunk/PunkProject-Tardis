@@ -10,6 +10,7 @@
     </div>
     <ul class="list-group list-group-flush">
         <li class="list-group-item"><img src="{{avatar(asset.author)}}" width="30" height="30" class="img-fluid d-inline-block align-top rounded-circle" alt="" loading="lazy"> <a href="{{ path('user_show', {'id': asset.author.id}) }}">{{asset.author.username}}</a></li>
+        <li class="list-group-item">{{asset.category}}</li>
     </ul>
     <div class="card-footer">
         <div class="btn-group">

@@ -9,6 +9,7 @@
         <tr>
             <th>Id</th>
             <th>Title</th>
+            <th>Category</th>
             <th>Comment</th>
             <th>Link</th>
             <th>Delete</th>
@@ -19,6 +20,7 @@
         <tr>
             <td>{{ asset.id }}</td>
             <td>{{ asset.title }}</td>
+            <td>{{ asset.category }}</td>
             <td>{{ asset.comment | u.truncate(100, '...')}}</td>
             <td>
                 <a href="{{ path('asset_show', {'id': asset.id}) }}" class='btn btn-secondary'>

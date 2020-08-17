@@ -21,7 +21,7 @@
             
         </div>
         <div class="col-md-7 bg-light rounded-lg p-2">
-            <h2>{{ asset.title }}</h2>
+            <h2>{{ asset.title }} {% if asset.category %}<span class="badge badge-secondary">{{ asset.category }}</span>{% endif %}</h2>
             <p class="lead">{{ asset.comment }}</p>
             {% if app.user == asset.author or is_granted('ROLE_ADMIN') %}
                 <hr>
