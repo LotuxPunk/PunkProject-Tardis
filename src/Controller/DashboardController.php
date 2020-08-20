@@ -79,6 +79,7 @@ class DashboardController extends AbstractController
             }
 
             $asset->setAuthor($this->getUser());
+            $asset->setAdded(false);
 
             $manager->persist($asset);
             $manager->flush();

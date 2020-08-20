@@ -54,6 +54,11 @@ class Asset
      */
     private $pictures = [];
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $added;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -139,6 +144,18 @@ class Asset
     public function setPictures(array $pictures): self
     {
         $this->pictures = $pictures;
+
+        return $this;
+    }
+
+    public function getAdded(): ?bool
+    {
+        return $this->added;
+    }
+
+    public function setAdded(bool $added): self
+    {
+        $this->added = $added;
 
         return $this;
     }
