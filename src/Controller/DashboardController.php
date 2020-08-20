@@ -94,8 +94,8 @@ class DashboardController extends AbstractController
                 $form->get('title')->getNormData(),
                 $form->get('comment')->getNormData(),
                 "#3AC98A",
-                //$assetsManager->getUrl("uploads/thumbnails/$thumbnailFile"),
-                null,
+                $assetsManager->getUrl("uploads/thumbnails/$thumbnailFile"),
+                //null,
                 $avatarHelper->getAvatarFromUser($this->getUser())
             );
 
