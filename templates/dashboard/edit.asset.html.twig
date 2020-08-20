@@ -1,0 +1,13 @@
+{% extends 'dashboard/base.dashboard.html.twig' %}
+
+{% block subtitle %}Edit asset{% endblock %}
+
+{% block body_dashboard %}
+<h2>Editing an asset</h2>
+{{ form_start(form) }}
+    {{ form_row(form.title) }}
+    {{ form_row(form.comment) }}
+    {{ form_row(form.category) }}
+    {{ form_row(form.submit, { 'label': 'Submit me', 'attr': {'class': 'btn btn-primary'} }) }}
+{{ form_end(form) }}
+{% endblock %}

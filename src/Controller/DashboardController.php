@@ -9,6 +9,7 @@ use App\Form\AssetCategoryType;
 use App\Repository\AssetRepository;
 use App\Discord\DiscordAvatarHelper;
 use App\Discord\DiscordWebhookHelper;
+use App\Form\AssetEditType;
 use Symfony\Component\Asset\Packages;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -93,7 +94,8 @@ class DashboardController extends AbstractController
                 $form->get('title')->getNormData(),
                 $form->get('comment')->getNormData(),
                 "#3AC98A",
-                $assetsManager->getUrl("uploads/thumbnails/$thumbnailFile"),
+                //$assetsManager->getUrl("uploads/thumbnails/$thumbnailFile"),
+                null,
                 $avatarHelper->getAvatarFromUser($this->getUser())
             );
 
@@ -136,5 +138,24 @@ class DashboardController extends AbstractController
         ]);
     }
 
-    
+    /**
+     * @Route("/dashboard/edit_asset/{id}", name="edit_asset")
+     */
+    public function editAsset(Asset $asset, Request $request, EntityManagerInterface $manager){
+        $form = $this->createForm(AssetEditType::class, $asset);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager->persist($asset);
+            $manager->flush();
+
+            $this->addFlash('success', 'Asset edited!');
+
+            return $this->redirect($this->generateUrl('my_assets'));
+        }
+
+        return $this->render('dashboard/edit.asset.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
 }
