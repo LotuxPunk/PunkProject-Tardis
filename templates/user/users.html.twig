@@ -19,7 +19,7 @@
             </thead>
             {% for user in users %}
             <tr>
-                <th scope="row"><img src="{{avatar(user)}}" width="30" height="30" class="img-fluid d-inline-block align-top rounded-circle" alt="" loading="lazy"> {{user.username}}</th>
+                <th scope="row"><img src="{{avatar(user)}}" width="30" height="30" class="img-fluid d-inline-block align-top rounded-circle avatar" alt="" loading="lazy"> {{user.username}}</th>
                 <td>{% if "ROLE_ADMIN" in user.roles %}<div class="badge badge-primary">Admin</div>{% endif %}{% if user.banned %}<div class="badge badge-danger">Banned</div>{% endif %}</td>
                 <td><a href="{{ path('user_show', {'id': user.id}) }}">Profile of {{user.username}}</a></td>
             </tr>
