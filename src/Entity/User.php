@@ -50,6 +50,11 @@ class User implements UserInterface
      */
     private $banned;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Datapack::class, mappedBy="author", orphanRemoval=true)
+     */
+    private $datapacks;
+
     public function __construct(array $data = [])
     {
         $this->username = $data['username'];
@@ -57,6 +62,7 @@ class User implements UserInterface
         $this->avatar = $data['avatar'];
         $this->assets = new ArrayCollection();
         $this->banned = false;
+        $this->datapacks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -192,6 +198,37 @@ class User implements UserInterface
     public function setBanned(bool $banned): self
     {
         $this->banned = $banned;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Datapack[]
+     */
+    public function getDatapacks(): Collection
+    {
+        return $this->datapacks;
+    }
+
+    public function addDatapack(Datapack $datapack): self
+    {
+        if (!$this->datapacks->contains($datapack)) {
+            $this->datapacks[] = $datapack;
+            $datapack->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDatapack(Datapack $datapack): self
+    {
+        if ($this->datapacks->contains($datapack)) {
+            $this->datapacks->removeElement($datapack);
+            // set the owning side to null (unless already changed)
+            if ($datapack->getAuthor() === $this) {
+                $datapack->setAuthor(null);
+            }
+        }
 
         return $this;
     }
